@@ -47,10 +47,6 @@ public class Community {
 	
 	@NonNull
 	private String comContent;
-<<<<<<< HEAD
-
-=======
->>>>>>> 02f4ac9cd48c9ed0983eee7c855711d10d4226cc
 	
 	@Column(length = 6)
 	private String comPw;
