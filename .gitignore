@@ -36,11 +36,7 @@ local.properties
 .buildpath
 
 # sbteclipse plugin
-<<<<<<< Updated upstream
-.target/
-=======
-.target
->>>>>>> Stashed changes
+target/*
 
 # Tern plugin
 .tern-project
@@ -51,11 +47,8 @@ local.properties
 # STS (Spring Tool Suite)
 .springBeans
 persistence.xml
-<<<<<<< Updated upstream
 .classpath
 .project
-=======
->>>>>>> Stashed changes
 
 # Code Recommenders
 .recommenders/
