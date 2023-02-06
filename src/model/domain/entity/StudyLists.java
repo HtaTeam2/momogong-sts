@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,9 +37,9 @@ public class StudyLists {
 	
 	private String roomDesc;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY) //사용 시점에서 부모테이블이 조회가 되도록 설정
 	@JoinColumn(name = "memberid")
-	private String roomAdmin;
+	private StudyMembers studyMembers;
 	
 	private Integer memNum;
 	private Integer maxMem;
@@ -46,6 +47,6 @@ public class StudyLists {
 	@Column(length = 10)
 	private String category;
 	
-	@OneToMany(mappedBy = "studylists_no")
+	@OneToMany(mappedBy = "studyLists") //StudyLists에 매핑되어 있는 변수이름으로 지정해야함
 	private List<StudyGroup> studygroup = new ArrayList<StudyGroup>();
 }

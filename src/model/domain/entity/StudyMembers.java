@@ -17,13 +17,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
-import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 
 
 @Entity
@@ -52,6 +50,6 @@ public class StudyMembers {
 	private String grade;
 	
 	//참조
-	@OneToMany(mappedBy = "studymembers_id")
+	@OneToMany(mappedBy = "studyMembers") //StudyGroup에 매핑설정된 변수 이름으로 지정해야 함
 	private List<StudyGroup> studygroup = new ArrayList<StudyGroup>();
 }

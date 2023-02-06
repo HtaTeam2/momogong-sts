@@ -16,13 +16,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
-@ToString
 
 @Entity
 public class StudyGroup { 
@@ -35,7 +33,7 @@ public class StudyGroup {
 	private StudyLists studyLists;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "studymembers_id")
+	@JoinColumn(name = "studymembers_no")
 	private StudyMembers studyMembers;
 	
 	
