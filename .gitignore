@@ -120,6 +120,7 @@ hs_err_pid*
 target/
 WebContent/META-INF/
 *.web.xml
+*.team2-servlet.xml
 release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
