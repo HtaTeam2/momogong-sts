@@ -119,7 +119,7 @@ hs_err_pid*
 ### Maven ###
 target/
 WebContent/META-INF/
-WebContent/WEB-INF/
+*.web.xml
 release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
