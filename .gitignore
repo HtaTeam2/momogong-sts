@@ -14,7 +14,7 @@ local.properties
 .loadpath
 .recommenders
 .target/
-persistence.xm
+persistence.xml
 
 # ignore properties file
 config.properties
@@ -119,8 +119,9 @@ hs_err_pid*
 ### Maven ###
 target/
 WebContent/META-INF/
-*.web.xml
-*.team2-servlet.xml
+web.xml
+pom.xml
+team2-servlet.xml
 release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
