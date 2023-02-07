@@ -12,11 +12,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
+import lombok.Value;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,26 +30,29 @@ import lombok.Setter;
 @Entity
 public class StudyMembers {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue //(strategy = GenerationType.IDENTITY)
 	@Column(length = 20)
+	@NonNull
 	private String id;
 	
 	@NonNull
 	@Column(length = 16)
 	private String password;
 	
-	@NonNull
-	@Column(length = 30, unique = true, nullable = false)
+	@Column(length = 30, unique = true, nullable = true)
 	private String nickname;
 	
 	@NonNull
 	@Column(length = 100)
 	private String email;
 	
+	@CreationTimestamp
 	private Date regdate;
 	
+	@NonNull
 	private String goal;
 	
+	@NonNull
 	private String grade;
 	
 	//참조

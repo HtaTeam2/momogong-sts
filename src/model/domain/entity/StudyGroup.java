@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -23,9 +24,15 @@ import lombok.Setter;
 @Getter
 
 @Entity
+@SequenceGenerator(
+        name="STUDYGROUP_SEQ_GEN",
+        sequenceName="STUDYGROUP_SEQ",
+        initialValue=1,
+        allocationSize=1
+        )
 public class StudyGroup { 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long memNo;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
