@@ -17,13 +17,10 @@ import javax.persistence.SequenceGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 @Getter
 @Setter
 
@@ -39,8 +36,7 @@ public class StudyLists {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STUDYLISTS_SEQ_GEN")
 	private Long roomNo;
 	
-	@NonNull
-	@Column(length = 20)
+	@Column(length = 20, nullable = false)
 	private String roomTitle;
 	
 	@Column(length = 6)
@@ -54,11 +50,10 @@ public class StudyLists {
 	
 	private Integer memNum;
 	
-	@NonNull
+	@Column(nullable = false)
 	private Integer maxMem;
 	
-	@NonNull
-	@Column(length = 10)
+	@Column(length = 10, nullable = false)
 	private String category;
 	
 	@OneToMany(mappedBy = "studyLists") //StudyLists에 매핑되어 있는 변수이름으로 지정해야함

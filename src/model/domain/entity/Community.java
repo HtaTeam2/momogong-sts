@@ -16,14 +16,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 @Getter
 @Setter
 
@@ -38,23 +35,26 @@ public class Community {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="COMMUNITY_SEQ_GEN")
 	private Long comNo;
-	//글쓴이 회원테이블 참조!
-	@NonNull
-	@Column(length = 50)
+	
+	@Column(length = 50, nullable = false)
+	private String comTitle;
+
+	@Column(nullable = false)
 	private String subject;
 	
-	@NonNull
+	@Column(nullable = false)
 	private String comContent;
 	
-	@Column(length = 6)
+	@Column(length = 6, nullable = false)
 	private String comPw;
 	
 	@CreationTimestamp
 	private Date comRegdate;
 	
+	@Column(nullable = false)
 	private Integer comViewCount;
 	
-	//참조
+	//글쓴이 회원테이블 참조!
 	@ManyToOne
 	@JoinColumn(name = "memberid")
 	private StudyMembers studymembers;
