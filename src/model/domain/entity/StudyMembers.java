@@ -21,7 +21,6 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 @Getter
 @Setter
 
@@ -32,15 +31,13 @@ public class StudyMembers {
 	@Column(length = 20)
 	private String id;
 	
-	@NonNull
-	@Column(length = 16)
+	@Column(length = 16, nullable = false)
 	private String password;
 	
 	@Column(length = 30, unique = true)
 	private String nickname;
 	
-	@NonNull
-	@Column(length = 100)
+	@Column(length = 100, nullable = false)
 	private String email;
 	
 	@CreationTimestamp
@@ -48,8 +45,7 @@ public class StudyMembers {
 	
 	private String goal;
 	
-	@NonNull
-	@Column(length = 10)
+	@Column(length = 10, nullable = false)
 	private String grade; //default : FREE => insert문에서 주는걸로!
 	
 	//참조

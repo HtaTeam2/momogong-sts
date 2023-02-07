@@ -20,7 +20,6 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 @Getter
 @Setter
 
@@ -37,15 +36,15 @@ public class Notice {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "NOTICE_SEQ_GEN")
 	private Long noticeNo;
 	
-	@NonNull
-	@Column(length = 50)
+	@Column(length = 50, nullable = false)
 	private String noticeTitle;
 	
-	@NonNull
+	@Column(nullable = false)
 	private String noticeContent;
 	
 	@CreationTimestamp
 	private Date noticeRegdate;
 	
+	@Column(nullable = false)
 	private Integer viewCount;
 }
