@@ -33,7 +33,7 @@ public class StudyGroup {
 	private StudyLists studyLists;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "studymembers_no")
+	@JoinColumn(name = "studymembers_id")
 	private StudyMembers studyMembers;
 	
 	
