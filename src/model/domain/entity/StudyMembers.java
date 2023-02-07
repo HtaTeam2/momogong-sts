@@ -7,8 +7,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -18,10 +16,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 
@@ -36,7 +36,7 @@ public class StudyMembers {
 	@Column(length = 16)
 	private String password;
 	
-	@Column(length = 30, unique = true, nullable = true)
+	@Column(length = 30, unique = true)
 	private String nickname;
 	
 	@NonNull
@@ -48,7 +48,9 @@ public class StudyMembers {
 	
 	private String goal;
 	
-	private String grade;
+	@NonNull
+	@Column(length = 10)
+	private String grade; //default : FREE => insert문에서 주는걸로!
 	
 	//참조
 	@OneToMany(mappedBy = "studyMembers") //StudyGroup에 매핑설정된 변수 이름으로 지정해야 함

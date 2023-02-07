@@ -1,32 +1,36 @@
 package model;
 //스터디 구성원 회원가입(insert), 로그인/로그아웃, 수정(update), 탈퇴(delete) 
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import org.springframework.stereotype.Repository;
 
-import model.domain.entity.StudyMembers;
-import util.DBUtil;
+import model.domain.StudyMembersDTO;
+import util.DBUtil2;
 
 @Repository
 public class StudyMembersDAO {
 	
 	//가입
-	public void insertMember() {
-		EntityManager em = DBUtil.getEntityManager();
-		EntityTransaction tx = em.getTransaction();
+	public StudyMembersDTO insertMember(StudyMembersDTO dto) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
 		try {
-			tx.begin();
-			
-			StudyMembers studyMembers = new StudyMembers(); //파라미터추가
-			em.persist(studyMembers);
-			tx.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			em.close();
+			con = DBUtil2.getConnection();
+			pstmt = con.prepareStatement("INSERT INTO customer VALUES(?, ?, ?, ?)");
+//			pstmt.setString(1, dto.getId());
+//			pstmt.setString(2, dto.getPassword());
+//			pstmt.setString(3, dto.getName());
+//			pstmt.setString(4, dto.getEmail());
+			pstmt.executeUpdate();
+		} catch (SQLException s) {
+			s.printStackTrace();
+			throw new SQLException("id가 중복되었습니다");
+		} finally {
+			DBUtil2.close(con, pstmt);
 		}
+		return dto;
 	}
-
 }
