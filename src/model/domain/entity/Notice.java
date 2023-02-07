@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.SequenceGenerators;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -18,14 +17,12 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Getter
 @Setter
-@ToString
 
 @Entity
 @SequenceGenerator(

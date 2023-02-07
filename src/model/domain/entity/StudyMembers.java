@@ -7,19 +7,21 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 
@@ -27,7 +29,6 @@ import lombok.Setter;
 @Entity
 public class StudyMembers {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(length = 20)
 	private String id;
 	
@@ -35,19 +36,21 @@ public class StudyMembers {
 	@Column(length = 16)
 	private String password;
 	
-	@NonNull
-	@Column(length = 30, unique = true, nullable = false)
+	@Column(length = 30, unique = true)
 	private String nickname;
 	
 	@NonNull
 	@Column(length = 100)
 	private String email;
 	
+	@CreationTimestamp
 	private Date regdate;
 	
 	private String goal;
 	
-	private String grade;
+	@NonNull
+	@Column(length = 10)
+	private String grade; //default : FREE => insert문에서 주는걸로!
 	
 	//참조
 	@OneToMany(mappedBy = "studyMembers") //StudyGroup에 매핑설정된 변수 이름으로 지정해야 함
