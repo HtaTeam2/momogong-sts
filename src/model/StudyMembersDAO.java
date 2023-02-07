@@ -12,12 +12,6 @@ import util.DBUtil;
 @Repository
 public class StudyMembersDAO {
 	
-	private static StudyMembersDAO instance = new StudyMembersDAO();
-	
-	public static StudyMembersDAO getInstance() {
-		return instance;
-	}
-	
 	//가입
 	public void insertMember() {
 		EntityManager em = DBUtil.getEntityManager();
@@ -25,7 +19,7 @@ public class StudyMembersDAO {
 		try {
 			tx.begin();
 			
-			StudyMembers studyMembers = new StudyMembers();
+			StudyMembers studyMembers = new StudyMembers(); //파라미터추가
 			em.persist(studyMembers);
 			tx.commit();
 		} catch (Exception e) {

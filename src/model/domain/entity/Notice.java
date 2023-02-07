@@ -25,7 +25,6 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @Getter
 @Setter
-@ToString
 
 @Entity
 @SequenceGenerator(

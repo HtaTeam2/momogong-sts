@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +29,6 @@ import lombok.Setter;
 @Entity
 public class StudyMembers {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(length = 20)
 	private String id;
 	
@@ -35,14 +36,14 @@ public class StudyMembers {
 	@Column(length = 16)
 	private String password;
 	
-	@NonNull
-	@Column(length = 30, unique = true, nullable = false)
+	@Column(length = 30, unique = true, nullable = true)
 	private String nickname;
 	
 	@NonNull
 	@Column(length = 100)
 	private String email;
 	
+	@CreationTimestamp
 	private Date regdate;
 	
 	private String goal;
