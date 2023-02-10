@@ -16,12 +16,12 @@ import lombok.ToString;
 
 public class CommunityDTO { 
 	private long comNo;		//게시번호 - 시퀀스 
+	private String comTitle; //제목
+	private String subject; //말머리
 	private String comContent; // 내용
 	private String comPw;		//글 비밀번호
 	private Date comRegedate;	//가입날짜
-	private String comTitle; //제목
 	private int comViewCount; //조회수
-	private String subject; //말머리
 	private String memberId; //글쓴이
 
 }
