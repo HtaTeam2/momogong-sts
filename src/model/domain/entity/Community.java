@@ -40,6 +40,7 @@ public class Community {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="COMMUNITY_SEQ_GEN")
 	private Long comNo;
+<<<<<<< main
 	//글쓴이 회원테이블 참조!
 	@NonNull
 	@Column(length = 50)
@@ -49,11 +50,33 @@ public class Community {
 	private String comContent;
 	
 	@Column(length = 6)
+=======
+	
+	@NonNull
+	@Column(length = 50, nullable = false)
+	private String comTitle;
+
+	@NonNull
+	@Column(nullable = false)
+	private String subject;
+	
+	@NonNull
+	@Column(nullable = false)
+	private String comContent;
+	
+	@NonNull
+	@Column(length = 6, nullable = false)
+>>>>>>> local
 	private String comPw;
 	
 	@CreationTimestamp
 	private Date comRegdate;
 	
+<<<<<<< main
+=======
+	@NonNull
+	@Column(nullable = false)
+>>>>>>> local
 	private Integer comViewCount;
 	
 	//참조
