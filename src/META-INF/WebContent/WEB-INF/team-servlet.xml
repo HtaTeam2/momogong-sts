@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd">
+
+	<!-- mvc 사용을 위한 설정 -->
+	<mvc:annotation-driven />
+	<mvc:default-servlet-handler />
+
+	<!-- 애노테이션을 사용해서 빈 객체 등록하기 위한 설정 controller -> @Controller model -> @Repository -->
+	<context:component-scan base-package="chat.controller" />
+	<context:component-scan base-package="chat.handler" />
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<websocket:handlers allowed-origins="*">
+	<!-- path: URL에서 /chat이라는 요청이 오면  handler: handlerChat에서 처리하겠다는 의미-->
+		<websocket:mapping handler="chat.handlerChat" path="/chat" />
+		<!-- Websocket이 모든 브라우저를 지원하지는 않음.
+		sockjs는 어플리케이션의 코드를 변경할 필요 없이 런타임에 필요할때 대체함. nodejs의 socket.io같은 역할-->
+		<websocket:sockjs websocket-enabled="true" />
+	</websocket:handlers>
+
+	<!-- handler.HandlerChat.java에서 처리하겠다는 뜻 -->
+	<bean id="chat.handlerChat" class="chat.handler.HandlerChat" />
+
+</beans>

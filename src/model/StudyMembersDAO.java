@@ -19,7 +19,7 @@ public class StudyMembersDAO {
 		PreparedStatement pstmt = null;
 		try {
 			con = DBUtil2.getConnection();
-			pstmt = con.prepareStatement("INSERT INTO customer VALUES(?, ?, ?, ?)");
+			pstmt = con.prepareStatement("INSERT INTO studymembers VALUES(?, ?, ?, ?)");
 //			pstmt.setString(1, dto.getId());
 //			pstmt.setString(2, dto.getPassword());
 //			pstmt.setString(3, dto.getName());

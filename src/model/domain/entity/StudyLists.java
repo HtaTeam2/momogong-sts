@@ -17,10 +17,13 @@ import javax.persistence.SequenceGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 
@@ -36,6 +39,7 @@ public class StudyLists {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STUDYLISTS_SEQ_GEN")
 	private Long roomNo;
 	
+	@NonNull
 	@Column(length = 20, nullable = false)
 	private String roomTitle;
 	
@@ -45,14 +49,18 @@ public class StudyLists {
 	private String roomDesc;
 	
 	@OneToOne(fetch = FetchType.LAZY) //사용 시점에서 부모테이블이 조회가 되도록 설정
-	@JoinColumn(name = "memberid")
+	@JoinColumn(name = "HostId")
 	private StudyMembers studyMembers;
 	
-	private Integer memNum;
+	@NonNull
+	@Column(nullable = false)
+	private Integer memNum; //생성 시점에서 멤버수는 1명
 	
+	@NonNull
 	@Column(nullable = false)
 	private Integer maxMem;
 	
+	@NonNull
 	@Column(length = 10, nullable = false)
 	private String category;
 	

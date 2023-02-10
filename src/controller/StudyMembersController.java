@@ -12,7 +12,7 @@ import model.StudyListDAO;
 import model.StudyMembersDAO;
 
 @Controller
-@RequestMapping("camstudy")
+@RequestMapping("StdMembers")
 public class StudyMembersController {
 	
 	@Autowired
