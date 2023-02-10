@@ -97,7 +97,7 @@ public class StudyListDAO {
 			allList = new ArrayList<StudyListsDTO>();
 			
 			while (rset.next()) {
-				allList.add(new StudyListsDTO(rset.getLong(1), rset.getString(2), rset.getInt(3), rset.getInt(4), rset.getString(5), rset.getString(6), rset.getString(7), rset.getString(8)));
+				//allList.add(new StudyListsDTO(rset.getLong(1), rset.getString(2), rset.getInt(3), rset.getInt(4), rset.getString(5), rset.getString(6), rset.getString(7), rset.getString(8)));
 			}
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();

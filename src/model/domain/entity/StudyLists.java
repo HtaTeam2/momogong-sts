@@ -39,8 +39,17 @@ public class StudyLists {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STUDYLISTS_SEQ_GEN")
 	private Long roomNo;
 	
+<<<<<<< HEAD
 	@NonNull
 	@Column(length = 20, nullable = false)
+=======
+<<<<<<< main
+	@Column(length = 20)
+=======
+	@NonNull
+	@Column(length = 20, nullable = false)
+>>>>>>> local
+>>>>>>> origin/ebwork
 	private String roomTitle;
 	
 	@Column(length = 6)
@@ -52,6 +61,7 @@ public class StudyLists {
 	@JoinColumn(name = "HostId")
 	private StudyMembers studyMembers;
 	
+<<<<<<< HEAD
 	@NonNull
 	@Column(nullable = false)
 	private Integer memNum; //생성 시점에서 멤버수는 1명
@@ -62,6 +72,25 @@ public class StudyLists {
 	
 	@NonNull
 	@Column(length = 10, nullable = false)
+=======
+<<<<<<< main
+	private Integer memNum;
+	private Integer maxMem;
+	
+	@Column(length = 10)
+=======
+	@NonNull
+	@Column(nullable = false)
+	private Integer memNum; //생성 시점에서 멤버수는 1명
+	
+	@NonNull
+	@Column(nullable = false)
+	private Integer maxMem;
+	
+	@NonNull
+	@Column(length = 10, nullable = false)
+>>>>>>> local
+>>>>>>> origin/ebwork
 	private String category;
 	
 	@OneToMany(mappedBy = "studyLists") //StudyLists에 매핑되어 있는 변수이름으로 지정해야함

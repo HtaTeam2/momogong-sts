@@ -10,8 +10,8 @@ import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
+@Setter
 @ToString
 
 public class NoticeDTO {

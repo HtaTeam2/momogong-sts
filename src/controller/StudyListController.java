@@ -30,6 +30,7 @@ public class StudyListController {
 	@Autowired
 	public CommunityDAO comdao;
 	
+
 	
 	
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
@@ -41,5 +42,5 @@ public class StudyListController {
 		//가입 후엔 Group원 추가로 넘겨줌 - 그룹원 가입 url = /insert
 		return "/StdGroup/insert";
 	}
-	
 }
+

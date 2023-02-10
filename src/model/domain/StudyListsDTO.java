@@ -1,6 +1,5 @@
 package model.domain;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,14 +7,13 @@ import lombok.Setter;
 import lombok.ToString;
 
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Setter
 @Getter
 @ToString
 
 public class StudyListsDTO {
-
 
 	private long roomNo; //방번호
 	private String category; //카테고리

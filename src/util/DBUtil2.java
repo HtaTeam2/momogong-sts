@@ -81,6 +81,7 @@ public class DBUtil2 {
 		}
 	}
 
+
 	public static void close(Connection con, Statement pstmt, Statement pstmt1, ResultSet rs) {
 		try {
 			if (pstmt1 != null) {
@@ -99,4 +100,5 @@ public class DBUtil2 {
 			System.out.println(se.getMessage());
 		}
 	}
+
 }

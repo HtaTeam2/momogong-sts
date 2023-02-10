@@ -25,18 +25,6 @@
 				<td width="70%">${dto.password}</td>
 		</table>
 		<br> <br>
-		<!--
-			 http://ip:port/context명/update.jsp  
-		${pageContext.request.contextPath} : 코드 사용 권장
-		즉 현 jsp의 실행 위치가 어디에 있던 "http://ip:port/context명/" 을 의미하는 코드
-		
-		-->
-		<input type="button" value="update"
-			Onclick="location.href='${pageContext.request.contextPath}/update.jsp'">&nbsp;
-
-		<button
-			onclick='location.href="${pageContext.request.contextPath}/StdMembers/delete?id=${dto.id}"'>
-			탈퇴하기</button>
 
 
 

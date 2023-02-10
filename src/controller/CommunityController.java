@@ -26,4 +26,11 @@ public class CommunityController {
 	@Autowired
 	public CommunityDAO comdao;
 	
+	@PostMapping(value = "/auth/register", produces = "application/json; charset=UTF-8")
+	protected String deptInsert() {
+		
+//		memdao.insertMember();
+		
+		return "회원가입성공";
+	}
 }
