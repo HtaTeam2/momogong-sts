@@ -132,15 +132,15 @@ public class StudyGroupDAO {
 			rset = pstmt.executeQuery();
 			
 			
-			while (rset.next()) {
-				new StudyGroupMembersDTO(rset.getString(1), rset.getString(2), rset.getString(3), rset.getString(4)));
-			}
+//			while (rset.next()) {
+//				new StudyGroupMembersDTO(rset.getString(1), rset.getString(2), rset.getString(3), rset.getString(4)));
+//			}
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
-			throw sqle;
+//			throw sqle;
 		} finally {
 			DBUtil2.close(con, pstmt, rset);
 		}
-		return allList;
+		return null;
 	}
 }
