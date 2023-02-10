@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>스터디생성</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<link rel="stylesheet" href="css/main.css" />
+</head>
+
+<body class="is-preload no-sidebar">
+	<div id="page-wrapper">
+	<h3>스터디생성Test</h3>
+	<br>
+	  <!-- write Form  -->
+	 <form action="StudyListController/insert" method="post">
+
+	 <table cellpadding="1" cellspacing="1" width="60%" border="1">
+		<tr>
+			<td width=30% align=center >스터디 등급</td>
+			<td width=70%>
+				<input type="radio" id="premium" name="premium" value="60">
+  				<label for="premium">premium</label><br>
+  				<input type="radio" id="free" name="free" value="60">
+  				<label for="premium">free</label><br>    
+			</td>
+		</tr>
+		<tr>
+			<td width=30% align=center >스터디 이름</td>
+			<td width=70%>
+				<input type="text" name="roomTitle">
+			</td>
+		</tr>
+	 <table border="1" cellspacing="1" width="60%">
+		<tr>
+			<td width=30% align=center >스터디 타입</td>
+			<td width=70%>
+				  <select name="category" id="category">
+				    <option value="자격증">자격증</option>
+				    <option value="수능">수능</option>
+				    <option value="취업">취업</option>
+				    <option value="자율">자율</option>
+				  </select>
+			</td>
+		</tr>
+	 <table border="1" cellspacing="1" width="60%">
+		<tr>
+			<td width=30% align=center >상세설명</td>
+			<td width=70%>
+				<input type="text" name="roomDesc">
+			</td>
+		</tr>
+	 <table border="1" cellspacing="1" width="60%">
+		<tr>
+			<td width=30% align=center >최대 가입 인원</td>
+			<td width=70%>
+				<select name="maxMem" id="maxMem">
+				    <option value="default">4</option>
+				    <option value="membership">8</option>
+				 </select>
+			</td>
+		</tr>
+    
+	 </table>
+	 <br><br>
+	 <input type="submit" value="스터디 만들기">&nbsp;
+	 <input type="reset" value="취소">&nbsp;
+
+	 <!-- 다음은 버튼 클릭만으로  index.html파일로 이동 가능한 단순 문법입니다. -->
+	 <input type="button" value="메인으로 이동" Onclick="location.href='index.html'">
+	 </form>	 
+
+
+</body>
+</html>

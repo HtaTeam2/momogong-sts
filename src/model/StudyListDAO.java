@@ -15,125 +15,126 @@ import util.DBUtil2;
 public class StudyListDAO {
 	
 	//방만들기 - 방을 만들고 난 후 스터디 그룹원 가입으로 이동하는 방식으로 진행
-	public void createStdList(StudyListsDTO list) throws SQLException {
+		public void createStdList(StudyListsDTO list) throws SQLException {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			try {
+				con = DBUtil2.getConnection();
+				//방 최대 인원수는 4명, 최초 생성시 방 멤버수는 방장 1명
+				pstmt = con.prepareStatement("INSERT INTO studylists(roomNo, roomTitle, category, roomPw, roomDesc, maxMem, memNum, memberid) "
+												+ "VALUES(STUDYLISTS_SEQ.NEXTVAL, ?, ?, ?, ?, 4, 1, ?)");
+				pstmt.setString(1, list.getRoomTitle());
+				pstmt.setString(2, list.getCategory());
+				pstmt.setString(3, list.getRoomPw());
+				pstmt.setString(4, list.getRoomDesc());
+				pstmt.setString(5, list.getHostId());
+			} catch (SQLException s) {
+				s.printStackTrace();
+				throw new SQLException("가입에 실패했습니다. 잠시 후 재시도 해주세요.");
+			} finally {
+				DBUtil2.close(con, pstmt);
+			}
+		}
+	
+	//방삭제
+	public boolean delete(long roomNo) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		
 		try {
 			con = DBUtil2.getConnection();
-			//방 최대 인원수는 4명, 최초 생성시 방 멤버수는 방장 1명
-			pstmt = con.prepareStatement("INSERT INTO studylists(roomNo, roomTitle, category, roomPw, roomDesc, maxMem, memNum, memberid) "
-											+ "VALUES(STUDYLISTS_SEQ.NEXTVAL, ?, ?, ?, ?, 4, 0, ?)");
-			pstmt.setString(1, list.getRoomTitle());
-			pstmt.setString(2, list.getCategory());
-			pstmt.setString(3, list.getRoomPw());
-			pstmt.setString(4, list.getRoomDesc());
-			pstmt.setString(5, list.getHostId());
+			pstmt = con.prepareStatement("delete from studylists where roomNo=?");
+			pstmt.setLong(1, roomNo);
+			int result = pstmt.executeUpdate();
+			if(result != 0) {
+				return true;
+			}
+
+		} catch (SQLException s) {
+			s.printStackTrace();
+			throw s;
+		} finally {
+			DBUtil2.close(con, pstmt);
+		}
+		
+		return false;
+	}
+	
+	//방업데이트
+	public void update(StudyListsDTO list) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = DBUtil2.getConnection();
+			pstmt = con.prepareStatement("UPDATE studylists SET category=?, roomDesc=?, roomTitle=? WHERE roomNo=?");
+			pstmt.setString(1, list.getCategory());
+			pstmt.setString(2, list.getRoomDesc());
+			pstmt.setString(3, list.getRoomTitle());
+			pstmt.setLong(4, list.getRoomNo());
 			
 			pstmt.executeUpdate();
 		} catch (SQLException s) {
-			s.printStackTrace();
-			throw new SQLException("가입에 실패했습니다. 잠시 후 재시도 해주세요.");
+			throw s;
 		} finally {
 			DBUtil2.close(con, pstmt);
 		}
 	}
 	
-	//방만들기
-		public void createStdList2(StudyListsDTO list) throws SQLException {
-			Connection con = null;
-			PreparedStatement pstmt = null;	
-			try {
-				con = DBUtil2.getConnection();
-				pstmt = con.prepareStatement("INSERT INTO studylists VALUES(?,?,?,?,?,?,?,?)");
-				
-				pstmt.setLong(1, list.getRoomNo());
-				pstmt.setString(2, list.getCategory());
-				pstmt.setInt(3, list.getMaxMem());
-				pstmt.setInt(4, list.getMemNum());
-				pstmt.setString(5, list.getRoomDesc());
-				pstmt.setString(6, list.getRoomPw());
-				pstmt.setString(7, list.getRoomTitle());
-				pstmt.setString(8, list.getHostId());
-				
-				pstmt.executeUpdate();
-				
-			} catch (SQLException s) {
-				//s.printStackTrace();
-				throw new SQLException("올바른 값을 입력해 주세요."); //getMessage()로 데이터 활용
-			} finally {
-				DBUtil2.close(con, pstmt);
+	//방 전체조회
+	public ArrayList<StudyListsDTO> getStdList() throws SQLException {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		ArrayList<StudyListsDTO> allList = null;
+		
+		try {
+			conn = DBUtil2.getConnection();
+			pstmt = conn.prepareStatement("SELECT * FROM studylists");
+			rset = pstmt.executeQuery();
+			
+			allList = new ArrayList<StudyListsDTO>();
+			
+			while (rset.next()) {
+				allList.add(new StudyListsDTO(rset.getLong(1), rset.getString(2), rset.getInt(3), rset.getInt(4), rset.getString(5), rset.getString(6), rset.getString(7), rset.getString(8)));
 			}
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			throw sqle;
+		} finally {
+			DBUtil2.close(conn, pstmt, rset);
 		}
 		
-		//방삭제
-		public boolean delete(long roomNo) throws SQLException {
-			Connection con = null;
-			PreparedStatement pstmt = null;
-			
-			try {
-				con = DBUtil2.getConnection();
-				pstmt = con.prepareStatement("delete from studylists where roomNo=?");
-				pstmt.setLong(1, roomNo);
-				int result = pstmt.executeUpdate();
-				if(result != 0) {
-					return true;
-				}
-			} catch (SQLException s) {
-				s.printStackTrace();
-				throw s;
-			} finally {
-				DBUtil2.close(con, pstmt);
-			}
-			
-			return false;
-		}
+		return allList;
+	}
+	
+	//카테고리별 조회 *
+	public boolean getctStdList(String category) throws SQLException {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
 		
-		//방업데이트
-		public void update(StudyListsDTO list) throws SQLException {
-			Connection con = null;
-			PreparedStatement pstmt = null;
-			
-			try {
-				con = DBUtil2.getConnection();
-				pstmt = con.prepareStatement("UPDATE studylists SET category=?, roomDesc=?, roomTitle=? WHERE roomNo=?");
-				pstmt.setString(1, list.getCategory());
-				pstmt.setString(2, list.getRoomDesc());
-				pstmt.setString(3, list.getRoomTitle());
-				
-				pstmt.executeUpdate();
-			} catch (SQLException s) {
-				throw s;
-			} finally {
-				DBUtil2.close(con, pstmt);
-			}
-		}
+		boolean result = false;
 		
-		//방 전체조회
-		public ArrayList<StudyListsDTO> getStdList() throws SQLException {
-			Connection conn = null;
-			PreparedStatement pstmt = null;
-			ResultSet rset = null;
-			
-			ArrayList<StudyListsDTO> allList = null;
-			
-			try {
-				conn = DBUtil2.getConnection();
-				pstmt = conn.prepareStatement("SELECT * FROM studylists");
-				rset = pstmt.executeQuery();
-				
-				allList = new ArrayList<StudyListsDTO>();
-				
-				while (rset.next()) {
-//					allList.add(new StudyListsDTO(rset.getLong(1), rset.getString(2), rset.getInt(3), rset.getInt(4), rset.getString(5), rset.getString(6), rset.getString(7), rset.getString(8)));
-				}
-			} catch (SQLException sqle) {
-				sqle.printStackTrace();
-				throw sqle;
-			} finally {
-				DBUtil2.close(conn, pstmt, rset);
-			}
-			
-			return allList;
-		}
+		try {
+			conn = DBUtil2.getConnection();
+			pstmt = conn.prepareStatement("SELECT * FROM studylists WHRER category=?");
 
+			pstmt.setString(1, category);
+			
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) { 
+				return true;
+			}
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			throw sqle;
+		} finally {
+			DBUtil2.close(conn, pstmt, rset);
+		}
+		
+		return false;
+	}
 }

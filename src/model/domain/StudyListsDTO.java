@@ -26,3 +26,4 @@ public class StudyListsDTO {
 	private String roomTitle; //방 제목
 	private String hostId; //방관리자 id
 }
+

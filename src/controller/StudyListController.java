@@ -31,14 +31,15 @@ public class StudyListController {
 	public CommunityDAO comdao;
 	
 	
+	
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
 	public String insert(Model sessionData, StudyListsDTO sdto) throws SQLException {
-		System.out.println("insert()메소드 호출 확인");
+		System.out.println("insert()메소드 호출 확인~^^");
 		listdao.createStdList(sdto);
-
 		sessionData.addAttribute("sdto", sdto);
 		
-		//가입 후엔 Group원 추가로 넘겨줌 - 그룹원 가입 url = /insert 
-		return "StdGroup/insert";
+		//가입 후엔 Group원 추가로 넘겨줌 - 그룹원 가입 url = /insert
+		return "/StdGroup/insert";
 	}
+	
 }

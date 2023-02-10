@@ -22,5 +22,7 @@ public class CommunityDTO {
 	private String comTitle; // 제목
 	private int comViewCount; //조회수
 	private String subject; //말머리
-	private String memberid; //멤버 아이디
+	private String memberId; //글쓴이
+
 }
+
