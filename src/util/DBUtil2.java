@@ -61,6 +61,26 @@ public class DBUtil2 {
 			System.out.println(se.getMessage());
 		}
 	}
+	
+	public static void close(Connection con, Statement pstmt1, Statement pstmt2) {
+		try {
+			if (pstmt1 != null) {
+				pstmt1.close();
+				pstmt1 = null;
+			}
+			if (pstmt2 != null) {
+				pstmt2.close();
+				pstmt2 = null;
+			}
+			if (con != null) {
+				con.close();
+				con = null;
+			}
+		} catch (SQLException se) {
+			System.out.println(se.getMessage());
+		}
+	}
+
 
 	public static void close(Connection con, Statement pstmt, Statement pstmt1, ResultSet rs) {
 		try {
@@ -80,4 +100,5 @@ public class DBUtil2 {
 			System.out.println(se.getMessage());
 		}
 	}
+
 }

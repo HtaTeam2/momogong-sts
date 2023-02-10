@@ -1,5 +1,4 @@
 package model.domain.entity;
-
 import java.sql.Date;
 
 import javax.persistence.Column;
@@ -14,10 +13,13 @@ import org.hibernate.annotations.CreationTimestamp;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 
@@ -34,15 +36,41 @@ public class Notice {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "NOTICE_SEQ_GEN")
 	private Long noticeNo;
 	
+	@NonNull
+<<<<<<< HEAD
 	@Column(length = 50, nullable = false)
 	private String noticeTitle;
 	
+	@NonNull
 	@Column(nullable = false)
+=======
+<<<<<<< main
+	@Column(length = 50)
+	private String noticeTitle;
+	
+	@NonNull
+=======
+	@Column(length = 50, nullable = false)
+	private String noticeTitle;
+	
+	@NonNull
+	@Column(nullable = false)
+>>>>>>> local
+>>>>>>> origin/ebwork
 	private String noticeContent;
 	
 	@CreationTimestamp
 	private Date noticeRegdate;
 	
+<<<<<<< HEAD
+	@NonNull
 	@Column(nullable = false)
+=======
+<<<<<<< main
+=======
+	@NonNull
+	@Column(nullable = false)
+>>>>>>> local
+>>>>>>> origin/ebwork
 	private Integer viewCount;
 }

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -22,4 +23,5 @@ public class StudyMembersDTO {
 	private String nickname;
 	private String password;
 	private Date regdate;
+
 }
