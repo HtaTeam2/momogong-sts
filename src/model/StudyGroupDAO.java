@@ -64,7 +64,7 @@ public class StudyGroupDAO {
 			allList = new ArrayList<>();
 			
 			while (rset.next()) {
-				allList.add(new StudyGroupMembersDTO(roomNum, rset.getString(2), rset.getString(3), rset.getString(4)));
+				//allList.add(new StudyGroupMembersDTO(roomNum, rset.getString(2), rset.getString(3), rset.getString(4)));
 			}
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
@@ -135,7 +135,7 @@ public class StudyGroupDAO {
 			
 			allList = new ArrayList<MyStudyDTO>();
 			while (rset.next()) {
-				allList.add(new MyStudyDTO(rset.getLong(1), rset.getString(2), rset.getString(3), rset.getString(4), rset.getString(5)));
+				//allList.add(new MyStudyDTO(rset.getLong(1), rset.getString(2), rset.getString(3), rset.getString(4), rset.getString(5)));
 			}
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();

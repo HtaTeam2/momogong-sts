@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -15,6 +16,7 @@ import lombok.ToString;
 @ToString
 
 public class CommunityDTO { 
+
 	private int comNo; //게시번호 - 시퀀스
 	private String comTitle; // 제목
 	private String membernick; //멤버 아이디
@@ -25,3 +27,4 @@ public class CommunityDTO {
 	private int comViewCount; //조회수
 
 }
+
