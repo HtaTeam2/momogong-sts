@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="list.css"/>
+</head>
+	<script language=javascript>
+	
+	function checkValid() {
+	    var f = window.document.writeForm;
+			
+		if ( f.author.value == "") {
+		    alert( "작성자를 입력해 주세요." );
+			return false;
+	    }
+		if ( f.email.value == "" ) {
+			alert( "전자메일을 입력해 주세요." );
+			return false;
+		}
+		if ( f.title.value == "" ) {
+			alert( "제목을 입력해 주세요." );
+			return false;
+		}
+		if ( f.password.value == "" ) {
+	        alert( "비밀번호를 입력해 주세요" );
+	        return false;
+	    }
+		if ( f.content.value == "" ) {
+	        alert( "글 내용을 입력해 주세요." );
+	        return false;
+	    }
+	    return true;
+	}
+	</script>
+<body>
+	<form name="writeForm" action="Community/write" method="post" onsubmit="return checkValid()">
+		<table align="center" cellpadding="5" cellspacing="2" width="600" border="1">
+		
+	    <tr>
+	        <td width="1220" height="20" colspan="2" bgcolor="#336699">
+	            <p align="center"><font color="white" size="3"><b>커뮤니티 게시글 작성</b></font></p>
+	        </td>
+	    </tr>
+	    <tr>
+	        <td width="150" height="20" >
+	            <p align="right"><b><span style="font-size:9pt;">작성자</span></b></p>
+	        </td>
+	        <td width="450" height="20"><b><span style="font-size:9pt;">
+			<input type=text name="memberid" value="고정값"size="30" readonly></span></b></td>
+	    </tr>
+	    <tr>
+	        <td width="150" height="20">
+	            <p align="right"><b><span style="font-size:9pt;">말머리</span></b></p>
+	        </td>
+	        <td width="450" height="20"><b><span style="font-size:9pt;">
+			<select name="subject">
+			    <option value="none">-----선 택-----</option>
+			    <option value="testReview">시험 후기</option>
+			    <option value="chat">잡담</option>
+			    <option value="studying">스터디원 모집</option>
+			    <option value="infoShare">정보 공유</option>
+			</select>
+		</span></b></td>
+	    </tr>
+	    <tr>
+	        <td width="150" height="20">
+	            <p align="right"><b><span style="font-size:9pt;">제 목</span></b></p>
+	        </td>
+	        <td width="450" height="20" ><b><span style="font-size:9pt;">
+			<input type=text name="title" size="50"></span></b></td>
+	    </tr>
+	    <tr>
+	        <td width="150" height="20">
+	            <p align="right"><b><span style="font-size:9pt;">내 용</span></b></p>
+	        </td>
+	        <td width="450" height="20">
+	        	<b><span style="font-size:9pt;">
+					<textarea name="content" cols="50" rows="10"></textarea>
+				</span></b>
+			</td>
+	    </tr>
+	    <tr>
+	        <td width="150" height="20">
+	            <p align="right"><b><span style="font-size:9pt;">비밀번호</span></b></p>
+	        </td>
+	        <td width="450" height="20">
+	        	<b><span style="font-size:9pt;">
+	        		<input type=password name="password" size="12">(글 수정, 삭제시 필요합니다.)
+	        	   </span></b>
+	        </td>
+	    </tr>
+	    <tr>
+	        <td width="450" height="20" colspan="2" align="center">
+	        <b><span style="font-size:9pt;">
+	        <input type=submit value=글쓰기> 
+	        <input type=reset value=다시쓰기></span></b></td>
+	    </tr>
+	</table>
+	</form>
+</body>
+</html>
