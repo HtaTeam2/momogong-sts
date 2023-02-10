@@ -22,4 +22,16 @@ public class StudyMembersDTO {
 	private String nickname;
 	private String password;
 	private Date regdate;
+	
+	
+	public StudyMembersDTO(String id, String email, String grade, String nickname, Date regdate) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.grade = grade;
+		this.nickname = nickname;
+		this.regdate = regdate;
+	}
+	
+	
 }
