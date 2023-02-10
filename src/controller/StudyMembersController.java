@@ -48,7 +48,7 @@ public class StudyMembersController {
 		memdao.insertMember(dto);
 		sessionData.addAttribute("dto", dto);
 
-		return "forward:auth/join.jsp";
+		return "forward:/auth/join.jsp";
 	}
 	
 	//탈퇴
@@ -76,7 +76,7 @@ public class StudyMembersController {
 
 		memdao.update(dto);
 
-		return "forward:auth/updateSuccess.jsp";
+		return "forward:/auth/updateSuccess.jsp";
 	}
 	
 	//조회
@@ -102,13 +102,13 @@ public class StudyMembersController {
 
 		req.setAttribute("errorMsg", e.getMessage());
 
-		return "forward:auth/error.jsp";
+		return "forward:/auth/error.jsp";
 	}
 
 	@ExceptionHandler
 	public String totalEx2(NullPointerException e) { 
 		System.out.println("예외 처리 전담");
 		e.printStackTrace();
-		return "forward:auth/error.jsp";
+		return "forward:/auth/error.jsp";
 	}
 }

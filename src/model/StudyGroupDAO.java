@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
 
+import model.domain.MyStudyDTO;
 import model.domain.StudyGroupMembersDTO;
 import util.DBUtil2;
 
@@ -120,27 +121,28 @@ public class StudyGroupDAO {
 	}
 	
 	//mystudy
-	public Object getMyStudy(String id) {
+	public ArrayList<MyStudyDTO> getMyStudy(String id) throws SQLException{
 		System.out.println("DAO getMyStudy " + id);
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
+		ArrayList<MyStudyDTO> allList = null;
 		try {
 			con = DBUtil2.getConnection();
 			pstmt = con.prepareStatement("SELECT g.studyListNo, l.roomTitle, m.id, m.nickname, m.goal FROM studylists l, studygroup g, studymembers m WHERE g.studymembers_id = m.id AND g.studyListNo = l.roomNo AND m.id = ?;");
 			pstmt.setString(1, id);
 			rset = pstmt.executeQuery();
 			
-			
-//			while (rset.next()) {
-//				new StudyGroupMembersDTO(rset.getString(1), rset.getString(2), rset.getString(3), rset.getString(4)));
-//			}
+			allList = new ArrayList<MyStudyDTO>();
+			while (rset.next()) {
+				allList.add(new MyStudyDTO(rset.getLong(1), rset.getString(2), rset.getString(3), rset.getString(4), rset.getString(5)));
+			}
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
-//			throw sqle;
+			throw sqle;
 		} finally {
 			DBUtil2.close(con, pstmt, rset);
 		}
-		return null;
+		return allList;
 	}
 }

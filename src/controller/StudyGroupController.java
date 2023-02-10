@@ -20,7 +20,7 @@ import model.domain.StudyGroupMembersDTO;
 
 @Controller
 @RequestMapping("StdGroup")
-@SessionAttributes({"allGroup", "id"})
+@SessionAttributes({"roomNo", "id"})
 public class StudyGroupController {
 	
 	@Autowired
@@ -72,11 +72,11 @@ public class StudyGroupController {
 	
 	//내 스터디 클릭시 로그인한 회원의 방가입정보 나옴
 	@GetMapping(value = "/mystudy", produces = "application/json; charset=UTF-8")
-	public ModelAndView getMyStudy(Model sessionData, @ModelAttribute("id") String id){
+	public ModelAndView getMyStudy(Model sessionData, @ModelAttribute("id") String id) throws SQLException{
 		System.out.println("getMyStudy " + id);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("allData", groupdao.getMyStudy(id));
-		mv.setViewName("group/MyStudy"); //WEB-INF/group/MyStudy.jsp
+		mv.setViewName("group/myStudy"); //WEB-INF/group/myStudy.jsp
 		return mv;
 		
 	}

@@ -52,7 +52,6 @@ public class StudyMembersDAO {
 		PreparedStatement pstmt = null;
 		try {
 			con = DBUtil2.getConnection();
-			
 			pstmt = con.prepareStatement("INSERT INTO studentmembers VALUES(?, ?, ?, ?, ?, ?, ?)");
 			pstmt.setString(1, dto.getId()); //중복 불가능
 			pstmt.setString(2, dto.getEmail());
