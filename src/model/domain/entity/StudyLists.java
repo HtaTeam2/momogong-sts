@@ -21,9 +21,9 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-@RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 
@@ -40,7 +40,7 @@ public class StudyLists {
 	private Long roomNo;
 	
 	@NonNull
-	@Column(length = 20)
+	@Column(length = 20, nullable = false)
 	private String roomTitle;
 	
 	@Column(length = 6)
@@ -52,14 +52,16 @@ public class StudyLists {
 	@JoinColumn(name = "memberid")
 	private StudyMembers studyMembers;
 	
-	
-	private Integer memNum;
+	@NonNull
+	@Column(nullable = false)
+	private Integer memNum; //생성 시점에서 멤버수는 1명
 	
 	@NonNull
+	@Column(nullable = false)
 	private Integer maxMem;
 	
 	@NonNull
-	@Column(length = 10)
+	@Column(length = 10, nullable = false)
 	private String category;
 	
 	@OneToMany(mappedBy = "studyLists") //StudyLists에 매핑되어 있는 변수이름으로 지정해야함

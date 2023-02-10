@@ -23,9 +23,22 @@ li {
   background: rgba(0, 0, 0, 0.1);
 }
 
-.login {
-  width: 30%;
-  height: 650px;
+h2 {
+  color: tomato;
+  font-size: 2em;
+}
+
+p {
+    margin-top: 20px;
+    margin-left: 75px;
+    font-size: 10pt;
+    display: flex;
+    align-items: center;
+}
+
+.join {
+  width: 35%;
+  height: 750px;
   background: white;
   border-radius: 20px;
   display: flex;
@@ -34,29 +47,19 @@ li {
   flex-direction: column;
 }
 
-h2 {
-  color: tomato;
-  font-size: 2em;
-}
-
-.text{
-    margin-top: 20px;
-    font-size: 10pt;
-    display: flex;
-}
-.login_sns {
+.join_sns {
   padding: 20px;
   margin-bottom: 10px;
   display: flex;
 }
 
-.login_sns li {
+.join_sns li {
   padding: 0px 15px;
   margin: 0px 25px;
 }
 
 
-.login_sns li:nth-child(1) {
+.join_sns li:nth-child(1) {
   width: 50px;
   height: 50px;
   display: flex;
@@ -68,7 +71,7 @@ h2 {
   font-size: 20px;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4), -3px -3px 5px rgba(0, 0, 0, 0.1);
 }
-.login_sns li:nth-child(2){
+.join_sns li:nth-child(2){
     width: 50px;
     height: 50px;
     display: flex;
@@ -86,13 +89,13 @@ h2 {
 .fa-solid :nth-child(2){
     color: rgb(34, 21, 4);
 }
-.login_id {
+.join_a {
   margin-top: 20px;
   width: 80%;
 }
 
-.login_id input {
-  width: 100%;
+.join_a input {
+  width: 150%;
   height: 50px;
   border-radius: 30px;
   margin-top: 10px;
@@ -101,37 +104,21 @@ h2 {
   outline: none;
 }
 
-.login_pw {
+.join_grade {
   margin-top: 20px;
   width: 80%;
 }
-
-.login_pw input {
-  width: 100%;
-  height: 50px;
-  border-radius: 30px;
-  margin-top: 10px;
-  padding: 0px 20px;
-  border: 1px solid lightgray;
-  outline: none;
+.join_grade input {
+	margin-right: 10px;
 }
 
-.login_etc {
-  padding: 10px;
-  width: 80%;
-  font-size: 14px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: bold;
-}
 
 .submit {
   margin-top: 20px;
   width: 80%;
 }
 .submit input {
-  width: 100%;
+  width: 150%;
   height: 50px;
   border: 0;
   outline: none;

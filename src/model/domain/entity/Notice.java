@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.SequenceGenerators;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -18,14 +17,12 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Getter
 @Setter
-@ToString
 
 @Entity
 @SequenceGenerator(
@@ -41,14 +38,17 @@ public class Notice {
 	private Long noticeNo;
 	
 	@NonNull
-	@Column(length = 50)
+	@Column(length = 50, nullable = false)
 	private String noticeTitle;
 	
 	@NonNull
+	@Column(nullable = false)
 	private String noticeContent;
 	
 	@CreationTimestamp
 	private Date noticeRegdate;
 	
+	@NonNull
+	@Column(nullable = false)
 	private Integer viewCount;
 }

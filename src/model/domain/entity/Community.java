@@ -19,7 +19,6 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 
 @NoArgsConstructor
@@ -27,7 +26,6 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @Getter
 @Setter
-@ToString
 
 @Entity
 @SequenceGenerator(
@@ -40,23 +38,31 @@ public class Community {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="COMMUNITY_SEQ_GEN")
 	private Long comNo;
-	//글쓴이 회원테이블 참조!
+	
 	@NonNull
-	@Column(length = 50)
+	@Column(length = 50, nullable = false)
+	private String comTitle;
+
+	@NonNull
+	@Column(nullable = false)
 	private String subject;
 	
 	@NonNull
+	@Column(nullable = false)
 	private String comContent;
 	
-	@Column(length = 6)
+	@NonNull
+	@Column(length = 6, nullable = false)
 	private String comPw;
 	
 	@CreationTimestamp
 	private Date comRegdate;
 	
+	@NonNull
+	@Column(nullable = false)
 	private Integer comViewCount;
 	
-	//참조
+	//글쓴이 회원테이블 참조!
 	@ManyToOne
 	@JoinColumn(name = "memberid")
 	private StudyMembers studymembers;

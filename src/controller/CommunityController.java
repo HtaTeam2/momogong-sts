@@ -12,8 +12,8 @@ import model.StudyListDAO;
 import model.StudyMembersDAO;
 
 @Controller
-@RequestMapping("camstudy")
-public class StudyController {
+@RequestMapping("Community")
+public class CommunityController {
 	
 	@Autowired
 	public StudyMembersDAO memdao;
@@ -26,11 +26,4 @@ public class StudyController {
 	@Autowired
 	public CommunityDAO comdao;
 	
-	@PostMapping(value = "/auth/register", produces = "application/json; charset=UTF-8")
-	protected String deptInsert() {
-		
-		memdao.insertMember();
-		
-		return "회원가입성공";
-	}
 }

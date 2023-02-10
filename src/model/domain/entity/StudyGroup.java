@@ -25,14 +25,14 @@ import lombok.Setter;
 
 @Entity
 @SequenceGenerator(
-        name="STUDYGROUP_SEQ_GEN",
-        sequenceName="STUDYGROUP_SEQ",
-        initialValue=1,
-        allocationSize=1
+        name="STUDYGROUP_SEQ_GEN", //시퀀스 제너레이터 이름
+        sequenceName="STUDYGROUP_SEQ", //시퀀스 이름
+        initialValue=1, //시작값
+        allocationSize=1 //메모리를 통해 할당할 범위 사이즈
         )
 public class StudyGroup { 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STUDYGROUP_SEQ_GEN")
 	private Long memNo;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -40,7 +40,7 @@ public class StudyGroup {
 	private StudyLists studyLists;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "studymembers_no")
+	@JoinColumn(name = "studymembers_id")
 	private StudyMembers studyMembers;
 	
 	
