@@ -15,10 +15,13 @@ import org.hibernate.annotations.CreationTimestamp;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 
@@ -26,15 +29,19 @@ import lombok.Setter;
 @Entity
 public class StudyMembers {
 	@Id
+	@NonNull
 	@Column(length = 20)
 	private String id;
 	
+	@NonNull
 	@Column(length = 16, nullable = false)
 	private String password;
 	
+	@NonNull
 	@Column(length = 30, unique = true)
 	private String nickname;
 	
+	@NonNull
 	@Column(length = 100, nullable = false)
 	private String email;
 	
@@ -43,6 +50,7 @@ public class StudyMembers {
 	
 	private String goal;
 	
+	@NonNull
 	@Column(length = 10, nullable = false)
 	private String grade; //default : FREE => insert문에서 주는걸로!
 	
