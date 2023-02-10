@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,12 +25,18 @@ import lombok.Setter;
 @Setter
 
 @Entity
+@SequenceGenerator(
+        name="STUDYLISTS_SEQ_GEN",
+        sequenceName="STUDYLISTS_SEQ",
+        initialValue=1,
+        allocationSize=1
+        )
 public class StudyLists {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long roomno;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STUDYLISTS_SEQ_GEN")
+	private Long roomNo;
 	
-	@Column(length = 20)
+	@Column(length = 20, nullable = false)
 	private String roomTitle;
 	
 	@Column(length = 6)
@@ -42,11 +49,13 @@ public class StudyLists {
 	private StudyMembers studyMembers;
 	
 	private Integer memNum;
+	
+	@Column(nullable = false)
 	private Integer maxMem;
 	
-	@Column(length = 10)
+	@Column(length = 10, nullable = false)
 	private String category;
 	
 	@OneToMany(mappedBy = "studyLists") //StudyLists에 매핑되어 있는 변수이름으로 지정해야함
-	private List<StudyGroup> studygroup = new ArrayList<StudyGroup>();
+	private List<StudyGroup> studyGroup = new ArrayList<StudyGroup>();
 }
