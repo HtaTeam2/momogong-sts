@@ -1,4 +1,5 @@
 package model.domain.entity;
+
 import java.sql.Date;
 
 import javax.persistence.Column;
@@ -37,40 +38,17 @@ public class Notice {
 	private Long noticeNo;
 	
 	@NonNull
-<<<<<<< HEAD
 	@Column(length = 50, nullable = false)
 	private String noticeTitle;
 	
 	@NonNull
 	@Column(nullable = false)
-=======
-<<<<<<< main
-	@Column(length = 50)
-	private String noticeTitle;
-	
-	@NonNull
-=======
-	@Column(length = 50, nullable = false)
-	private String noticeTitle;
-	
-	@NonNull
-	@Column(nullable = false)
->>>>>>> local
->>>>>>> origin/ebwork
 	private String noticeContent;
 	
 	@CreationTimestamp
 	private Date noticeRegdate;
 	
-<<<<<<< HEAD
 	@NonNull
 	@Column(nullable = false)
-=======
-<<<<<<< main
-=======
-	@NonNull
-	@Column(nullable = false)
->>>>>>> local
->>>>>>> origin/ebwork
 	private Integer viewCount;
 }

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-<<<<<<< HEAD
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
@@ -16,32 +16,14 @@ import lombok.ToString;
 @ToString
 
 public class CommunityDTO { 
+	
 	private long comNo; //게시번호 - 시퀀스
-	private String comContent; // 게시글 내용
+	private String comTitle; // 제목
+	private String membernick; //멤버 아이디
+	private String subject; //말머리
 	private String comPw; //비밀번호
 	private Date comRegdate; //가입날짜
-	private String comTitle; // 제목
-=======
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@ToString
-
-public class CommunityDTO { 
-	private long comNo;		//게시번호 - 시퀀스 
-	private String comContent; // 내용
-	private String comPw;		//글 비밀번호
-	private Date comRegedate;	//가입날짜
-	private String comTitle; //제목
->>>>>>> origin/ebwork
+	private String comContent; // 게시글 내용
 	private int comViewCount; //조회수
-	private String subject; //말머리
-	private String memberId; //글쓴이
-
-<<<<<<< HEAD
 }
 
-=======
-}
->>>>>>> origin/ebwork

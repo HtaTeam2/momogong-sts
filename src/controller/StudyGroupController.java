@@ -1,6 +1,5 @@
 package controller;
 
-<<<<<<< HEAD
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -21,7 +20,7 @@ import model.domain.StudyGroupMembersDTO;
 
 @Controller
 @RequestMapping("StdGroup")
-@SessionAttributes({"roomNo", "id"})
+@SessionAttributes({"allGroup", "id"})
 public class StudyGroupController {
 	
 	@Autowired
@@ -77,7 +76,7 @@ public class StudyGroupController {
 		System.out.println("getMyStudy " + id);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("allData", groupdao.getMyStudy(id));
-		mv.setViewName("group/myStudy"); //WEB-INF/group/myStudy.jsp
+		mv.setViewName("group/MyStudy"); //WEB-INF/group/MyStudy.jsp
 		return mv;
 		
 	}
@@ -97,32 +96,3 @@ public class StudyGroupController {
 	}
 	
 }
-=======
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import model.CommunityDAO;
-import model.NoticeDAO;
-import model.StudyGroupDAO;
-import model.StudyListDAO;
-import model.StudyMembersDAO;
-
-@Controller
-@RequestMapping("camstudy")
-public class StudyGroupController {
-	
-	@Autowired
-	public StudyMembersDAO memdao;
-	@Autowired
-	public StudyListDAO listdao;
-	@Autowired
-	public StudyGroupDAO groupdao;
-	@Autowired
-	public NoticeDAO notdao;
-	@Autowired
-	public CommunityDAO comdao;
-	
-}
->>>>>>> origin/ebwork

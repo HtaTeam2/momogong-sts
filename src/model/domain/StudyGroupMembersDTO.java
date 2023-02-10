@@ -16,8 +16,8 @@ import lombok.ToString;
 
 public class StudyGroupMembersDTO {
 	
-	private long studyListNo; //방번호fk
-	private String studyMemberId;	//그룹원 아이디
+	private int studyListNo; //방번호fk
+	private String id;	//그룹원 아이디
 	private String nickname; //닉네임
 	private String goal; //목표
 	

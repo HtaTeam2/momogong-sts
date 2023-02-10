@@ -15,9 +15,11 @@ import lombok.ToString;
 @ToString
 
 public class NoticeDTO {
+	
 	private long noticeNo;
 	private String noticeContent;
 	private Date noticeRegdate;
 	private String noticeTitle;
 	private int viewCount;
+	
 }

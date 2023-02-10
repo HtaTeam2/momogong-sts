@@ -18,8 +18,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Setter
 @Getter
 
@@ -36,12 +36,11 @@ public class StudyGroup {
 	private Long memNo;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "studyListNo")
+	@JoinColumn(name = "studylists_no")
 	private StudyLists studyLists;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-
-	@JoinColumn(name = "studyMemberId")
+	@JoinColumn(name = "studymembers_id")
 	private StudyMembers studyMembers;
 	
 	

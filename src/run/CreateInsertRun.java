@@ -3,7 +3,6 @@ package run;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-
 import model.domain.entity.Community;
 import model.domain.entity.Notice;
 import model.domain.entity.StudyGroup;

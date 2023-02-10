@@ -38,30 +38,6 @@ public class Community {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="COMMUNITY_SEQ_GEN")
 	private Long comNo;
-<<<<<<< HEAD
-	
-=======
-<<<<<<< main
-	//글쓴이 회원테이블 참조!
->>>>>>> origin/ebwork
-	@NonNull
-	@Column(length = 50, nullable = false)
-	private String comTitle;
-
-	@NonNull
-	@Column(nullable = false)
-	private String subject;
-	
-	@NonNull
-	@Column(nullable = false)
-	private String comContent;
-	
-<<<<<<< HEAD
-	@NonNull
-	@Column(length = 6, nullable = false)
-=======
-	@Column(length = 6)
-=======
 	
 	@NonNull
 	@Column(length = 50, nullable = false)
@@ -77,23 +53,13 @@ public class Community {
 	
 	@NonNull
 	@Column(length = 6, nullable = false)
->>>>>>> local
->>>>>>> origin/ebwork
 	private String comPw;
 	
 	@CreationTimestamp
 	private Date comRegdate;
 	
-<<<<<<< HEAD
 	@NonNull
 	@Column(nullable = false)
-=======
-<<<<<<< main
-=======
-	@NonNull
-	@Column(nullable = false)
->>>>>>> local
->>>>>>> origin/ebwork
 	private Integer comViewCount;
 	
 	//글쓴이 회원테이블 참조!

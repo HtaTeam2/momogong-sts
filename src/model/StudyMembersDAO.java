@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
 
@@ -14,52 +15,21 @@ import util.DBUtil2;
 
 @Repository
 public class StudyMembersDAO {
-	
-	//id,pw 로그인 인증 메소드 - 시현님
-		public boolean getstudymembers(String id, String pw) throws SQLException {
-			Connection conn = null;
-			PreparedStatement pstmt = null; 
-			ResultSet rset = null;
-			
-			boolean result = false;
-			
-			try {
-				conn = DBUtil2.getConnection();
-				pstmt = conn.prepareStatement("SELECT name from studymembers where id=? and password=?");
-				
-				pstmt.setString(1, id);
-				pstmt.setString(2, pw);
-				
-				rset = pstmt.executeQuery();
-				
-				if(rset.next()) {
-					return true;
-				}
-				
-			} catch (SQLException sqle) {
-				sqle.printStackTrace();
-				throw sqle;
-				
-			} finally {
-				DBUtil2.close(conn, pstmt, rset);
-			}
-			return false;
-		}
 		
 	//회원가입 
-	public int  insertMember(StudyMembersDTO dto) throws SQLException {
+	public int insertMember(StudyMembersDTO dto) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
 			con = DBUtil2.getConnection();
-			pstmt = con.prepareStatement("INSERT INTO studentmembers VALUES(?, ?, ?, ?, ?, ?, ?)");
+			pstmt = con.prepareStatement("INSERT INTO studentmembers VALUES (?, ?, ?, ?, ?, ?, now())");
 			pstmt.setString(1, dto.getId()); //중복 불가능
 			pstmt.setString(2, dto.getEmail());
 			pstmt.setString(3, dto.getGoal()); //null 가능
 			pstmt.setString(4, dto.getGrade());
 			pstmt.setString(5, dto.getNickname());//null 가능, 중복 불가능
 			pstmt.setString(6, dto.getPassword());
-			pstmt.setDate(7, dto.getRegdate()); //null 가능
+			
 			
 			pstmt.executeUpdate();
 			
@@ -73,31 +43,10 @@ public class StudyMembersDAO {
 		return -1;
 	}
 	
-	//삭제
-	public boolean delete(String id) throws SQLException {
-		Connection con = null;
-		PreparedStatement pstmt = null;
 
-		try {
-			con = DBUtil2.getConnection();
-			pstmt = con.prepareStatement("delete from studymembers where id = ?");
-			pstmt.setString(1, id);
-			
-			int result = pstmt.executeUpdate();
-			if(result != 0) {
-				return true;
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally{
-		    DBUtil2.close(con, pstmt);
-		}	
-		return false;
-	}
 
-	//수정 - 닉네임/이메일/목표/비밀번호/(등급/프로필사진)
-	public boolean update(StudyMembersDTO dto) throws SQLException {
+	//멤버 본인 프로필 수정 - 닉네임/이메일/목표/비밀번호/(등급/프로필사진)
+	public boolean memUpdate(StudyMembersDTO dto) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -126,7 +75,7 @@ public class StudyMembersDAO {
 		return false;
 	}
 	
-	//조회
+	//본인조회
 	public StudyMembersDTO getMember(String id) throws SQLException {
 		Connection conn = null;
 		PreparedStatement pstmt = null; //db 자체적인 실행 속도 향상 (Satatement에 비해서)
@@ -141,7 +90,7 @@ public class StudyMembersDAO {
 			
 			
 			if ( rset.next() ) {
-				return new StudyMembersDTO (rset.getString(1), rset.getString(2), rset.getString(3), rset.getString(4), rset.getString(5), rset.getString(6),rset.getDate(7));
+				return new StudyMembersDTO (rset.getString(1), rset.getString(2), rset.getString(3), rset.getString(4), rset.getDate(5), rset.getString(6),rset.getString(7));
 			}
 			
 		} catch (SQLException sqle) {
@@ -154,4 +103,111 @@ public class StudyMembersDAO {
 		return null;
 	}
 	
+	
+	//로그인 grade로 뽑아서 관리자,일반회원 구분?
+		//sql = "select grade from studymembers where id=? and password=?";
+		public boolean getMemberInfo(String id, String pw) throws SQLException {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			
+			try {
+				conn = DBUtil2.getConnection();
+				pstmt = conn.prepareStatement("select grade from studymembers where id=? and password=?");
+				pstmt.setString(1, id);
+				pstmt.setString(2, pw);
+				
+				rset = pstmt.executeQuery();
+				
+				if (rset.next()) {
+					return true;
+				}
+			} catch (SQLException sqle) {
+				sqle.printStackTrace();
+				throw sqle;
+			} finally {
+				DBUtil2.close(conn, pstmt, rset);
+			}
+			
+			return false;
+		}
+		
+		/**
+		 * 가입한 모든 회원 검색 (admin 제외/pw,goal 제외)
+		 * sql = "SELECT id, nickname, email, regdate, grade  FROM studymembers where grade in('free','premium')";
+		 */
+		public ArrayList<StudyMembersDTO> getMembers() throws SQLException {
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			
+			ArrayList<StudyMembersDTO> allList = null;
+			
+			try {
+				conn = DBUtil2.getConnection();
+				pstmt = conn.prepareStatement("SELECT id, nickname, email, regdate, grade  FROM studymembers where grade in('free','premium')");
+				rset = pstmt.executeQuery();
+				
+				allList = new ArrayList<StudyMembersDTO>();
+				
+				while (rset.next()) {
+					//allList.add(new StudyMembersDTO(rset.getString(1), rset.getString(2), rset.getString(3), rset.getDate(4), rset.getString(5)));
+				}
+			} catch (SQLException sqle) {
+				sqle.printStackTrace();
+				throw sqle;
+			} finally {
+				DBUtil2.close(conn, pstmt, rset);
+			}
+			
+			return allList;
+		}
+		
+		/**
+		 * 회원 삭제
+		 */
+		public boolean delete(String id) throws SQLException {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			
+			try {
+				con = DBUtil2.getConnection();
+				pstmt = con.prepareStatement("delete from studymembers where id=?");
+				pstmt.setString(1, id);
+				int result = pstmt.executeUpdate();
+				if(result != 0) {
+					return true;
+				}
+			} catch (SQLException s) {
+				s.printStackTrace();
+				throw s;
+			} finally {
+				DBUtil2.close(con, pstmt);
+			}
+			
+			return false;
+		}
+		
+		/**
+		 * 관리자 비밀번호,이메일 수정
+		 */
+		
+		public void update(StudyMembersDTO dto) throws SQLException {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			
+			try {
+				con = DBUtil2.getConnection();
+				pstmt = con.prepareStatement("UPDATE studymembers SET password = ?, email = ? WHERE id = admin");
+				pstmt.setString(1, dto.getPassword());
+				pstmt.setString(2, dto.getEmail());
+				//pstmt.setString(3, dto.getId());
+				pstmt.executeUpdate(); //insert/update/delete
+			} catch (SQLException s) {
+				s.printStackTrace();
+				throw s;
+			} finally {
+				DBUtil2.close(con, pstmt);
+			}
+		}
 }
