@@ -19,12 +19,13 @@ public class CommunityDAO {
 		PreparedStatement pstmt = null;
 		try {
 			con = DBUtil2.getConnection();
-			pstmt = con.prepareStatement("insert into community values(COMMUNITY_SEQ.nextval, ?, ?, sysdate, ?, 0, ?, ?)");
-			pstmt.setString(1, dto.getComContent());
-			pstmt.setString(2, dto.getComPw());
-			pstmt.setString(3, dto.getComTitle());
-			pstmt.setString(4, dto.getSubject());
-			pstmt.setString(5, dto.getMemberId());
+			pstmt = con.prepareStatement("insert into community values(?, ?, ?, ?, sysdate, ?, 0)");
+			pstmt.setString(1, dto.getComTitle());
+			pstmt.setString(2, dto.getMembernick());
+			pstmt.setString(3, dto.getSubject());
+			pstmt.setString(4, dto.getComPw());
+			pstmt.setString(5, dto.getComContent());
+			
 			pstmt.executeUpdate();
 		}catch(SQLException s) {
 			s.printStackTrace();
@@ -35,7 +36,7 @@ public class CommunityDAO {
 		
 	}
 
-	public CommunityDTO view(long comNo, boolean flag) throws SQLException{
+	public CommunityDTO view(int comNo, boolean flag) throws SQLException{
 		Connection con = null;	
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -45,7 +46,7 @@ public class CommunityDAO {
 			
 			if(flag) {
 				pstmt = con.prepareStatement("update community set comViewCount = comViewCount + 1 where comNo = ?");
-				pstmt.setLong(1, comNo);
+				pstmt.setInt(1, comNo);
 				if(pstmt.executeUpdate() == 0) {
 					pstmt.close();
 					pstmt = null;
@@ -53,11 +54,11 @@ public class CommunityDAO {
 				}
 			}
 			pstmt = con.prepareStatement("select * from community where comNo = ?");
-			pstmt.setLong(1, comNo);
+			pstmt.setInt(1, comNo);
 			rset = pstmt.executeQuery();
 			if(rset.next()) {
-				dto = new CommunityDTO(comNo, rset.getString("comTitle"), rset.getString("subject"), rset.getString("comContent"), rset.getString("comPw"), 
-						rset.getDate("comRegdate"), rset.getInt("comViewCount"), rset.getString("memberId"));
+				dto = new CommunityDTO(comNo, rset.getString("comTitle"), rset.getString("membernick"), rset.getString("subject"), rset.getString("comPw"), 
+						rset.getDate("comRegdate"), rset.getString("comContent"), rset.getInt("comViewCount"));
 			}
 		}catch(SQLException s) {
 			s.printStackTrace();
@@ -82,8 +83,8 @@ public class CommunityDAO {
 			list = new ArrayList<CommunityDTO>();
 			
 			while(rset.next()) {
-				list.add(new CommunityDTO(rset.getLong("comNo"), rset.getString("comTitle"), rset.getString("subject"), rset.getString("comContent"), rset.getString("comPw"), 
-						rset.getDate("comRegdate"), rset.getInt("comViewCount"), rset.getString("memberId")));
+				list.add(new CommunityDTO(rset.getInt("comNo"), rset.getString("comTitle"), rset.getString("membernick"), rset.getString("subject"), rset.getString("comPw"), 
+						rset.getDate("comRegdate"), rset.getString("comContent"), rset.getInt("comViewCount")));
 			}
 		}catch(SQLException s) {
 			s.printStackTrace();
@@ -103,7 +104,7 @@ public class CommunityDAO {
 			pstmt.setString(1, dto.getComTitle());
 			pstmt.setString(2, dto.getSubject());
 			pstmt.setString(3, dto.getComContent());
-			pstmt.setLong(4, dto.getComNo());
+			pstmt.setInt(4, dto.getComNo());
 			pstmt.setString(5, dto.getComPw());
 			
 			int result = pstmt.executeUpdate();
@@ -120,13 +121,13 @@ public class CommunityDAO {
 		
 	}
 
-	public boolean delete(long comNo, String comPw) {
+	public boolean delete(int comNo, String comPw) {
 		Connection con = null;	
 		PreparedStatement pstmt = null;
 		try{
 			con = DBUtil2.getConnection();
 			pstmt = con.prepareStatement("delete from community where comNo = ? and comPw = ?");
-			pstmt.setLong(1, comNo);
+			pstmt.setInt(1, comNo);
 			pstmt.setString(2, comPw);
 			
 			int result = pstmt.executeUpdate();

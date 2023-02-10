@@ -42,7 +42,7 @@ public class CommunityController {
 
 	//읽기
 	@RequestMapping(value = "/view", method = RequestMethod.GET)
-	public String view(Model model, @RequestParam("comNo") long comNo) throws SQLException {
+	public String view(Model model, @RequestParam("comNo") int comNo) throws SQLException {
 		System.out.println("view()------------"+comNo);
 
 		CommunityDTO dto = comdao.view(comNo, true);
@@ -70,7 +70,7 @@ public class CommunityController {
 
 	//수정화면(read.jsp에서 수정버튼 클릭시 실행되는 로직)
 	@RequestMapping(value = "/updateform", method = RequestMethod.POST)
-	public String updateForm(Model model, @RequestParam("comNo") long comNo) throws SQLException{
+	public String updateForm(Model model, @RequestParam("comNo") int comNo) throws SQLException{
 		System.out.println("updateForm()---------"+comNo);
 
 		if(comNo == 0) {
@@ -105,7 +105,7 @@ public class CommunityController {
 	
 	//삭제
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String delete(@RequestParam("comNo") long comNo, @RequestParam("comPw") String comPw) {
+	public String delete(@RequestParam("comNo") int comNo, @RequestParam("comPw") String comPw) {
 		System.out.println("delete()---------");
 		if(comNo == 0 || comPw == null || comPw.trim().length() == 0) {
 			throw new RuntimeException("입력값이 충분하지 않습니다.");
