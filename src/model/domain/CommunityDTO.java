@@ -8,20 +8,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@NoArgsConstructor
 @AllArgsConstructor
-@Getter
+@NoArgsConstructor
 @Setter
+@Getter
 @ToString
 
 public class CommunityDTO { 
-	private long comNo;		//게시번호 - 시퀀스 
-	private String comContent; // 내용
-	private String comPw;		//글 비밀번호
-	private Date comRegedate;	//가입날짜
-	private String comTitle; //제목
+	private long comNo; //게시번호 - 시퀀스
+	private String comContent; // 게시글 내용
+	private String comPw; //비밀번호
+	private Date comRegdate; //가입날짜
+	private String comTitle; // 제목
 	private int comViewCount; //조회수
 	private String subject; //말머리
-	private String memberId; //글쓴이
-
+	private String memberid; //멤버 아이디
 }

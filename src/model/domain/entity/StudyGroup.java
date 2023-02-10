@@ -18,8 +18,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Setter
 @Getter
 
@@ -40,6 +40,7 @@ public class StudyGroup {
 	private StudyLists studyLists;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+
 	@JoinColumn(name = "studyMemberId")
 	private StudyMembers studyMembers;
 	
