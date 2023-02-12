@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -24,6 +25,11 @@ import lombok.Setter;
 @RequiredArgsConstructor
 @Getter
 @Setter
+
+//수정해서 사용 => 모든 검색 일치
+//@NamedQuery(name = "Player.findByTeamPlayers", query = "select p from Player p where p.team.tname = :name")
+//수정해서 사용 => 부분검색
+//@NamedQuery(name = "Player.findByLikePlayer", query = "select p from Player p where p.name like :name")
 
 
 @Entity
@@ -57,4 +63,19 @@ public class StudyMembers {
 	//참조
 	@OneToMany(mappedBy = "studyMembers") //StudyGroup에 매핑설정된 변수 이름으로 지정해야 함
 	private List<StudyGroup> studygroup = new ArrayList<StudyGroup>();
+
+	
+	@Builder
+	public StudyMembers(String id, String password, String nickname, String email, String grade, String goal) {
+		this.id = id;
+		this.password = password;
+		this.nickname = nickname;
+		this.email = email;
+		this.grade = grade;
+		this.goal = goal;
+	}
+	
+
+	
+
 }

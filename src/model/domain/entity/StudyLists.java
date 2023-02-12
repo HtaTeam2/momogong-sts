@@ -27,6 +27,11 @@ import lombok.Setter;
 @Getter
 @Setter
 
+//수정해서 사용 => 모든 검색 일치
+//@NamedQuery(name = "Player.findByTeamPlayers", query = "select p from Player p where p.team.tname = :name")
+//수정해서 사용 => 부분검색
+//@NamedQuery(name = "Player.findByLikePlayer", query = "select p from Player p where p.name like :name")
+
 @Entity
 @SequenceGenerator(
         name="STUDYLISTS_SEQ_GEN",
