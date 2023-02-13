@@ -47,7 +47,7 @@ input[type=text] {
 	      <button class="w3-button w3-white" onclick='location.href="StdGroup/mystudy"'>내 스터디</button>
 	      <button class="w3-button w3-white" onclick='location.href="StdList/insert"'>스터디 생성</button>
 	      <button class="w3-button w3-white" onclick='location.href="Community/list"'>커뮤니티</button>
-	      <button class="w3-button w3-white w3-hide-small" onclick='location.href="Notice/공지사항 전체select"'>공지사항</button>
+	      <button class="w3-button w3-white w3-hide-small" onclick='location.href="Notice/list"'>공지사항</button>
 	      	 스터디 검색 : <input type="text" id="study" name="study" value=""><button id="btn1" class="w3-button w3-white w3-hide-small"><i class="fa fa-search"></i></button>
 	      <button class="w3-button w3-white w3-hide-small w3-right" onclick='location.href="StdMembers/logout"'>로그아웃</button>
 	    </div>
