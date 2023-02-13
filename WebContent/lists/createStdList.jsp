@@ -102,8 +102,8 @@
 					<div class="content">
 						<div class="field">
 							<label for="maxMem" /> <select name="maxMem" id="maxMem">
-								<option value="1">4</option>
-								<option value="2">8</option>
+								<option value="4">4</option>
+								<option value="8">8</option>
 							</select>
 						</div>
 					</div>
