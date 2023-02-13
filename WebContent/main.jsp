@@ -37,38 +37,11 @@ input[type=text] {
 </head>
 <body class="w3-white w3-content" style="max-width:1600px">
 ​
-  <!-- Header -->
-  <header id="portfolio">
-    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
-    <div class="w3-container">
-	    <div class="w3-section w3-bottombar w3-padding-16">
-	       
-		  <img src="${pageContext.request.contextPath}/images/momogong.png" onclick='location.href="${pageContext.request.contextPath}/main.jsp"' style="width:10%" class="w3-hover-opacity">
-	      <button class="w3-button w3-white" onclick='location.href="StdGroup/mystudy"'>내 스터디</button>
-	      <button class="w3-button w3-white" onclick='location.href="StdList/insert"'>스터디 생성</button>
-	      <button class="w3-button w3-white" onclick='location.href="Community/list"'>커뮤니티</button>
-	      <button class="w3-button w3-white w3-hide-small" onclick='location.href="Notice/list"'>공지사항</button>
-	      	 스터디 검색 : <input type="text" id="study" name="study" value=""><button id="btn1" class="w3-button w3-white w3-hide-small"><i class="fa fa-search"></i></button>
-	      <button class="w3-button w3-white w3-hide-small w3-right" onclick='location.href="StdMembers/logout"'>로그아웃</button>
-	    </div>
-    </div>
-  </header>
-  
-  
-<!--    <div>
-    <h1><b>list</b></h1>
-    현재 진행중인 스터디 리스트
-    <div class="w3-row-padding" style="margin:0 -16px">
-      <div class="w3-third w3-margin-bottom">
-        <ul class="w3-ul w3-border w3-white w3-center w3-opacity w3-hover-opacity-off">
-         
-          <li class="w3-padding-30">현재 로그인 상태가 아닙니다. 로그인 후 확인하여 주십시오.</li>
-          
-        </ul>
-      </div>
-  </div> -->
-  
-  <!-- 추천스터디 1 배열로 3개까지 나열? rownum..-->
+  <!-- Header header.jsp에서 경로 수정 -->
+<jsp:include page="header.jsp"></jsp:include> 
+
+
+  <!-- 카테고리별 스터디 목록 조회-->
   <div id="searchList" class="w3-row-padding">
   	 <div class="w3-section w3-bottombar w3-padding-16">
 	  <span> </span>
