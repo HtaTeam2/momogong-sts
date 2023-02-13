@@ -10,117 +10,84 @@
 <meta charset="UTF-8">
 <title>스터디룸</title>
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
 <style>
-.first {
-	display: block;
-	position: absolute;
-	width: 40%;
-	height: 50%;
-	background-color: gray;
+body,h1,h2,h3,h4,h5,h6,ul,li,footer,#exit {
+	font-family: "Raleway", sans-serif;
+	font-size: 18px;	
 }
 
-.second {
-	display: block;
-	position: absolute;
-	left: 40%;
-	width: 40%;
-	height: 50%;
-	background-color: gray;
+footer {
+	width: 100%; 
+	bottom:0; 
 }
 
-.third {
-	display: block;
-	position: absolute;
-	bottom: 0px;
-	width: 40%;
-	height: 50%;
-	background-color: gray;
-}
 
-.fourth {
-	display: block;
-	position: absolute;
-	left: 40%;
-	bottom: 0px;
-	width: 40%;;
-	height: 50%;
-	background-color: gray;
-}
-
-#members {
-	display: block;
-	position: absolute;
-	right: 0;
-	width: 20%;
-	height: 50%;
-	border: 0.5px;
-	background-color: none;
-}
-
-#chat {
-	display: block;
-	position: absolute;
-	bottom: 0px;
-	right: 0;
-	width: 20%;
-	height: 50%;
-	border: 0.5px;
-	background-color: none;
-}
-
-#full {
-	position: absolute;
-	right: 0;
-	width: 94%;
-	height: 800px;
-	border: 3px solid;
-}
-
-#side {
-	position: relative;
-	width: 5%;
-	height: 800px;
-	border: 3px solid;
-	background-color: none;
+input[type=text] {
+	width: 500px;
+	height: 32px;
+	font-size: 15px;
+	border: 0;
+	border-radius: 15px;
+	outline: none;
+	padding-left: 10px;
+	background-color: rgb(233, 233, 233);
 }
 
 </style>
 </head>
 <body style = "width: 100%;">
-	<header>
-		<h1>
-			<i class="fas fa-cloud" style="font-size: 48px; color: skyblue"></i>모모공
-		</h1>
-	</header>
-
-	<div id="full" class="full">
+  <header id="portfolio">
+    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+    <div class="w3-container">
+	   <div class="w3-section w3-bottombar w3-padding-16">
+	       
+		  <img src="${pageContext.request.contextPath}/images/momogong.png" onclick='location.href="${pageContext.request.contextPath}/main.jsp"' style="width:10%" class="w3-hover-opacity">
+	      <button class="w3-button w3-white" onclick='location.href="${pageContext.request.contextPath}/StdGroup/mystudy"'>내 스터디</button>
+	      <button class="w3-button w3-white" onclick='location.href="${pageContext.request.contextPath}/StdList/insert"'>스터디 생성</button>
+	      <button class="w3-button w3-white" onclick='location.href="Community/커뮤니티 전체select"'>커뮤니티</button>
+	      <button class="w3-button w3-white w3-hide-small" onclick='location.href="Notice/공지사항 전체select"'>공지사항</button>
+	      <button class="w3-button w3-white w3-hide-small w3-right" onclick='location.href="StdMembers/logout"'>로그아웃</button>
+	    </div>
+    </div>
+  </header>
+	<div id="full" div class="w3-main w3-rest" style="max-width:1200px;max-height:900px;margin-top:100px">
 	<!-- 추후 script로 변경 -->
-		<div>
-			<div class="first">
-				<iframe width="100%" height="100%" src="https://www.youtube.com/embed/R7TXQF8bW_Y?autoplay=1&mute=1" ></iframe>
+		<div id="fir" class="w3-row">
+			<div id = "first" class="w3-half">
+				<iframe width="100%" height="400" src="https://www.youtube.com/embed/R7TXQF8bW_Y?autoplay=1&mute=1" ></iframe>
 			</div> 
-			<div class="second">
-				<iframe width="100%" height="100%" src="https://www.youtube.com/embed/R7TXQF8bW_Y?autoplay=1&mute=1"></iframe>
-			</div>
-			<div class="third">
-				<iframe width="100%" height="100%" src="https://www.youtube.com/embed/R7TXQF8bW_Y?autoplay=1&mute=1"></iframe>
-			</div> 
-			<div class="fourth">
-				<iframe width="100%" height="100%" src="https://www.youtube.com/embed/R7TXQF8bW_Y?autoplay=1&mute=1"></iframe>
+			<div id="second" class="w3-half">
+				<iframe width="100%" height="400" src="https://www.youtube.com/embed/R7TXQF8bW_Y?autoplay=1&mute=1"></iframe>
 			</div>
 		</div>
-
-		<div>
-			<div id="members">Members</div> 
-			<div id="chat"></div>
+		<div id="sec" class="w3-row">
+			<div id="third" class="w3-half">
+				<iframe width="100%" height="400" src="https://www.youtube.com/embed/R7TXQF8bW_Y?autoplay=1&mute=1"></iframe>
+			</div> 
+			<div id="fourth" class="w3-half">
+				<iframe width="100%" height="400" src="https://www.youtube.com/embed/R7TXQF8bW_Y?autoplay=1&mute=1"></iframe>
+			</div>
 		</div>
-
 	</div>
-	<div id="side"></div>
+	<div id="members" class="w3-row w3-right" style="width:20%">
+		<ul>&nbsp;&nbsp; MEMBERS
+			<c:forEach items="${requestScope.allGroup}" var="e" varStatus="status">
+				<li>${e.nickname}</li>
+			</c:forEach>
+		
+		</ul>
+		<div id="chat"></div>
+	</div> 
 
-	<footer>
-		  <a href="main.jsp"><i class="material-icons" style="font-size:60px;color:lightblue;"></i>나가기</a>
-	</footer>
+  <footer class="w3-row-padding w3-padding-32">
+    <div class="w3-third">
+   	 <button id="exit" class="w3-button w3-white" onclick='location.href="${pageContext.request.contextPath}/main.jsp"'>나가기</button>
+    </div>
+  </footer>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   	<script src="/group/view.js"></script>
 </body>
