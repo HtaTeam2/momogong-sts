@@ -29,18 +29,6 @@ public class StudyMembersController {
 	@Autowired
 	public StudyMembersDAO memdao;
 
-
-	//회원가입
-	@PostMapping(value = "/insert", produces = "application/json; charset=UTF-8")
-	protected String memInsert(Model sessionData, StudyMembersDTO dto) throws SQLException {
-
-		System.out.println("insert() -----");
-
-		memdao.insertMember(dto);
-		sessionData.addAttribute("dto", dto);
-
-		return "forward:/auth/join.jsp";
-	}
 	
 	//로그인
 	/* 1.유효한 user인 경우
@@ -129,16 +117,7 @@ public class StudyMembersController {
 		return "forward:error.jsp";
 	}
 	
-	
-	
-//	@Autowired
-//	public StudyListDAO listdao;
-//	@Autowired
-//	public StudyGroupDAO groupdao;
-//	@Autowired
-//	public NoticeDAO notdao;
-//	@Autowired
-//	public CommunityDAO comdao;
+
 	
 	//회원가입 입력 폼 
 	//http://localhost/team2_studyroom/StdMembers/insertview
