@@ -6,120 +6,144 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+
 import org.springframework.stereotype.Repository;
 
 import model.domain.NoticeDTO;
+import model.domain.entity.Notice;
 import util.DBUtil;
 import util.DBUtil2;
 
 @Repository
 public class NoticeDAO {
 	
-	private static NoticeDAO instance = new NoticeDAO();
-	
-	public static NoticeDAO getInstance() {
-		return instance;
-	}
-
 	// 글 추가
-	public void insert(NoticeDTO ndto) throws SQLException {
-		Connection con = null;
-		PreparedStatement pstmt = null;
+	// 일단 글 추가만 (관리자 설정은 나중에)
+	public void insertNotice(NoticeDTO dto)  {
+		EntityManager em = DBUtil.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
 		
 		try {
-			con = DBUtil2.getConnection();
-			pstmt = con.prepareStatement("INSERT INTO notice VALUES(?,?,?,?,?)");
-			
-			pstmt.setLong(1, ndto.getNoticeNo());
-			pstmt.setString(2, ndto.getNoticeContent());
-			pstmt.setDate(3, ndto.getNoticeRegdate());
-			pstmt.setString(4, ndto.getNoticeTitle());
-			pstmt.setInt(5, ndto.getViewCount());
-			
-			pstmt.executeUpdate();
-			
-		} catch (SQLException s) {
-//			s.printStackTrace();
-			throw s;
-		} finally {
-			DBUtil2.close(con, pstmt);
+			tx.begin();
+			Notice notice = new Notice(dto.getNoticeTitle(), dto.getNoticeContent(), dto.getViewCount());
+			em.persist(notice);
+			tx.commit();
+		} catch (Exception e) {
+			tx.rollback();
+			e.printStackTrace();
+		}finally {
+			em.close();
 		}
 	}
-	
+
 	// 글 수정
-	public void update(NoticeDTO ndto) throws SQLException {
+	// 내용, 제목만 변경 
+	public boolean updateNotice(NoticeDTO dto) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
+
 		try {
 			con = DBUtil2.getConnection();
 
-			pstmt = con.prepareStatement("UPDATE notice SET noticeContent = ? , noticeTitle = ?");
-		//	pstmt.setLong(1, ndto.getNoticeNo());
-			pstmt.setString(1, ndto.getNoticeContent());
-		//	pstmt.setDate(3, ndto.getNoticeRegdate());
-			pstmt.setString(2, ndto.getNoticeTitle());
-
-			pstmt.executeUpdate(); //insert/update/delete
-		} catch (SQLException s) {
-//			s.printStackTrace();
-			throw s;
-		} finally {
-			DBUtil2.close(con, pstmt);
-		}
-	}
-	
-	// 글 삭제
-	public boolean delete(Long noticeNo) throws SQLException {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			con = DBUtil2.getConnection();
-			pstmt = con.prepareStatement("delete from notice where noticeNo=?");
-			pstmt.setLong(1, noticeNo);
-
+			pstmt = con.prepareStatement("UPDATE notice SET noticeContent = ? , noticeTitle = ?");			
+			pstmt.setString(1, dto.getNoticeContent());
+			pstmt.setString(2, dto.getNoticeTitle());
 			int result = pstmt.executeUpdate();
 			if(result != 0) {
 				return true;
 			}
-
-		} catch (SQLException s) {
+		}catch(SQLException s) {
 			s.printStackTrace();
 			throw s;
-		} finally {
+		}finally {
 			DBUtil2.close(con, pstmt);
 		}
-		
 		return false;
+	
 	}
 	
-	// 조회
-	public ArrayList<NoticeDTO> getNotice() throws SQLException {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		ArrayList<NoticeDTO> allList = null;
-		
-		try {
-			conn = DBUtil2.getConnection();
-			pstmt = conn.prepareStatement("SELECT * FROM notice");
-			rset = pstmt.executeQuery();
-			
-			allList = new ArrayList<NoticeDTO>();
-			
-			while (rset.next()) {
-				allList.add(new NoticeDTO(rset.getLong(1), rset.getString(2), rset.getDate(3), rset.getString(4), rset.getInt(5)));
+		// 글 삭제
+		//Long noticeNo
+		public void deleteNotice(Long noticeNo) {
+			EntityManager em = DBUtil.getEntityManager();
+			EntityTransaction tx = em.getTransaction();
+			try {
+				tx.begin();
+				Notice notice = em.find(Notice.class, noticeNo);
+				if (notice != null) {
+					em.remove(notice);
+				}else {
+					System.out.println("이미 삭제 된 게시글입니다.");
+				}
+				tx.commit();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				em.close();
 			}
-		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-			throw sqle;
-		} finally {
-			DBUtil2.close(conn, pstmt, rset);
+		}
+	
+	// 상세조회
+		public NoticeDTO view(Long noticeNo, boolean flag) throws SQLException{
+			Connection con = null;	
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			NoticeDTO dto = null;
+			try {
+				con = DBUtil2.getConnection();
+				
+				if(flag) {
+					pstmt = con.prepareStatement("update notice set ViewCount = ViewCount + 1 where noticeNo = ?");
+					pstmt.setLong(1, noticeNo);
+					if(pstmt.executeUpdate() == 0) {
+						pstmt.close();
+						pstmt = null;
+						return dto; //여기서 메소드 종료
+					}
+				}
+				pstmt = con.prepareStatement("select * from notice where noticeNo = ?");
+				pstmt.setLong(1, noticeNo);
+				rset = pstmt.executeQuery();
+				if(rset.next()) {
+					dto = new NoticeDTO(noticeNo, rset.getString("noticeContent"), rset.getDate("noticeRegdate"), rset.getString("noticeTitle"), rset.getInt("viewCount"));
+				}
+			}catch(SQLException s) {
+				s.printStackTrace();
+				throw s;
+			}finally {
+				DBUtil2.close(con, pstmt, rset);
+			}
+			return dto;
+			
+		}
+
+	// 전체 글 조회
+		public ArrayList<NoticeDTO> list() throws SQLException{
+			Connection con = null;	
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			ArrayList<NoticeDTO> list = null;
+			try {
+				con = DBUtil2.getConnection();
+				pstmt = con.prepareStatement("select * from notice");
+				rset = pstmt.executeQuery();
+				
+				list = new ArrayList<NoticeDTO>();
+				
+				while(rset.next()) {
+					list.add(new NoticeDTO(rset.getLong("noticeNo"), rset.getString("noticeContent"), rset.getDate("noticeRegdate"), rset.getString("noticeTitle"), rset.getInt("viewCount") 
+							 ));
+				}
+			}catch(SQLException s) {
+				s.printStackTrace();
+				throw s;
+			}finally {
+				DBUtil2.close(con, pstmt, rset);
+			}
+			return list;
 		}
 		
-		return allList;
-	}
 	
 }
