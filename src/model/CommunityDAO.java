@@ -69,7 +69,7 @@ public class CommunityDAO {
 			pstmt.setLong(1, comNo);
 			rset = pstmt.executeQuery();
 			if(rset.next()) {
-				dto = new CommunityDTO(comNo, rset.getString("comTitle"), rset.getString("membernick"), rset.getString("subject"), rset.getString("comPw"), 
+				dto = new CommunityDTO(comNo, rset.getString("comTitle"), rset.getString("memberid"), rset.getString("subject"), rset.getString("comPw"), 
 						rset.getDate("comRegdate"), rset.getString("comContent"), rset.getInt("comViewCount"));
 			}
 		}catch(SQLException s) {
@@ -91,7 +91,6 @@ public class CommunityDAO {
 			list = em.createQuery(sql).getResultList();
 			
 			list.forEach(v->System.out.println(v));
-			System.out.println(list.get(0));
 			
 		}catch(Exception e) {
 			e.printStackTrace();

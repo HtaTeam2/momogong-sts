@@ -5,10 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
 
 import model.domain.StudyListsDTO;
+import model.domain.entity.StudyLists;
+import util.DBUtil;
 import util.DBUtil2;
 
 @Repository

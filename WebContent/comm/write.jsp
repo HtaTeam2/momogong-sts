@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="${pageContext.request.contextPath}/ckeditor/ckeditor.js"></script>
+<script src="${pageContext.request.contextPath}/comm/ckeditor/ckeditor.js"></script>
 <title>Insert title here</title>
 </head>
 
@@ -41,7 +41,7 @@
     <div class="col-md-2"></div>
     <div class="col-md-8">
         <h2 class="text-center">게시글 쓰기</h2>
-        <form name="writeForm" action="${pageContext.request.contextPath}/Community/write" accept-charset="utf-8" method="get" onsubmit="return checkValid()">
+        <form name="writeForm" action="${pageContext.request.contextPath}/Community/write" accept-charset="utf-8" method="post" onsubmit="return checkValid()">
           <table class="table table-striped">
             <tr>
                 <td>작성자</td>
