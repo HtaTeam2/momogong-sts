@@ -31,7 +31,7 @@ public class NoticeController {
 	 @RequestMapping(value = "/insertNotice", method = RequestMethod.POST) public
 	  String insert(Model sessionData, Notice ndto) throws SQLException {
 	  System.out.println("insert()"); notdao.insertNotice(ndto);
-	  sessionData.addAttribute("ndto", ndto); return "forward:/notice/view.jsp"; }
+	  sessionData.addAttribute("ndto", ndto); return "redirect:/Notice/list"; }
 	 
 
 	// 글 등록 폼
