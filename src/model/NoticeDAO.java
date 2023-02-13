@@ -20,14 +20,13 @@ import util.DBUtil2;
 public class NoticeDAO {
 	
 	// 글 추가
-	// 일단 글 추가만 (관리자 설정은 나중에)
-	public void insertNotice(NoticeDTO dto)  {
+	public void insertNotice(Notice ndto)  {
 		EntityManager em = DBUtil.getEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		
 		try {
 			tx.begin();
-			Notice notice = new Notice(dto.getNoticeTitle(), dto.getNoticeContent(), dto.getViewCount());
+			Notice notice = new Notice(ndto.getNoticeTitle(), ndto.getNoticeContent(), 0);
 			em.persist(notice);
 			tx.commit();
 		} catch (Exception e) {
@@ -37,33 +36,56 @@ public class NoticeDAO {
 			em.close();
 		}
 	}
+	
+	
+	
 
 	// 글 수정
 	// 내용, 제목만 변경 
-	public boolean updateNotice(NoticeDTO dto) throws SQLException {
-		Connection con = null;
-		PreparedStatement pstmt = null;
+	/*
+	 * public boolean updateNotice2(NoticeDTO dto) throws SQLException { Connection
+	 * con = null; PreparedStatement pstmt = null;
+	 * 
+	 * try { con = DBUtil2.getConnection();
+	 * 
+	 * pstmt =
+	 * con.prepareStatement("UPDATE notice SET noticeContent = ? , noticeTitle = ?"
+	 * ); pstmt.setString(1, dto.getNoticeContent()); pstmt.setString(2,
+	 * dto.getNoticeTitle()); int result = pstmt.executeUpdate(); if(result != 0) {
+	 * return true; } }catch(SQLException s) { s.printStackTrace(); throw s;
+	 * }finally { DBUtil2.close(con, pstmt); } return false;
+	 * 
+	 * }
+	 */
+	
+	public void updateNotice(Notice no){
+		EntityManager em = DBUtil.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		Notice notice = null;
+
 
 		try {
-			con = DBUtil2.getConnection();
-
-			pstmt = con.prepareStatement("UPDATE notice SET noticeContent = ? , noticeTitle = ?");			
-			pstmt.setString(1, dto.getNoticeContent());
-			pstmt.setString(2, dto.getNoticeTitle());
-			int result = pstmt.executeUpdate();
-			if(result != 0) {
-				return true;
+			tx.begin();
+			notice = em.find(Notice.class, no.getNoticeNo());
+			//공지사항이 존재하면 null 아님, 내용 변경
+			if(notice !=null) {
+				System.out.println("update 전 : " + notice);
+				notice.setNoticeContent(no.getNoticeContent()); //게시물
+				notice.setNoticeTitle(no.getNoticeTitle()); //제목
+			}else {
+				System.out.println("업데이트 하려는 게시물을 찾지 못했습니다");
 			}
-		}catch(SQLException s) {
-			s.printStackTrace();
-			throw s;
+			em.persist(notice);
+			tx.commit();
+		}catch(Exception e) {
+			tx.rollback();
+			e.printStackTrace();
 		}finally {
-			DBUtil2.close(con, pstmt);
+			em.close();
 		}
-		return false;
-	
 	}
-	
+			
+
 		// 글 삭제
 		//Long noticeNo
 		public void deleteNotice(Long noticeNo) {
@@ -100,7 +122,6 @@ public class NoticeDAO {
 					if(pstmt.executeUpdate() == 0) {
 						pstmt.close();
 						pstmt = null;
-						return dto; //여기서 메소드 종료
 					}
 				}
 				pstmt = con.prepareStatement("select * from notice where noticeNo = ?");
@@ -144,6 +165,12 @@ public class NoticeDAO {
 			}
 			return list;
 		}
+
+
+
+
+	
+	
 		
 	
 }
