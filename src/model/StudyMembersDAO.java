@@ -138,97 +138,6 @@ public class StudyMembersDAO {
 	}
 		
 	
-	//회원가입 
-//	public int insertMember(StudyMembersDTO dto) throws SQLException {
-//		Connection con = null;
-//		PreparedStatement pstmt = null;
-//		try {
-//			con = DBUtil2.getConnection();
-//			pstmt = con.prepareStatement("INSERT INTO studentmembers VALUES (?, ?, ?, ?, ?, ?, now())");
-//			pstmt.setString(1, dto.getId()); //중복 불가능
-//			pstmt.setString(2, dto.getEmail());
-//			pstmt.setString(3, dto.getGoal()); //null 가능
-//			pstmt.setString(4, dto.getGrade());
-//			pstmt.setString(5, dto.getNickname());//null 가능, 중복 불가능
-//			pstmt.setString(6, dto.getPassword());
-//			
-//			
-//			pstmt.executeUpdate();
-//			
-//		} catch (SQLException s) {
-//			s.printStackTrace();
-//			throw new SQLException("id가 중복되었습니다");
-//
-//		} finally {
-//			DBUtil2.close(con, pstmt);
-//		}
-//		return -1;
-//	}
-	
-
-
-	//멤버 본인 프로필 수정 - 닉네임/이메일/목표/비밀번호/(등급/프로필사진)
-	public static boolean memUpdate (String id, String email, String goal, String nick, String pw) throws SQLException {
-		EntityManager em = DBUtil.getEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		StudyMembers mem = null;
-		
-		try {
-			tx.begin();
-			mem = em.find(StudyMembers.class, id);
-			if (mem != null) {
-				// before update
-				System.out.println("update 전 : " + mem);
-				mem.setEmail(email);
-				mem.setGoal(goal);
-				mem.setNickname(nick);
-				mem.setPassword(pw);
-				
-			} else {
-				System.out.println("업데이트 하려는 사람의 정보를 찾지 못하였습니다");
-			}
-			em.persist(mem); //persist -> update
-			tx.commit(); 
-			// after update
-			System.out.println("update 후 : " + mem);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			em.close();
-		}
-
-		return false;
-		
-	}
-	
-	//본인조회
-	public StudyMembersDTO getMember(String id) throws SQLException {
-		Connection conn = null;
-		PreparedStatement pstmt = null; //db 자체적인 실행 속도 향상 (Satatement에 비해서)
-		ResultSet rset = null;
-		
-		try {
-			conn = DBUtil2.getConnection();
-			pstmt = conn.prepareStatement("SELECT * FROM studymembers where id =?");
-			pstmt.setString(1, id);
-			
-			rset = pstmt.executeQuery();
-			
-			
-			if ( rset.next() ) {
-				return new StudyMembersDTO (rset.getString(1), rset.getString(2), rset.getString(3), rset.getString(4), rset.getDate(5), rset.getString(6),rset.getString(7));
-			}
-			
-		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-			throw sqle;
-			
-		} finally {
-			DBUtil2.close(conn, pstmt, rset);
-		}
-		return null;
-	}
-	
 	
 	//로그인 grade로 뽑아서 관리자,일반회원 구분?
 		//sql = "select grade from studymembers where id=? and password=?";
@@ -336,4 +245,102 @@ public class StudyMembersDAO {
 				DBUtil2.close(con, pstmt);
 			}
 		}
+	
+		//회원가입 - jpa
+	public static StudyMembers insertMember(StudyMembers member) throws SQLException {
+		EntityManager em = DBUtil.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		try {
+			tx.begin();
+			em.persist(member);
+			tx.commit();
+			
+		} catch (Exception e) {
+			tx.rollback();
+			e.printStackTrace();
+			
+		} finally {
+			em.close();
+		}
+		
+        return member;
+    }
+	//회원가입 - 아이디 중복 확인
+	public static int duplecateID(String id){
+		int cnt=0;
+	    try{
+	    	Connection con=DBUtil2.getConnection();
+	        StringBuilder sql=new StringBuilder();
+	        
+	        //아이디 중복 확인
+	        sql.append(" SELECT count(id) as cnt ");
+	        sql.append(" FROM studymembers ");
+	        sql.append(" WHERE id = ? ");
+	        
+	        PreparedStatement pstmt=con.prepareStatement(sql.toString());
+	        pstmt.setString(1, id);
+	        
+	        ResultSet rs=pstmt.executeQuery();
+	        if(rs.next()){
+	        	cnt=rs.getInt("cnt");
+	 
+	        }
+	        
+	    }catch(Exception e){
+	     	System.out.println("아이디 중복 확인 실패 : " + e);
+	    }
+		return cnt;
+	}
+		
+
+	
+	
+	
+	//멤버 본인 프로필 수정 - jpa
+	public static boolean memUpdate (String id, String email, String goal, String nick, String pw) throws SQLException {
+		EntityManager em = DBUtil.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		StudyMembers mem = null;
+		
+		try {
+			tx.begin();
+			mem = em.find(StudyMembers.class, id);
+			if (mem != null) {
+				// before update
+				System.out.println("update 전 : " + mem);
+				mem.setEmail(email);
+				mem.setGoal(goal);
+				mem.setNickname(nick);
+				mem.setPassword(pw);
+				
+			} else {
+				System.out.println("업데이트 하려는 사람의 정보를 찾지 못하였습니다");
+			}
+			em.persist(mem); //persist -> update
+			tx.commit(); 
+			// after update
+			System.out.println("update 후 : " + mem);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			em.close();
+		}
+
+		return false;
+		
+	}
+
+
+	
+	//본인 조회 - jpa
+	public static StudyMembers getMember (String id) {
+		EntityManager em = DBUtil.getEntityManager();
+//		StudyMembers stdmember = (StudyMembers)em.createNamedQuery("StudyMembers.findByStudyMembers").setParameter("id", id).getSingleResult();
+		StudyMembers stdmember = em.find(StudyMembers.class, id);
+		
+		em.clear();
+		
+		return stdmember;
+	}
+	
 }
