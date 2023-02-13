@@ -1,146 +1,114 @@
 package model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
 import org.springframework.stereotype.Repository;
 
 import model.domain.StudyListsDTO;
 import model.domain.entity.StudyLists;
 import util.DBUtil;
-import util.DBUtil2;
 
 @Repository
 public class StudyListDAO {
 	
-	//방만들기 - 방을 만들고 난 후 스터디 그룹원 가입으로 이동하는 방식으로 진행
-		public void createStdList(StudyListsDTO list) throws SQLException {
-			Connection con = null;
-			PreparedStatement pstmt = null;
-			try {
-				con = DBUtil2.getConnection();
-				//방 최대 인원수는 4명, 최초 생성시 방 멤버수는 방장 1명
-				pstmt = con.prepareStatement("INSERT INTO studylists(roomNo, roomTitle, category, roomPw, roomDesc, maxMem, memNum, memberid) "
-												+ "VALUES(STUDYLISTS_SEQ.NEXTVAL, ?, ?, ?, ?, 4, 1, ?)");
-				pstmt.setString(1, list.getRoomTitle());
-				pstmt.setString(2, list.getCategory());
-				pstmt.setString(3, list.getRoomPw());
-				pstmt.setString(4, list.getRoomDesc());
-				pstmt.setString(5, list.getHostId());
-			} catch (SQLException s) {
-				s.printStackTrace();
-				throw new SQLException("가입에 실패했습니다. 잠시 후 재시도 해주세요.");
-			} finally {
-				DBUtil2.close(con, pstmt);
-			}
-		}
-	
-	//방삭제
-	public boolean delete(long roomNo) throws SQLException {
-		Connection con = null;
-		PreparedStatement pstmt = null;
+	//방만들기 
+	public void insertList(StudyListsDTO sdto) throws Exception {
+		EntityManager em = DBUtil.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
 		
 		try {
-			con = DBUtil2.getConnection();
-			pstmt = con.prepareStatement("delete from studylists where roomNo=?");
-			pstmt.setLong(1, roomNo);
-			int result = pstmt.executeUpdate();
-			if(result != 0) {
-				return true;
-			}
-
-		} catch (SQLException s) {
-			s.printStackTrace();
-			throw s;
-		} finally {
-			DBUtil2.close(con, pstmt);
+			tx.begin();
+			
+			StudyLists lists = new StudyLists(sdto.getRoomTitle(), sdto.getMemNum(), sdto.getMaxMem(), sdto.getCategory());
+			em.persist(lists);
+			tx.commit();
+	
+		}catch (Exception e) {
+			tx.rollback();
+			e.printStackTrace();
+			
+		}finally {
+			em.close();
 		}
-		
-		return false;
 	}
 	
-	//방업데이트
-	public void update(StudyListsDTO list) throws SQLException {
-		Connection con = null;
-		PreparedStatement pstmt = null;
+	// 방삭제
+	public void deleteList(Long roomNo) throws Exception {
+		EntityManager em = DBUtil.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
 		
 		try {
-			con = DBUtil2.getConnection();
-			pstmt = con.prepareStatement("UPDATE studylists SET category=?, roomDesc=?, roomTitle=? WHERE roomNo=?");
-			pstmt.setString(1, list.getCategory());
-			pstmt.setString(2, list.getRoomDesc());
-			pstmt.setString(3, list.getRoomTitle());
-			pstmt.setLong(4, list.getRoomNo());
+			tx.begin();
+			//방번호로
+			StudyLists lists = em.find(StudyLists.class, roomNo);
 			
-			pstmt.executeUpdate();
-		} catch (SQLException s) {
-			throw s;
-		} finally {
-			DBUtil2.close(con, pstmt);
+			if (lists != null) {
+				em.remove(lists);
+			}else {
+				System.out.println("이미 처리되었습니다.");
+			}
+			tx.commit();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			
+		}finally {
+			em.close();
+		}	
+	}
+	
+	
+	//방수정, 스터디이름, 스터디상세설명, 스터디 카테고리만 수정.
+	public boolean updateList(StudyListsDTO sdto) throws SQLException {
+		EntityManager em = DBUtil.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		StudyLists lists = null;
+		
+		try {
+			tx.begin();
+			
+			lists = em.find(StudyLists.class, sdto.getRoomNo());
+			//리스트가 존재한다면 null이 아님
+			if (lists != null) {
+				// DAO로 넘어왔는지 Test
+				System.out.println("업데이트 전 : " + lists);
+				lists.setRoomTitle(sdto.getRoomTitle());
+				lists.setRoomDesc(sdto.getRoomDesc());
+				lists.setCategory(sdto.getCategory());
+			}else {
+				System.out.println("다시 시도해 주세요.");
+			}
+			em.persist(lists);
+			tx.commit();
+			
+		}catch (Exception e) {
+			tx.rollback();
+			e.printStackTrace();
+			
+		}finally {
+			em.close();
 		}
+		return false;
 	}
 	
 	//방 전체조회
-	public ArrayList<StudyListsDTO> getStdList() throws SQLException {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		ArrayList<StudyListsDTO> allList = null;
+	public List<StudyLists> AllList() throws Exception {
+		EntityManager em = DBUtil.getEntityManager();
+		List<StudyLists> list = null;
 		
 		try {
-			conn = DBUtil2.getConnection();
-			pstmt = conn.prepareStatement("SELECT * FROM studylists");
-			rset = pstmt.executeQuery();
-			
-			allList = new ArrayList<StudyListsDTO>();
-			
-			while (rset.next()) {
-				//allList.add(new StudyListsDTO(rset.getLong(1), rset.getString(2), rset.getInt(3), rset.getInt(4), rset.getString(5), rset.getString(6), rset.getString(7), rset.getString(8)));
-			}
-		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-			throw sqle;
-		} finally {
-			DBUtil2.close(conn, pstmt, rset);
+			String sql = "select l from StudyLists l";
+			list = em.createQuery(sql).getResultList();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			em.close();
 		}
-		
-		return allList;
-	}
-	
-	//카테고리별 조회 *
-	public boolean getctStdList(String category) throws SQLException {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		boolean result = false;
-		
-		try {
-			conn = DBUtil2.getConnection();
-			pstmt = conn.prepareStatement("SELECT * FROM studylists WHRER category=?");
-
-			pstmt.setString(1, category);
-			
-			rset = pstmt.executeQuery();
-			
-			if (rset.next()) { 
-				return true;
-			}
-		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-			throw sqle;
-		} finally {
-			DBUtil2.close(conn, pstmt, rset);
-		}
-		
-		return false;
+		return list;
 	}
 	
 	//방 이름으로 검색(부분검색). static이 있어야 함..
