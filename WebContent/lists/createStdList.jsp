@@ -105,18 +105,6 @@
 				</section>
 				<section>
 					<header>
-						<h3>상세설명</h3>
-					</header>
-					<div class="content">
-						<div class="field">
-							<label for="roomDesc" />
-							<textarea name="roomDesc" id="roomDesc" rows="6"></textarea>
-						</div>
-					</div>
-				</section>
-
-				<section>
-					<header>
 						<h3>스터디 비밀번호</h3>
 					</header>
 					<div class="content">
