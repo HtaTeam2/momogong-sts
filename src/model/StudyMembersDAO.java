@@ -168,33 +168,37 @@ public class StudyMembersDAO {
 
 
 	//멤버 본인 프로필 수정 - 닉네임/이메일/목표/비밀번호/(등급/프로필사진)
-	public boolean memUpdate(StudyMembersDTO dto) throws SQLException {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
+	public static boolean memUpdate (String id, String email, String goal, String nick, String pw) throws SQLException {
+		EntityManager em = DBUtil.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		StudyMembers mem = null;
+		
 		try {
-			con = DBUtil2.getConnection();
-
-			pstmt = con.prepareStatement("UPDATE studymembers SET nickname =?, email =?, password = ? , goal = ? WHERE id = ?");
-			
-			pstmt.setString(1, dto.getNickname());
-			pstmt.setString(2, dto.getEmail());
-			pstmt.setString(3, dto.getPassword());
-			pstmt.setString(4, dto.getGoal());
-			pstmt.setString(5, dto.getId());
-			
-			int result = pstmt.executeUpdate();
-			if(result == 1) {
-				return true;
+			tx.begin();
+			mem = em.find(StudyMembers.class, id);
+			if (mem != null) {
+				// before update
+				System.out.println("update 전 : " + mem);
+				mem.setEmail(email);
+				mem.setGoal(goal);
+				mem.setNickname(nick);
+				mem.setPassword(pw);
+				
+			} else {
+				System.out.println("업데이트 하려는 사람의 정보를 찾지 못하였습니다");
 			}
-			
-		} catch (SQLException s) {
-//			s.printStackTrace();
-			throw s;
+			em.persist(mem); //persist -> update
+			tx.commit(); 
+			// after update
+			System.out.println("update 후 : " + mem);
+		} catch (Exception e) {
+			e.printStackTrace();
 		} finally {
-			DBUtil2.close(con, pstmt);
+			em.close();
 		}
+
 		return false;
+		
 	}
 	
 	//본인조회
