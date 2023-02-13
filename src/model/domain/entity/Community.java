@@ -35,6 +35,11 @@ import lombok.ToString;
 //수정해서 사용 => 부분검색
 //@NamedQuery(name = "Community.findAll", query = "select c from Community p")
 
+//수정해서 사용 => 모든 검색 일치
+//@NamedQuery(name = "Player.findByTeamPlayers", query = "select p from Player p where p.team.tname = :name")
+//수정해서 사용 => 부분검색
+//@NamedQuery(name = "Player.findByLikePlayer", query = "select p from Player p where p.name like :name")
+
 @Entity
 @SequenceGenerator(
         name="COMMUNITY_SEQ_GEN", //시퀀스 제너레이터 이름
