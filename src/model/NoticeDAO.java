@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -37,8 +37,25 @@ public class NoticeDAO {
 		}
 	}
 	
-	
-	
+//	public static NoticeDTO insertNotice(NoticeDTO ndto) throws SQLException {
+//		EntityManager em = DBUtil.getEntityManager();
+//		EntityTransaction tx = em.getTransaction();
+//		try {
+//			tx.begin();
+//			em.persist(ndto);
+//			tx.commit();
+//			
+//		} catch (Exception e) {
+//			tx.rollback();
+//			e.printStackTrace();
+//			
+//		} finally {
+//			em.close();
+//		}
+//		
+//        return ndto;
+//    }
+//	
 
 	// 글 수정
 	// 내용, 제목만 변경 
@@ -141,33 +158,51 @@ public class NoticeDAO {
 		}
 
 	// 전체 글 조회
-		public ArrayList<NoticeDTO> list() throws SQLException{
-			Connection con = null;	
-			PreparedStatement pstmt = null;
-			ResultSet rset = null;
-			ArrayList<NoticeDTO> list = null;
+//		public ArrayList<NoticeDTO> list() throws SQLException{
+//			Connection con = null;	
+//			PreparedStatement pstmt = null;
+//			ResultSet rset = null;
+//			ArrayList<NoticeDTO> list = null;
+//			try {
+//				con = DBUtil2.getConnection();
+//				pstmt = con.prepareStatement("select * from notice");
+//				rset = pstmt.executeQuery();
+//				
+//				list = new ArrayList<NoticeDTO>();
+//				
+//				while(rset.next()) {
+//					list.add(new NoticeDTO(rset.getLong("noticeNo"), rset.getString("noticeContent"), rset.getDate("noticeRegdate"), rset.getString("noticeTitle"), rset.getInt("viewCount") 
+//							 ));
+//				}
+//			}catch(SQLException s) {
+//				s.printStackTrace();
+//				throw s;
+//			}finally {
+//				DBUtil2.close(con, pstmt, rset);
+//			}
+//			return list;
+//		}
+
+
+
+		public List<Notice> list() throws Exception{
+			EntityManager em = DBUtil.getEntityManager();
+			
+			List<Notice> list = null;
 			try {
-				con = DBUtil2.getConnection();
-				pstmt = con.prepareStatement("select * from notice");
-				rset = pstmt.executeQuery();
+				String sql = "select n from Notice n";
+				list = em.createQuery(sql).getResultList();
 				
-				list = new ArrayList<NoticeDTO>();
+				list.forEach(v->System.out.println(v));
 				
-				while(rset.next()) {
-					list.add(new NoticeDTO(rset.getLong("noticeNo"), rset.getString("noticeContent"), rset.getDate("noticeRegdate"), rset.getString("noticeTitle"), rset.getInt("viewCount") 
-							 ));
-				}
-			}catch(SQLException s) {
-				s.printStackTrace();
-				throw s;
+			}catch(Exception e) {
+				e.printStackTrace();
+				throw e;
 			}finally {
-				DBUtil2.close(con, pstmt, rset);
+				em.close();
 			}
 			return list;
 		}
-
-
-
 
 	
 	
