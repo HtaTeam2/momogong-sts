@@ -9,7 +9,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/f51a30e87b.js" crossorigin="anonymous"></script>
-   <link rel="stylesheet" href="./join.css">
+   <link rel="stylesheet" href="../css/join.css">
 	<title>회원가입 페이지</title>
 </head>
 <body>
