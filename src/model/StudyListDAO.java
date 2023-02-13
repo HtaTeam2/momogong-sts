@@ -137,4 +137,14 @@ public class StudyListDAO {
 		
 		return false;
 	}
+	
+	//방 이름으로 검색(부분검색). static이 있어야 함..
+	public static List<StudyLists> serchRoom(String title) throws SQLException {
+		EntityManager em = DBUtil.getEntityManager();
+		System.out.println("serchRoom 방찾기: " + title);
+		List<StudyLists> all = em.createNamedQuery("StudyLists.findByLikeLists").setParameter("title", "%" + title + "%").getResultList();
+		em.close();
+		
+		return all;
+	}
 }
