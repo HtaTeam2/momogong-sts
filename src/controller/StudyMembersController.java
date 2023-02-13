@@ -30,41 +30,39 @@ public class StudyMembersController {
 	public StudyMembersDAO memdao;
 
 	
+	//로그인 화면으로 이동
+	@RequestMapping(value="/loginForm", method = RequestMethod.GET)
+	public String login() {
+		return "login.html";
+	}
+	
 	//로그인
-	/* 1.유효한 user인 경우
-	 * 	1-1.id가 admin(관리자)인 경우 
-	 * 	- 세션에 id 데이터 저장
-	 * 	- 관리자 메인(adLoginView)화면으로 redirect 이동
-	 * 	1-2.일반 회원일 경우
-	 * 	- 세션에 id 데이터 저장
-	 * 	- 일반 로그인 후 메인(loginView)화면으로 redirect 이동
-	 * 	
-	 * 2.무효한 user라면 로그인 웹페이지로 이동 
-	 * 
-	 * http://localhost:8080/team2_studyroom/StdMembers/login
-	 * 	- ?id=admin&pw=admin
-	 */
 	@RequestMapping(value = "/login", method=RequestMethod.POST)
-	public String login(Model sessionData, @RequestParam String id, @RequestParam String pw) throws SQLException {
+	public String login(Model sessionData, @RequestParam("id") String id, @RequestParam("pw") String password) throws SQLException {
 		
-		boolean validate = memdao.getMemberInfo(id, pw);
-		//System.out.println("----"+validate);
+		boolean validate = memdao.loginMember(id, password);
+		System.out.println("----"+validate);
 		
-		if(validate == true && id.equals("admin")) { //관리자
-			//System.out.println("id확인 "+id);
+		if(validate == true) { //로그인성공
+			System.out.println("id확인 "+id);
 			sessionData.addAttribute("id", id);  //세션에 데이터  저장
-			return "redirect:/adLoginView.jsp";
-		}else if(validate == true && !id.equals("admin")) {//관리자X = 회원
-			//System.out.println("id확인 "+id);
-			sessionData.addAttribute("id", id);  //세션에 데이터  저장
-			return "redirect:/loginView.jsp";
+			return "redirect:/main.jsp"; //로그인 후 메인화면
 		}else {
-			return "redirect:/login.html";			
+			return "redirect:/login.html"; //에러메시지..... => view단에서	
 		}
 		
 	}
 	
-	//로그아웃 -  세션 삭제 후 login.html로 이동
+	//로그인 상태 확인
+	@RequestMapping(value = "/loginCheck", method = RequestMethod.POST)
+	public String loginCheck(HttpSession session, Model sessionData) {
+		System.out.println("로그인 확인");
+		String id = (String) sessionData.getAttribute("id");
+		return (String) session.getAttribute("id");
+		
+	}
+	
+	//로그아웃 -  세션 삭제 후 로그인 전 메인화면으로 이동
 	@RequestMapping(value = "/logout", method=RequestMethod.GET)
 	public String login(SessionStatus sess) {
 		
@@ -72,9 +70,8 @@ public class StudyMembersController {
 		sess.setComplete();
 		sess = null;
 		
-		return "home.html";			
+		return "redirect:/main.html"; //로그인 전 메인화면			
 	}
-	
 	
 	//전체회원조회
 	//http://localhost:8080/team2_studyroom/StdMembers/allView
@@ -88,7 +85,6 @@ public class StudyMembersController {
 		mv.setViewName("auth/list");
 		
 		return mv;
-		
 	}
 	
 	
@@ -109,15 +105,6 @@ public class StudyMembersController {
 	
 	
 	
-	//예외 처리에 대한 중복 코드를 분리해서 예외처리 전담 메소드
-	@ExceptionHandler
-	public String totalEx(SQLException e) {  // 예외중 SQLException 만 처리 하는 핸들러 메소드
-		System.out.println("예외 처리 전담");
-		e.printStackTrace();
-		return "forward:error.jsp";
-	}
-	
-
 	
 	//회원가입 입력 폼 
 	//http://localhost/team2_studyroom/StdMembers/insertview
@@ -208,6 +195,16 @@ public class StudyMembersController {
 
 		return mv;
 
+	}
+	
+	
+	
+	//예외 처리에 대한 중복 코드를 분리해서 예외처리 전담 메소드
+	@ExceptionHandler
+	public String totalEx(SQLException e) {  // 예외중 SQLException 만 처리 하는 핸들러 메소드
+		System.out.println("예외 처리 전담");
+		e.printStackTrace();
+		return "forward:error.jsp";
 	}
 
 	// 예외 처리에 대한 중복 코드를 분리해서 예외처리 전담 메소드
