@@ -7,41 +7,163 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
 import org.springframework.stereotype.Repository;
 
 import model.domain.StudyMembersDTO;
+import model.domain.entity.StudyMembers;
+import util.DBUtil;
 import util.DBUtil2;
 
 @Repository
 public class StudyMembersDAO {
-		
-	//회원가입 
-	public int insertMember(StudyMembersDTO dto) throws SQLException {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		try {
-			con = DBUtil2.getConnection();
-			pstmt = con.prepareStatement("INSERT INTO studentmembers VALUES (?, ?, ?, ?, ?, ?, now())");
-			pstmt.setString(1, dto.getId()); //중복 불가능
-			pstmt.setString(2, dto.getEmail());
-			pstmt.setString(3, dto.getGoal()); //null 가능
-			pstmt.setString(4, dto.getGrade());
-			pstmt.setString(5, dto.getNickname());//null 가능, 중복 불가능
-			pstmt.setString(6, dto.getPassword());
-			
-			
-			pstmt.executeUpdate();
-			
-		} catch (SQLException s) {
-			s.printStackTrace();
-			throw new SQLException("id가 중복되었습니다");
-
-		} finally {
-			DBUtil2.close(con, pstmt);
-		}
-		return -1;
+	
+	private static StudyMembersDAO instance = new StudyMembersDAO();
+	
+	public static StudyMembersDAO getInstance() {
+		return instance;
 	}
+	
+	//가입 insert 로직
+	public void insertMember(StudyMembersDTO dto) {
+		EntityManager em = DBUtil.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		try {
+			tx.begin();
+			//방법2 기본생성자 생성 후 setxXX()메소드로 인자 집어넣어줌. 단, not null인 컬럼들은 필수로 값 삽입
+//			StudyMembers members = new StudyMembers();
+//			members.setId(dto.getId());
+//			members.setPassword(dto.getPassword());
+//
+//			em.persist(members);
+			
+			//엔티티의 @nonnull이 붙은 컬럼들을 파라미터로 받아서 생성자 생성 후 
+			StudyMembers members = new StudyMembers(dto.getId(), dto.getPassword(), dto.getNickname(), dto.getEmail(), dto.getGrade());
+			//persist(객체의 변수) insert 실행
+			em.persist(members);
+			tx.commit();
+		} catch (Exception e) {
+			tx.rollback();
+			e.printStackTrace();
+		}finally {
+			em.close();
+		}
+	}
+	
+	//goal 하나 수정 파라미터 인자값 수정 고려, 여러개 update는 방법을 찾지 못함 -> Spring Data 프레임 워크 어쩌구..
+	public void updateMember(String goal, String id) {
+		EntityManager em = DBUtil.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		StudyMembers members = null;
+		try {
+			tx.begin();
+			//pk를 기준으로 class로부터 데이터를 찾음
+			members = em.find(StudyMembers.class, id);
+			if (members != null) {
+				// before update
+				System.out.println("update 전 : " + members);
+				members.setGoal(goal);
+			}else {
+				System.out.println("업데이트 하려는 사람의 정보를 찾지 못하였습니다");
+			}
+			//persist -> update
+			em.persist(members);
+			tx.commit();
+		} catch (Exception e) {
+			tx.rollback();
+			e.printStackTrace();
+		}finally {
+			em.close();
+		}
+	}
+	
+	// delete
+	public void deleteMember(String id) {
+		EntityManager em = DBUtil.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		try {
+			tx.begin();
+			//find로 찾기 
+			StudyMembers members = em.find(StudyMembers.class, id);
+			if (members != null) {
+				em.remove(members);
+			}else {
+				System.out.println("이미 탈퇴처리가 완료된 회원입니다.");
+			}
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			em.close();
+		}
+	}
+	
+	// select 한명 => 마이페이지
+	public StudyMembers findOneMember(String id) {
+		EntityManager em = DBUtil.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		StudyMembers members = null;
+		try {
+			tx.begin();
+			//단순 조회 후 
+			members = em.find(StudyMembers.class, id);
+		
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			em.close();
+		}
+		//해당 객체 출력
+		return members;
+	}
+	
+	//모든 회원 검색(Empcopy 배열 출력) 반환타입
+	public List<StudyMembers> getAllMembers() {
+		EntityManager em = DBUtil.getEntityManager();
+		
+		//jpql
+		String sql = "select m from StudyMembers m";
+		//createQuery : 쿼리 데이터 조회
+		//getResultList : 조회된 데이터 추출
+		List<StudyMembers> all = em.createQuery(sql).getResultList();
+
+		em.close();
+		
+		return all;
+	}
+		
+	
+	//회원가입 
+//	public int insertMember(StudyMembersDTO dto) throws SQLException {
+//		Connection con = null;
+//		PreparedStatement pstmt = null;
+//		try {
+//			con = DBUtil2.getConnection();
+//			pstmt = con.prepareStatement("INSERT INTO studentmembers VALUES (?, ?, ?, ?, ?, ?, now())");
+//			pstmt.setString(1, dto.getId()); //중복 불가능
+//			pstmt.setString(2, dto.getEmail());
+//			pstmt.setString(3, dto.getGoal()); //null 가능
+//			pstmt.setString(4, dto.getGrade());
+//			pstmt.setString(5, dto.getNickname());//null 가능, 중복 불가능
+//			pstmt.setString(6, dto.getPassword());
+//			
+//			
+//			pstmt.executeUpdate();
+//			
+//		} catch (SQLException s) {
+//			s.printStackTrace();
+//			throw new SQLException("id가 중복되었습니다");
+//
+//		} finally {
+//			DBUtil2.close(con, pstmt);
+//		}
+//		return -1;
+//	}
 	
 
 

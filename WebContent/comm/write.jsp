@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="model.domain.CommunityDTO, model.domain.StudyListsDTO"%>
+<%@ page import="model.domain.CommunityDTO, model.domain.StudyMembersDTO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-<% request.setAttribute("dto", new StudyListsDTO(1,"카테","타이틀","111","desc","id",3,4)); %>
+<% session.setAttribute("id", "test1"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,18 +37,16 @@
 	</script>
 
 <body>
- 
- 
- 
 <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-8">
         <h2 class="text-center">게시글 쓰기</h2>
-        <form name="writeForm" action="Community/write" method="post" onsubmit="return checkValid()">
+        <form name="writeForm" action="${pageContext.request.contextPath}/Community/write" accept-charset="utf-8" method="get" onsubmit="return checkValid()">
           <table class="table table-striped">
             <tr>
                 <td>작성자</td>
-                <td>${requestScope.dto.category}</td>
+                <td>${sessionScope.id}<input type="hidden" name="memberid" value="${sessionScope.id}"></td>
+                
             </tr>
             <tr>
                 <td>제목</td>
@@ -60,10 +57,10 @@
                 <td>
 	                <select name="subject">
 				    <option value="">-----선 택-----</option>
-				    <option value="testReview">시험 후기</option>
-				    <option value="chat">잡담</option>
-				    <option value="studying">스터디원 모집</option>
-				    <option value="infoShare">정보 공유</option>
+				    <option value="시험 후기">시험 후기</option>
+				    <option value="잡담">잡담</option>
+				    <option value="스터디원 모집">스터디원 모집</option>
+				    <option value="정보 공유">정보 공유</option>
 					</select>
 				</td>
             </tr>
@@ -91,7 +88,7 @@
                  
                 <td colspan="2"  class="text-center">
                     <input type="submit" value="글쓰기" class="btn btn-success">
-                    <input type="reset" value="다시작성" class="btn btn-warning">
+                    <!-- <input type="reset" value="다시작성" class="btn btn-warning"> -->
                     <button type="button"  class="btn btn-primary">전체 게시글보기</button>
                 </td>
             </tr>

@@ -4,39 +4,51 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+
+import org.junit.Test;
 import org.springframework.stereotype.Repository;
 
 import model.domain.CommunityDTO;
+import model.domain.entity.Community;
+import model.domain.entity.StudyMembers;
+import util.DBUtil;
 import util.DBUtil2;
 
 @Repository
 public class CommunityDAO {
 
-	public void write(CommunityDTO dto) throws SQLException{
-		Connection con = null;	
-		PreparedStatement pstmt = null;
+	public CommunityDTO write(CommunityDTO dto) throws Exception{
+		EntityManager em = DBUtil.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
 		try {
-			con = DBUtil2.getConnection();
-			pstmt = con.prepareStatement("insert into community values(?, ?, ?, ?, sysdate, ?, 0)");
-			pstmt.setString(1, dto.getComTitle());
-			pstmt.setString(2, dto.getMembernick());
-			pstmt.setString(3, dto.getSubject());
-			pstmt.setString(4, dto.getComPw());
-			pstmt.setString(5, dto.getComContent());
+			tx.begin();
 			
-			pstmt.executeUpdate();
-		}catch(SQLException s) {
-			s.printStackTrace();
-			throw s;
+			StudyMembers member = em.find(StudyMembers.class, dto.getMemberid());
+			Community community = new Community(dto.getComTitle(), dto.getSubject(), dto.getComContent(), dto.getComPw(), 0);
+			community.setStudymembers(member);
+			em.persist(community);
+			
+			tx.commit();
+			return CommunityDTO.fromEntity(community);
+			
+		}catch(Exception e) {
+			tx.rollback();
+			e.printStackTrace();
+			throw e;
 		}finally {
-			DBUtil2.close(con, pstmt);
+			em.close();
 		}
 		
 	}
 
-	public CommunityDTO view(int comNo, boolean flag) throws SQLException{
+	public CommunityDTO view(long comNo, boolean flag) throws SQLException{
+//		EntityManager em = DBUtil.getEntityManager();
+//		EntityTransaction tx = em.getTransaction();
+		
 		Connection con = null;	
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -46,7 +58,7 @@ public class CommunityDAO {
 			
 			if(flag) {
 				pstmt = con.prepareStatement("update community set comViewCount = comViewCount + 1 where comNo = ?");
-				pstmt.setInt(1, comNo);
+				pstmt.setLong(1, comNo);
 				if(pstmt.executeUpdate() == 0) {
 					pstmt.close();
 					pstmt = null;
@@ -54,7 +66,7 @@ public class CommunityDAO {
 				}
 			}
 			pstmt = con.prepareStatement("select * from community where comNo = ?");
-			pstmt.setInt(1, comNo);
+			pstmt.setLong(1, comNo);
 			rset = pstmt.executeQuery();
 			if(rset.next()) {
 				dto = new CommunityDTO(comNo, rset.getString("comTitle"), rset.getString("membernick"), rset.getString("subject"), rset.getString("comPw"), 
@@ -70,27 +82,22 @@ public class CommunityDAO {
 		
 	}
 
-	public ArrayList<CommunityDTO> list() throws SQLException{
-		Connection con = null;	
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		ArrayList<CommunityDTO> list = null;
+	public List<Community> list() throws Exception{
+		EntityManager em = DBUtil.getEntityManager();
+		
+		List<Community> list = null;
 		try {
-			con = DBUtil2.getConnection();
-			pstmt = con.prepareStatement("select * from community");
-			rset = pstmt.executeQuery();
+			String sql = "select c from Community c";
+			list = em.createQuery(sql).getResultList();
 			
-			list = new ArrayList<CommunityDTO>();
+			list.forEach(v->System.out.println(v));
+			System.out.println(list.get(0));
 			
-			while(rset.next()) {
-				list.add(new CommunityDTO(rset.getInt("comNo"), rset.getString("comTitle"), rset.getString("membernick"), rset.getString("subject"), rset.getString("comPw"), 
-						rset.getDate("comRegdate"), rset.getString("comContent"), rset.getInt("comViewCount")));
-			}
-		}catch(SQLException s) {
-			s.printStackTrace();
-			throw s;
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw e;
 		}finally {
-			DBUtil2.close(con, pstmt, rset);
+			em.close();
 		}
 		return list;
 	}
@@ -104,7 +111,7 @@ public class CommunityDAO {
 			pstmt.setString(1, dto.getComTitle());
 			pstmt.setString(2, dto.getSubject());
 			pstmt.setString(3, dto.getComContent());
-			pstmt.setInt(4, dto.getComNo());
+			pstmt.setLong(4, dto.getComNo());
 			pstmt.setString(5, dto.getComPw());
 			
 			int result = pstmt.executeUpdate();
@@ -121,13 +128,13 @@ public class CommunityDAO {
 		
 	}
 
-	public boolean delete(int comNo, String comPw) {
+	public boolean delete(long comNo, String comPw) {
 		Connection con = null;	
 		PreparedStatement pstmt = null;
 		try{
 			con = DBUtil2.getConnection();
 			pstmt = con.prepareStatement("delete from community where comNo = ? and comPw = ?");
-			pstmt.setInt(1, comNo);
+			pstmt.setLong(1, comNo);
 			pstmt.setString(2, comPw);
 			
 			int result = pstmt.executeUpdate();
@@ -141,5 +148,15 @@ public class CommunityDAO {
 		return false;
 	}
 	
+	@Test
+	public void dataTest() {
+		try {
+			write(new CommunityDTO(0, "제목", "아이디", "말머리", "비번", null, "내용..", 0));
+			list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 
 }
