@@ -136,7 +136,7 @@
 			</div>
 
 			<div class='align-center'>
-				<input type="submit" values="스터디 만들기" class="button primary fit">
+				<input type="submit" value="스터디 만들기" class="button primary fit">
 			</div>
 
 			</form>
