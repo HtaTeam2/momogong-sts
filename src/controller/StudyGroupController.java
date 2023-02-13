@@ -20,23 +20,22 @@ import model.domain.StudyGroupMembersDTO;
 
 @Controller
 @RequestMapping("StdGroup")
-@SessionAttributes({"allGroup", "id", "roomNo"}) //저장될 값은 allGroup,  id, roomNo
+@SessionAttributes({"allGroup", "id"}) //저장될 값은 allGroup,  id, roomNo
 public class StudyGroupController {
 	
 	@Autowired
 	public StudyGroupDAO groupdao;
 	
-	//List에서 특정방 클릭하는 순간 해당방에 가입 . 필요한 값 roomNo, 세션id
+	//List나 검색결과에서 특정방 클릭하는 순간 해당방에 가입 . 필요한 값 roomNo, 세션id
 	//@RequestParam getParameter("roomNo")
 	//방에 가입 -> 방번호만 넘겨서 해당 방 멤버(group) 전체 조회(ArrayList) -> 방 전체조회 후 뷰로 넘기기 
 	@GetMapping(value = "/insert/{roomNo}", produces = "application/json; charset=UTF-8")
-	public String insertGroup(Model model, @ModelAttribute("id") String joinId, @PathVariable("roomNo") long roomNo) throws SQLException, Exception{
+	public String insertGroup(@ModelAttribute("id") String joinId, @PathVariable("roomNo") long roomNo) throws SQLException, Exception{
 		System.out.println(joinId + " insertGroup() 호출 "  + roomNo);
 		groupdao.joinGroup(joinId, roomNo);
+		System.out.println("가입완료");
 		
-		model.addAttribute("roomNo", roomNo);
-		
-		return "redirect:/StdGroup/enterRoom/" + roomNo; 
+		return "forward:/StdGroup/enterRoom/" + roomNo; 
 	}
 	
 	//그룹원 조회 후 roomView로 입장 
