@@ -76,10 +76,10 @@
 						<div class="field">
 							<label for="category" /> <select name="category" id="category">
 								<option value="">타입을 지정해주세요.</option>
-								<option value="1">자격증</option>
-								<option value="2">수능</option>
-								<option value="3">취업</option>
-								<option value="4">자율</option>
+								<option value="자격증">자격증</option>
+								<option value="수능">수능</option>
+								<option value="취업">취업</option>
+								<option value="자율">자율</option>
 							</select>
 						</div>
 					</div>
