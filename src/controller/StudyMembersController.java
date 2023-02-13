@@ -140,51 +140,92 @@ public class StudyMembersController {
 //	@Autowired
 //	public CommunityDAO comdao;
 	
-	@PostMapping(value = "/auth/register", produces = "application/json; charset=UTF-8")
-	protected String deptInsert() {
+	//회원가입 입력 폼 
+	//http://localhost/team2_studyroom/StdMembers/insertview
+	@GetMapping(value = "/insertview", produces = "application/json; charset=UTF-8")
+	protected ModelAndView memInsertView() throws SQLException {
 		
-//		memdao.insertMember();
+		ModelAndView mv = new ModelAndView();
+		System.out.println("insert() -----");
 		
-		return "회원가입성공";
+		mv.setViewName("auth/join");   
+		return mv;
 	}
 	
-	//탈퇴
-	//http://localhost/team2_studyroom/WEB-INF/auth/deleteSuccess.jsp
+	//회원 정보 등록 후 정보 보기
+	//http://localhost/team2_studyroom/StdMembers/insert
+	@PostMapping(value = "/insert", produces = "application/json; charset=UTF-8")
+	protected ModelAndView memInsert(Model sessionData, StudyMembers dto) throws SQLException {
+		ModelAndView mv = new ModelAndView();
+		System.out.println("insert() -----");
+
+		StudyMembers newmem = memdao.insertMember(dto);
+		
+		sessionData.addAttribute("dto", dto);
+		mv.setViewName("auth/viewOne"); 
+		
+		return mv;
+	}
+	
+	//아이디 중복 체크 화면 띄우기
+	//http://localhost/team2_studyroom/StdMembers/check
+	@GetMapping(value = "/check", produces = "application/json; charset=UTF-8")
+	protected ModelAndView idCheckView() throws SQLException {
+		
+		ModelAndView mv = new ModelAndView();
+		System.out.println("check() -----");
+		
+		mv.setViewName("auth/idCheckForm");   
+		return mv;
+	}
+	
+	//아이디 중복 체크 확인 -- 에러
+	//http://localhost/team2_studyroom/StdMembers/checkOk
+	@GetMapping(value = "/checkOk", produces = "application/json; charset=UTF-8")
+	protected ModelAndView idCheck() throws SQLException {
+		
+		ModelAndView mv = new ModelAndView();
+		System.out.println("checkOk() -----");
+		
+		mv.setViewName("auth/idCheckProc");   
+		return mv;
+	}
+	
+	
+	//프로필 수정 
+	@RequestMapping(value = "/updatepage", method = RequestMethod.GET)
+	public ModelAndView updatePage(String id) throws SQLException {
+
+		ModelAndView mv = new ModelAndView();
+
+		mv.addObject("allData", memdao.getMember(id));
+		mv.setViewName("auth/update");
+
+		return mv;
+
+	}
+	
+
+	
+	//탈퇴 --
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String delete(@RequestParam("id") String deleteId) throws SQLException {
+		
 		memdao.delete(deleteId);
-		return "redirect:auth/deleteSuccess"; 
-	}
-	
-	//수정
-	//http://localhost/team2_studyroom/WEB-INF/auth/update.jsp
-	//http://localhost/team2_studyroom/WEB-INF/auth/updateSuccess.jsp
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String update(@RequestParam("nickname") String nickname, @RequestParam("email") String email, @RequestParam("password") String pw, @RequestParam("goal") String goal,
-			@ModelAttribute("dto") StudyMembersDTO dto) throws SQLException {
-
-		System.out.println("update() ----- " + dto);
 		
-		dto.setNickname(nickname);
-		dto.setEmail(email);
-		dto.setPassword(pw);
-		dto.setGoal(goal);
-		
-
-		memdao.update(dto);
-
-		return "forward:/auth/updateSuccess.jsp";
+		return "redirect:/auth/deleteSuccess"; 
 	}
+
 	
-	//조회
+	//로그인 후 조회
 	//http://localhost/team2_studyroom/WEB-INF/auth/viewOne.jsp
-	@RequestMapping(value = "/viewOne", method = RequestMethod.GET)
+	@RequestMapping(value = "/viewOne2", method = RequestMethod.GET)
 	public ModelAndView viewOne(String id) throws SQLException {
 
 		ModelAndView mv = new ModelAndView();
 
 		mv.addObject("allData", memdao.getMember(id));
-		mv.setViewName("viewOne");
+		mv.setViewName("viewOne2");
 
 		return mv;
 
@@ -199,13 +240,7 @@ public class StudyMembersController {
 
 		req.setAttribute("errorMsg", e.getMessage());
 
-		return "forward:/auth/error.jsp";
+		return "forward:/error.jsp";
 	}
 
-	@ExceptionHandler
-	public String totalEx2(NullPointerException e) { 
-		System.out.println("예외 처리 전담");
-		e.printStackTrace();
-		return "forward:/auth/error.jsp";
-	}
 }
