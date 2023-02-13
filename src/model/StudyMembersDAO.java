@@ -332,13 +332,23 @@ public class StudyMembersDAO {
 
 
 	
-	//본인 조회 - jpa
+		//본인 조회 - jpa
 	public static StudyMembers getMember (String id) {
 		EntityManager em = DBUtil.getEntityManager();
-//		StudyMembers stdmember = (StudyMembers)em.createNamedQuery("StudyMembers.findByStudyMembers").setParameter("id", id).getSingleResult();
-		StudyMembers stdmember = em.find(StudyMembers.class, id);
+		EntityTransaction tx = em.getTransaction();
+		StudyMembers stdmember = null;
 		
-		em.clear();
+		try {
+			tx.begin();
+			stdmember = em.find(StudyMembers.class, id);
+			tx.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}finally {
+			em.close();
+		}
 		
 		return stdmember;
 	}
