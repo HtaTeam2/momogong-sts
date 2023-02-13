@@ -14,7 +14,7 @@
 	session.setAttribute("id", "test1");
 %>   
 
-	<a href="StdGroup/mystudy">내 스터디로 이동</a>
+	<a href="StdGroup/mystudy">내 스터디로 이동</a> 
 
 </body>
 </html>
