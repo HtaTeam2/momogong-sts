@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -22,6 +23,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @Setter
 @Getter
+
+//수정해서 사용 => 2개 이상의 조건을 주고 검색
+@NamedQuery(name = "Group.findByJoinId", 
+			query = "select g from StudyGroup g where g.studyMembers.id = :name and g.studyLists.roomNo = :roomNo")
+//수정해서 사용 => 부분검색
+//@NamedQuery(name = "Player.findByLikePlayer", query = "select p from Player p where p.name like :name")
+//SELECT DISTINCT * FROM studygroup g INNER JOIN studymembers m WHERE g.studymembers_id = m.id AND g.studylists_no = 1;
+// g.studylists_no, m.id, m.nickname, m.goal
+//@NamedQuery(name = "GroupMembers.findByRoomNo", 
+//			query = "SELECT g.studylists_no, g.studymembers.id, g.studymembers.nickname, m.goal FROM studygroup g WHERE g.studyLists.roomNo = :roomNo;")
 
 @Entity
 @SequenceGenerator(
