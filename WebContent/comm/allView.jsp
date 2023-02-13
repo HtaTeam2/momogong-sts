@@ -46,8 +46,8 @@
 								<tr>
 									<td>${c.comNo}</td>
 									<td>${c.subject}</td>
-									<td><a href="Community/view?comNo=${c.comNo}">${c.comTitle}</a></td>
-									<td>${c.memberid}</td>
+									<td><a href="${pageContext.request.contextPath}/Community/view/${c.comNo}">${c.comTitle}</a></td>
+									<td>${c.studymembers.id}</td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${c.comRegdate}"/></td>
 									<td>${c.comViewCount}</td>
 								</tr>
@@ -61,24 +61,6 @@
 					</c:choose>
 					
 					
-					
-						<tr>
-							<td>3</td>
-							<td><a href="#!">[공지사항] 개인정보 처리방침 변경안내처리방침</a></td>
-							<td>2017.07.13</td>
-						</tr>
-
-						<tr>
-							<td>2</td>
-							<td><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></td>
-							<td>2017.06.15</td>
-						</tr>
-
-						<tr>
-							<td>1</td>
-							<td><a href="#!">공지사항 안내입니다. 이용해주셔서 감사합니다</a></td>
-							<td>2017.06.15</td>
-						</tr>
 					</tbody>
 				</table>
 			</div>

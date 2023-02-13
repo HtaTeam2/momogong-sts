@@ -38,7 +38,7 @@ public class CommunityController {
 	public CommunityDAO comdao;
 
 	//글쓰기
-	@RequestMapping(value = "/write", method = RequestMethod.GET, produces="application/json;charset=UTF-8")
+	@RequestMapping(value = "/write", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
 	public String write(Model model, @ModelAttribute CommunityDTO dto) throws Exception{
 		System.out.println("insert()----------");
 		System.out.println(dto);
@@ -66,7 +66,7 @@ public class CommunityController {
 		}else {
 			model.addAttribute("dto", dto);
 		}
-		return "redirect:/read.jsp";
+		return "forward:/comm/read.jsp";
 	}
 
 
@@ -77,7 +77,7 @@ public class CommunityController {
 		System.out.println("list()------------");
 
 		model.addAttribute("list", comdao.list());
-		return "redirect:/allView.jsp";
+		return "forward:/comm/allView.jsp";
 	}
 
 
