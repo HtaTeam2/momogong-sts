@@ -141,3 +141,11 @@ h2 {
   font-size: 1.2em;
   letter-spacing: 2px;
 }
+
+.submit input:hover{
+
+	background: linear-gradient(to right, rgb(245, 188, 82),
+		rgb(253, 157, 157));
+	font-size: 1.5em;
+
+}
