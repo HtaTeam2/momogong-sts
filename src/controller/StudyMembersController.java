@@ -40,6 +40,7 @@ public class StudyMembersController {
 	}
 	
 	//로그인
+	//세션에 로그인 한 회원의 전체 정보 데이터  저장하도록 수정필요 ->나중에 등급권한 설정..
 	@RequestMapping(value = "/login", method=RequestMethod.POST)
 	public String login(Model sessionData, @RequestParam("id") String id, @RequestParam("password") String password) throws SQLException {
 		
@@ -49,20 +50,20 @@ public class StudyMembersController {
 		if(validate == true) { //로그인성공
 			System.out.println("id확인 " + id);
 			sessionData.addAttribute("id", id);  //세션에 데이터  저장
+			
 			return "redirect:/main.jsp"; //로그인 후 메인화면
 		}else {
 			return "redirect:/login.html"; //에러메시지..... => view단에서	
 		}
-		
 	}
 	
 	//로그인 상태 확인
 	@RequestMapping(value = "/loginCheck", method = RequestMethod.POST)
 	public String loginCheck(HttpSession session, Model sessionData) {
+		
 		System.out.println("로그인 확인");
 		String id = (String) sessionData.getAttribute("id");
 		return (String) session.getAttribute("id");
-		
 	}
 	
 	//로그아웃 -  세션 삭제 후 로그인 전 메인화면으로 이동
@@ -75,37 +76,6 @@ public class StudyMembersController {
 		
 		return "redirect:/main.html"; //로그인 전 메인화면			
 	}
-	
-	//전체회원조회
-	//http://localhost:8080/team2_studyroom/StdMembers/allView
-	//spring 코드로 변환 url - allView 
-	@RequestMapping(value="/allView", method = RequestMethod.GET)
-	public ModelAndView getStdMembers() throws SQLException {
-		
-		ModelAndView mv = new ModelAndView();
-			
-		mv.addObject("allData", memdao.getMembers());
-		mv.setViewName("auth/list");
-		
-		return mv;
-	}
-	
-	
-	//관리자 정보 수정(update)
-	@RequestMapping(value = "/updateAd", method=RequestMethod.POST)
-	public String updateAdmin(@RequestParam("password") String pw, 
-					     @RequestParam("email") String email,
-					     @ModelAttribute("dto") StudyMembersDTO dto) throws SQLException{
-		System.out.println("update() ---- " + dto);
-		
-		dto.setPassword(pw);
-		dto.setEmail(email);	
-			
-		memdao.update(dto);	
-				
-		return "forward:/auth/adUpdateSuccess.jsp";
-	}
-	
 	
 	
 	
@@ -160,7 +130,6 @@ public class StudyMembersController {
 		return mv;
 	}
 	
-	
 	//프로필 수정 
 	@RequestMapping(value = "/updatepage", method = RequestMethod.GET)
 	public ModelAndView updatePage(String id) throws SQLException {
@@ -171,7 +140,6 @@ public class StudyMembersController {
 		mv.setViewName("auth/update");
 
 		return mv;
-
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
@@ -190,9 +158,7 @@ public class StudyMembersController {
 		return "auth/updateSuccess";
 	}
 	
-
-	
-	//탈퇴 --
+	//탈퇴 & 1명 회원 삭제
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String delete(@RequestParam("id") String deleteId) throws SQLException {
 		
@@ -201,7 +167,6 @@ public class StudyMembersController {
 		return "redirect:/auth/deleteSuccess"; 
 	}
 
-	
 	//로그인 후 조회
 	//http://localhost/team2_studyroom/WEB-INF/auth/viewOne.jsp
 	@RequestMapping(value = "/viewOne2", method = RequestMethod.GET)
@@ -213,9 +178,44 @@ public class StudyMembersController {
 		mv.setViewName("auth/viewOne2");
 
 		return mv;
-
 	}
 	
+	
+
+	//관리자 화면으로 이동
+	@RequestMapping(value="/adPage", method = RequestMethod.GET)
+	public String adMain() {
+		return "auth/adPage";
+	}
+	
+	//관리자 - 전체회원조회
+	//http://localhost:8080/team2_studyroom/StdMembers/allView
+	//spring 코드로 변환 url - allView 
+	@RequestMapping(value="/adAllView", method = RequestMethod.GET)
+	public ModelAndView getMembers() throws SQLException {
+		
+		ModelAndView mv = new ModelAndView();
+			
+		mv.addObject("allData", memdao.getMembers());
+		mv.setViewName("auth/adAllView");
+		
+		return mv;
+	}
+	
+	//관리자 정보 수정(update)
+	@RequestMapping(value = "/updateAd", method=RequestMethod.POST)
+	public String updateAdmin(@RequestParam("password") String pw, 
+					     @RequestParam("email") String email,
+					     @ModelAttribute("dto") StudyMembersDTO dto) throws SQLException{
+		System.out.println("update() ---- " + dto);
+		
+		dto.setPassword(pw);
+		dto.setEmail(email);	
+			
+		memdao.update(dto);	
+				
+		return "forward:/auth/adUpdateSuccess.jsp";
+	}
 	
 	// 예외 처리에 대한 중복 코드를 분리해서 예외처리 전담 메소드
 	//http://localhost/team2_studyroom/WEB-INF/auth/error.jsp
