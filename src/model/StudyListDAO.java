@@ -10,21 +10,41 @@ import org.springframework.stereotype.Repository;
 
 import model.domain.StudyListsDTO;
 import model.domain.entity.StudyLists;
+import model.domain.entity.StudyMembers;
 import util.DBUtil;
 
 @Repository
 public class StudyListDAO {
 	
 	//방만들기 
-	public void insertList(StudyListsDTO sdto) throws Exception {
+	public StudyLists insertList(String roomTitle, String hostId, String category, String roomDesc, int maxMem, String roomPw) throws Exception {
 		EntityManager em = DBUtil.getEntityManager();
 		EntityTransaction tx = em.getTransaction();
+		StudyMembers smem = null;
+		StudyLists lists = null;
 		
 		try {
 			tx.begin();
 			
-			StudyLists lists = new StudyLists(sdto.getRoomTitle(), sdto.getMemNum(), sdto.getMaxMem(), sdto.getCategory());
+			smem = em.find(StudyMembers.class, hostId);
+			
+			lists = new StudyLists();
+			lists.setRoomTitle(roomTitle);
+			lists.setMaxMem(maxMem);
+			lists.setCategory(category);
+			lists.setMemNum(1);
+			if(roomPw != null) {
+				lists.setRoomPw(roomPw);
+			}
+			if(roomDesc != null) {
+				lists.setRoomDesc(roomDesc);
+			}
+			lists.setStudyMembers(smem);
+			
 			em.persist(lists);
+			
+			System.out.println(lists.getRoomNo());
+			
 			tx.commit();
 	
 		}catch (Exception e) {
@@ -34,6 +54,7 @@ public class StudyListDAO {
 		}finally {
 			em.close();
 		}
+		return lists;
 	}
 	
 	// 방삭제
@@ -96,7 +117,7 @@ public class StudyListDAO {
 	}
 	
 	//방 전체조회
-	public List<StudyLists> allList() throws Exception {
+	public List<StudyLists> AllList() throws Exception {
 		EntityManager em = DBUtil.getEntityManager();
 		List<StudyLists> list = null;
 		

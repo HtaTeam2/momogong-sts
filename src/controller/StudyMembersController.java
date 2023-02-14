@@ -47,7 +47,7 @@ public class StudyMembersController {
 		System.out.println("----"+validate);
 		
 		if(validate == true) { //로그인성공
-			System.out.println("id확인 "+id);
+			System.out.println("id확인 " + id);
 			sessionData.addAttribute("id", id);  //세션에 데이터  저장
 			return "redirect:/main.jsp"; //로그인 후 메인화면
 		}else {
@@ -174,6 +174,22 @@ public class StudyMembersController {
 
 	}
 	
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public String update(@ModelAttribute("id") String id, @RequestParam("nickname") String nickname, @RequestParam("email") String email, @RequestParam("password") String pw, @RequestParam("goal") String goal) throws SQLException {
+
+		System.out.println("update() ----- " + id);
+		
+//		dto.setNickname(nickname);
+//		dto.setEmail(email);
+//		dto.setPassword(pw);
+//		dto.setGoal(goal);
+		
+
+		memdao.memUpdate(id, email, goal, nickname, pw);
+
+		return "auth/updateSuccess";
+	}
+	
 
 	
 	//탈퇴 --
@@ -189,27 +205,18 @@ public class StudyMembersController {
 	//로그인 후 조회
 	//http://localhost/team2_studyroom/WEB-INF/auth/viewOne.jsp
 	@RequestMapping(value = "/viewOne2", method = RequestMethod.GET)
-	public ModelAndView viewOne(String id) throws SQLException {
-
+	public ModelAndView viewOne(@ModelAttribute("id") String id) throws SQLException {
 		ModelAndView mv = new ModelAndView();
-
-		mv.addObject("allData", memdao.getMember(id));
-		mv.setViewName("viewOne2");
+		StudyMembers members = memdao.getMember(id);
+		System.out.println(members);
+		mv.addObject("allData", members);
+		mv.setViewName("auth/viewOne2");
 
 		return mv;
 
 	}
 	
 	
-	
-	//예외 처리에 대한 중복 코드를 분리해서 예외처리 전담 메소드
-	@ExceptionHandler
-	public String totalEx(SQLException e) {  // 예외중 SQLException 만 처리 하는 핸들러 메소드
-		System.out.println("예외 처리 전담");
-		e.printStackTrace();
-		return "forward:error.jsp";
-	}
-
 	// 예외 처리에 대한 중복 코드를 분리해서 예외처리 전담 메소드
 	//http://localhost/team2_studyroom/WEB-INF/auth/error.jsp
 	@ExceptionHandler

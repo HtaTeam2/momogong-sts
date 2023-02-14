@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta charset="utf-8">
+<<<<<<< HEAD
 <link rel="stylesheet" href="${pageContext.request.contextPath}/comm/table.css" type="text/css"/>
 <title>커뮤니티 글 상세페이지</title>
 
@@ -33,6 +34,33 @@
 	
 	
 	</script>
+=======
+<title>커뮤니티 글 상세페이지</title>
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style>
+		body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+		
+		td{font-family: "Raleway", sans-serif; font-size: 18px; align:center;}
+		
+		input[type=text] {
+			width: 500px;
+			height: 32px;
+			font-size: 15px;
+			border: 0;
+			border-radius: 15px;
+			outline: none;
+			padding-left: 10px;
+			background-color: rgb(233, 233, 233);
+		}
+		
+		footer {
+			width: 100%; 
+			bottom:0; 
+		}
+	</style>
+>>>>>>> 8fd569769644628d30742270ebebd4fb54e9e322
 </head>
 <body>
 <jsp:include page="/header.jsp"></jsp:include>
@@ -44,7 +72,11 @@
             <thead>
                 <tr align="center">
                     <th width="10%">[${requestScope.dto.subject}]</th>
+<<<<<<< HEAD
                     <th width="60%">${requestScope.dto.comTitle}<span style='float:right'>글번호 : ${requestScope.dto.comNo}</span></th>
+=======
+                    <th width="60%">${requestScope.dto.comTitle}</th>
+>>>>>>> 8fd569769644628d30742270ebebd4fb54e9e322
                 </tr>
             </thead>
             <tbody>
@@ -91,6 +123,7 @@
                <tr>
                    <td>
                        <span style='float:right'>
+<<<<<<< HEAD
                                <button type="button" id="list" onclick="location.href='${pageContext.request.contextPath}/Community/list'">목록</button>
                                <button type="button" onclick="location.href='${pageContext.request.contextPath}/Community/writeform'" >글쓰기</button>
                       </span>
@@ -102,6 +135,13 @@
                            		</form>
                            
                            
+=======
+                               <button type="button" id="list" class="btn btn-default">목록</button>
+                               <button type="button" id="modify" class="btn btn-default">수정</button>
+                               <button type="button" id="delete" class="btn btn-default">삭제</button>
+                               <button type="button" id="write" class="btn btn-default">글쓰기</button>
+                           </span>
+>>>>>>> 8fd569769644628d30742270ebebd4fb54e9e322
                        </td>
                    </tr>
                </thead>

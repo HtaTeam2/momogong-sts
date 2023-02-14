@@ -42,7 +42,7 @@
 	<div class="wrap">
 		<div class="login">
 			<h2>로그인</h2>
-			<form name="f" action="StdMembers/Login" method="post">
+			<form name="f" action="StdMembers/login" method="post">
 				<div class="login_id">
 					<h4>아이디</h4>
 					<input type="id" name="id" placeholder="아이디를 입력해주세요.">

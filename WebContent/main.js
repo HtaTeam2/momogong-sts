@@ -24,7 +24,9 @@ function drawTable(list){
 		td.classList.add('w3-container'); 
 		let img = document.createElement('img'); //<img></img>
 		img.src = './images/profile.png';
-		img.setAttribute('onclick', '\'location.href=\"${pageContext.request.contextPath}/StdGroup/insert/' + item['roomNo'] + '\"\'');
+		//location.href="/StdGroup/insert/" + item['roomNo'] 
+		//"\'location.href=\"/StdGroup/insert/\"" + item['roomNo'] + "\'"
+		img.setAttribute('onclick', 'location.href=\"StdGroup/insert/' + item['roomNo'] + '\"');
 		img.classList.add('w3-hover-opacity');
 		img.setAttribute('width','60%');
 		console.log('출력: ' + item['roomNo']); //Object 타입
@@ -64,7 +66,6 @@ function dataReceive(title){
 			drawTable(data);
 		}
 	}).catch(function(errorMsg){
-//		console.log(errorMsg);
 		alert("실행중 문제 발생 : " + errorMsg);
 	});
 }

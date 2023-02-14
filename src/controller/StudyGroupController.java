@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,6 +28,17 @@ public class StudyGroupController {
 	
 	@Autowired
 	public StudyGroupDAO groupdao;
+	
+	//스터디 개설시 호스트 그룹원 추가
+	@PostMapping(value = "/hostJoin/{roomNo}", produces = "application/json; charset=UTF-8")
+	public String updateGroup(@ModelAttribute("id") String joinId, @PathVariable("roomNo") long roomNo) throws SQLException, Exception{
+		System.out.println(joinId + " insertGroup() 호출 "  + roomNo);
+		groupdao.hostJoin(joinId, roomNo);
+		System.out.println("가입완료");
+		
+		return "redirect:/group/joinSuccessView.jsp"; 
+	}
+	
 	
 	//List나 검색결과에 특정방 클릭하는 순간 해당방에 가입 . 필요한 값 roomNo, 세션id
 	//@RequestParam getParameter("roomNo")
@@ -47,7 +59,7 @@ public class StudyGroupController {
 		ModelAndView mv = new ModelAndView();
 //		List allGroup = groupdao.getCustomers(roomNo);
 		ArrayList<StudyGroupMembersDTO> allGroup = groupdao.getCustomers1(roomNo);
-		System.out.println(allGroup.get(0).getNickname());
+//		System.out.println(allGroup.get(0).getNickname());
 		mv.addObject("allGroup", allGroup);
 		mv.setViewName("group/roomView"); //WEB-INF/group/roomView.jsp
 		
@@ -58,13 +70,14 @@ public class StudyGroupController {
 	
 	
 	//그룹 탈퇴(방장인 경우, 비방장인 경우).
-	@GetMapping(value = "/delete/{roomNo}", produces = "application/json; charset=UTF-8")
-	public String deleteGroup(@ModelAttribute("id") String deleteId, @PathVariable("roomNo") long roomNo) throws SQLException, Exception{
+	@PostMapping(value = "/delete/{roomNo}", produces = "application/json; charset=UTF-8")
+	public String deleteGroup(Model sessionData, @ModelAttribute("id") String deleteId, @PathVariable("roomNo") long roomNo) throws SQLException, Exception{
 		System.out.println("deleteGroup() " + deleteId);
 		int result = groupdao.delete(deleteId, roomNo);
 		
 		if(result == 1) { //방 관리자 => list테이블에서 해당 방 번호 삭제
-			return "StdList/list 방삭제 url";
+			sessionData.addAttribute("roomNo", roomNo);
+			return "forward:/StdList/deleteList";
 		}
 		//삭제 후에 삭제 성공페이지로 돌아감
 		return "redirect:/group/deleteSucc.jsp";

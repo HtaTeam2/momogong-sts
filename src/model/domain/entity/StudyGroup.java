@@ -29,10 +29,10 @@ import lombok.Setter;
 			query = "select g from StudyGroup g where g.studyMembers.id = :name and g.studyLists.roomNo = :roomNo")
 //SELECT DISTINCT * FROM studygroup g INNER JOIN studymembers m WHERE g.studymembers_id = m.id AND g.studylists_no = 1;
 // 결과는 나오나 jsp el태그로 안뽑힘
-@NamedQuery(name = "GroupMembers.findByRoomNo", 
-			query = "SELECT m.nickname AS nick, l.roomTitle AS title "
-					+ "FROM StudyGroup g JOIN g.studyLists l JOIN g.studyMembers m "
-					+ "WHERE g.studyLists.roomNo = :roomNo")
+//@NamedQuery(name = "GroupMembers.findByRoomNo", 
+//			query = "SELECT m.nickname AS nick, l.roomTitle AS title "
+//					+ "FROM StudyGroup g JOIN g.studyLists l JOIN g.studyMembers m "
+//					+ "WHERE g.studyLists.roomNo = :roomNo")
 @Entity
 @SequenceGenerator(
         name="STUDYGROUP_SEQ_GEN", //시퀀스 제너레이터 이름

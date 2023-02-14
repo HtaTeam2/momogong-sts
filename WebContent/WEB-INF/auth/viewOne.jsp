@@ -44,6 +44,7 @@ input[type=text] {
   <header id="portfolio">
     <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
     <div class="w3-container">
+<<<<<<< HEAD
 	    <div class="w3-section w3-bottombar w3-padding-16">
 	       
 		  <img src="${pageContext.request.contextPath}/images/momogong.png" onclick='location.href="${pageContext.request.contextPath}/main.jsp"' style="width:10%" class="w3-hover-opacity">
@@ -72,6 +73,21 @@ input[type=text] {
   </div> -->
   
   <!-- 추천스터디 1 배열로 3개까지 나열? rownum..-->
+=======
+    <div class="w3-section w3-bottombar w3-padding-16">
+       
+	  <img src="../images/momogong.png" alt="Norway" style="width:10%" class="w3-hover-opacity" onclick='location.href="../main.html"'>
+      <button class="w3-button w3-white" onclick='location.href="../login.jsp"'>내 스터디</button>
+      <button class="w3-button w3-white" onclick='location.href="../login.jsp"'>커뮤니티</button>
+      <button class="w3-button w3-white w3-hide-small" onclick='location.href="/Notice/list"'>공지사항</button>
+		스터디 검색 : <input type="text" id="study" name="study" value=""><button id="btn1" class="w3-button w3-white w3-hide-small"><i class="fa fa-search"></i></button>
+      <button class="w3-button w3-white w3-hide-small w3-right" onclick='location.href="../login.jsp"'>로그인</button>
+    </div>
+    </div>
+  </header>
+  
+
+>>>>>>> 8fd569769644628d30742270ebebd4fb54e9e322
   <div id="searchList" class="w3-row-padding" align="center">
 	<form action="StdMembers/viewOne">
 
@@ -109,9 +125,12 @@ input[type=text] {
 
 	</form>
   </div> 
+<<<<<<< HEAD
     <!-- 외부로 별도로 분리해 놓은 js 파일만 include -->
   <!-- axios 사용을 위한 추가 설정 -->
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="main.js"></script>
+=======
+>>>>>>> 8fd569769644628d30742270ebebd4fb54e9e322
 </body>
 </html>

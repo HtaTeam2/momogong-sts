@@ -10,7 +10,7 @@
     <title>스터디 생성</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="stdlist.css" />
+    <link rel="stylesheet" href="assets/css/stdlist.css" />
 
 </head>
 
@@ -39,7 +39,7 @@
                 <!-- 내용 -->
                 <section>
                     <div class="content">
-                        <form name="writeForm" action="StdList/insertList" method="post" accept-charset="UTF-8" onSubmit='return checkValid()'>
+                        <form name="writeForm" action="${pageContext.request.contextPath}/StdList/insertList" method="post" accept-charset="UTF-8" onSubmit='return checkValid()'>
                             <div class="fields">
                                 <div class="field">
                                     <table border="1" cellspacing="1" width="100%">

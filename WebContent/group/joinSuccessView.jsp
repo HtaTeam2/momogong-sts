@@ -1,28 +1,11 @@
-<<<<<<< HEAD
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>updateSuccess.jsp</title>
-</head>
-<body>
-	<center>
-	
-		축하합니다.  update 성공하셨습니다. 
-		<a href="${pageContext.request.contextPath}/Notice/allView">모두보기</a>
-
-	</center>
-</body>
-=======
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>updateSuccess.jsp</title>
+	<title>joinSuccessView.jsp</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -49,12 +32,11 @@
 	</style>
 </head>
 <body>
-	<jsp:include page="/header.jsp"></jsp:include>
-	<center>
-		<h3>축하합니다. update 성공하셨습니다.</h3> 
-		<a href="${pageContext.request.contextPath}/Notice/allView">모두보기</a>
+<jsp:include page="/header.jsp"></jsp:include>
 
-	</center>
+<h1>성공적으로 방을 생성하였습니다!</h1>
+
+<a href='${pageContext.request.contextPath}/main.jsp'>메인으로 이동하기</a>
+
 </body>
->>>>>>> 8fd569769644628d30742270ebebd4fb54e9e322
 </html>

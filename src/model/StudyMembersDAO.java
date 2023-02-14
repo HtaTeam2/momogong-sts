@@ -103,7 +103,7 @@ public class StudyMembersDAO {
 	
 	
 		//멤버 본인 프로필 수정 - jpa
-	public static boolean memUpdate (String id, String email, String goal, String nick, String pw) throws SQLException {
+	public static boolean memUpdate(String id, String email, String goal, String nick, String pw) throws SQLException {
 		EntityManager em = DBUtil.getEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		StudyMembers mem = null;
@@ -145,6 +145,9 @@ public class StudyMembersDAO {
 		try {
 			tx.begin();
 			stdmember = em.find(StudyMembers.class, id);
+			
+			System.out.println(stdmember);
+			
 			tx.commit();
 			
 		} catch (Exception e) {
@@ -239,6 +242,7 @@ public class StudyMembersDAO {
 			StudyMembers loginData = (StudyMembers) em.createNamedQuery("StudyMembers.findByLoginInfo").setParameter("id", id).setParameter("password", password).getSingleResult();
 			
 			em.persist(loginData);
+			
 			System.out.println(loginData);
 
 			tx.commit();

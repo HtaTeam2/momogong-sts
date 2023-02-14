@@ -11,7 +11,7 @@
 <body>
 <h2>게시글 작성</h2>
 
- <form name="writeForm" action="${pageContext.request.contextPath}/Notice/insert" accept-charset="utf-8" method="post" >
+ <form name="writeForm" action="${pageContext.request.contextPath}/Notice/insertNotice" accept-charset="utf-8" method="post" >
 
 
 		<div>

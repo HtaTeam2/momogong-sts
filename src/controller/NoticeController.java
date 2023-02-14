@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import model.NoticeDAO;
 import model.domain.NoticeDTO;
@@ -26,16 +25,21 @@ public class NoticeController {
 	public NoticeDAO notdao;
 
 	// 글 등록 폼
+//	@GetMapping(value = "/insertview", produces = "application/json; charset=UTF-8")
+//	protected ModelAndView noticenisertView() throws SQLException {
+//
+//		ModelAndView mv = new ModelAndView();
+//		System.out.println("insertForm() -----");
+//
+//		mv.setViewName("notice/writeform");
+//		return mv;
+//	}
+
+	
 	@GetMapping(value = "/insertview", produces = "application/json; charset=UTF-8")
-	protected ModelAndView noticenisertView() throws SQLException {
-
-		ModelAndView mv = new ModelAndView();
-		System.out.println("insertForm() -----");
-
-		mv.setViewName("notice/writeform");
-		return mv;
+	public String writeform() {
+		return "forward:/notice/writeform.jsp";
 	}
-
 	// 글 등록
 
 	/*
@@ -59,7 +63,7 @@ public class NoticeController {
 //	}
 	
 	// 글등록
-	@PostMapping(value = "/insert", produces = "application/json; charset=UTF-8")
+	@PostMapping(value = "/insertNotice", produces = "application/json; charset=UTF-8")
 	public String write(Model model, @ModelAttribute Notice ndto) throws Exception{
 		System.out.println("insert()----------");
 		

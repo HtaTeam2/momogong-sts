@@ -32,7 +32,8 @@ import lombok.Setter;
 //@NamedQuery(name = "Player.findByTeamPlayers", query = "select p from Player p where p.team.tname = :name")
 //수정해서 사용 => 부분검색
 //다음 sql문과 같습니다.(검색어: 테) => select * from StudyLists where roomTitle like '%테%';
-@NamedQuery(name = "StudyLists.findByLikeLists", query = "select s from StudyLists s where s.roomTitle like :title")
+@NamedQuery(name = "StudyLists.findByLikeLists", 
+			query = "select s from StudyLists s where s.roomTitle like :title")
 
 @Entity
 @SequenceGenerator(
@@ -73,4 +74,13 @@ public class StudyLists {
 	
 	@OneToMany(mappedBy = "studyLists") //StudyLists에 매핑되어 있는 변수이름으로 지정해야함
 	private List<StudyGroup> studyGroup = new ArrayList<StudyGroup>();
+
+	@Override
+	public String toString() {
+		return "StudyLists [roomNo=" + roomNo + ", roomTitle=" + roomTitle + ", roomPw=" + roomPw + ", roomDesc="
+				+ roomDesc + ", studyMembers=" + studyMembers.getId() + ", memNum=" + memNum + ", maxMem=" + maxMem
+				+ ", category=" + category + "]";
+	}
+	
+	
 }

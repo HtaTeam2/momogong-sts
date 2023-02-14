@@ -24,7 +24,42 @@ import util.DBUtil2;
 @Repository
 public class StudyGroupDAO {
 	
-	//그룹원 가입
+	
+	//스터디 생성 후 업데이트 group -> host닉으로 insert 
+	public void hostJoin(String joinId, long roomNo) throws SQLException, Exception{
+		System.out.println("hostJoin DAO");
+		EntityManager em = DBUtil.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		StudyGroup group = null;
+		StudyLists lists = null;
+		StudyMembers mem = null;
+		
+		try {
+			tx.begin();
+			
+			lists= em.find(StudyLists.class, roomNo);
+			mem = em.find(StudyMembers.class, joinId);
+			
+			
+			if(joinId != null && roomNo != 0) {
+				group = new StudyGroup();
+				group.setStudyLists(lists);
+				group.setStudyMembers(mem);
+				
+				em.persist(group);
+				
+				tx.commit();
+			}
+		}catch (Exception s) {
+			s.printStackTrace();
+			tx.rollback();
+		}finally {
+			em.close();
+		}
+		
+	}
+	
+	//스터디 목록 조회
 	public StudyGroup joinGroup(String joinId, long roomNo) throws Exception, SQLException{
 		System.out.println("joinGroup DAO");
 		EntityManager em = DBUtil.getEntityManager();
@@ -36,7 +71,10 @@ public class StudyGroupDAO {
 			tx.begin();
 			lists= em.find(StudyLists.class, roomNo);
 			mem = em.find(StudyMembers.class, joinId);
+			//namedQuery 사용법 1. 그룹내에서 해당 id로 조회.. 없으면 예외가 발생해버린다ㅜ NoResultException: No entity found for query
 			group = (StudyGroup)em.createNamedQuery("Group.findByJoinId").setParameter("roomNo", roomNo).setParameter("name", joinId).getSingleResult();
+			//2. 그룹내에 해당Id가 없을때만 가입시킴 이걸 null이라고 해야하나... NoResultException: No entity found for query
+			//catch문을 이런식으로 써도 괜찮은지..............강사님께 여쭤보기
 		}catch (NoResultException e) {
 			try {
 				group = new StudyGroup();
@@ -48,6 +86,7 @@ public class StudyGroupDAO {
 					// before update
 					System.out.println("update 전 : " + lists.getMemNum());
 					if(lists.getMemNum() < lists.getMaxMem()) {
+						//1 추가. 다만 4명이 넘어야 한다는 조건은...
 						lists.setMemNum(lists.getMemNum() + 1);
 						em.persist(lists);
 					}else {
@@ -65,6 +104,9 @@ public class StudyGroupDAO {
 				s.printStackTrace();
 				tx.rollback();
 			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			tx.rollback();
 		}finally {
 			em.close();
 		}
@@ -156,7 +198,10 @@ public class StudyGroupDAO {
 		}
 		return result;
 	}
-
+//	public ArrayList<MyStudyDTO> getMyStudy(String id) throws SQLException{
+//		System.out.println("DAO getMyStudy " + id);
+//		
+//	}
 	//mystudy 조회
 	public ArrayList<MyStudyDTO> getMyStudy(String id) throws SQLException{
 		System.out.println("DAO getMyStudy " + id);
@@ -182,4 +227,51 @@ public class StudyGroupDAO {
 		}
 		return allList;
 	}
+	//가입. JDBC 리스트 update -> 인원수 증가시켜야 함. 그럼 초기값을 0으로 줘야겠다
+	//존재하는 id라면 false 리턴해서 바로 입장
+//	public boolean joinGroup1(String joinId, long roomNo) throws SQLException, Exception {
+//		Connection con = null;
+//		PreparedStatement pstmt1 = null;
+//		PreparedStatement pstmt2 = null;
+//		PreparedStatement pstmt3 = null;
+//		ResultSet rset = null; 
+//		boolean find = false;
+//		
+//		try {
+//			con = DBUtil2.getConnection();
+//			con.setAutoCommit(false);
+//			pstmt1 = con.prepareStatement("INSERT INTO studygroup(memNo, studylists_no, studymembers_id) VALUES(STUDYGROUP_SEQ.NEXTVAL, ? , ?)");
+//			//조건을 아래와 같이 걸어준 뒤 update되지 않으면 rollback. 문제 -> SQL 오류가 나는게 아니라 업데이트만 안됨
+//			pstmt2 = con.prepareStatement("UPDATE studylists SET memNum = (memNum + 1) WHERE roomNo = ? and memNum < maxMem");
+//			pstmt3 = con.prepareStatement("SELECT studymembers_id FROM studygroup WHERE studylists_no = ?");
+//			pstmt3.setLong(1, roomNo);
+//			pstmt3.executeUpdate();
+//			pstmt1.setLong(1, roomNo);
+//			pstmt1.setString(2, joinId);
+//			pstmt2.setLong(1, roomNo);
+//			rset = pstmt1.executeQuery();
+//			while(rset.next()) {
+//				//방 안에 중복되는 ID가 있으면 false 리턴. 가입안하고 입장 
+//				if(rset.getString(1).equals(joinId)){
+//					return find;
+//				}
+//			}
+//			int result = pstmt2.executeUpdate();
+//			//실행된 sql문이 0일때 예외 발생. 알림창에 뜨도록?
+//			if(result == 0) {
+//				con.rollback();
+//				throw new Exception("인원을 초과하여 가입하실 수 없습니다.");
+//			}else {
+//				find = true;
+//				con.commit();
+//			}
+//		} catch (SQLException s) {
+//			s.printStackTrace();
+//			con.rollback();
+//			throw new SQLException("내부적인 오류로 가입에 실패하였습니다. 잠시 후 재시도 해주십시오. ");
+//		} finally {
+//			DBUtil2.close(con, pstmt1, pstmt2);
+//		}
+//		return find;
+//	}
 }
