@@ -32,6 +32,7 @@ input[type=text] {
 </head>
 <body>
 	<!-- header -->
+	<header>
 	<div class="w3-container">
 	    <div class="w3-section w3-bottombar w3-padding-16">
 		  <img src="${pageContext.request.contextPath}/images/momogong.png" onclick='location.href="${pageContext.request.contextPath}/main.jsp"' style="width:10%" class="w3-hover-opacity">
@@ -44,6 +45,7 @@ input[type=text] {
 	      <button class="w3-button w3-white w3-hide-small w3-right" onclick='location.href="${pageContext.request.contextPath}/StdMembers/viewOne2"'>내 정보</button>
 	    </div>
 	</div>
+	</header>
 	
 	<div id="searchList" class="w3-row-padding">
 		<center>
