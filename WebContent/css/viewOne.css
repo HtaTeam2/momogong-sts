@@ -1,0 +1,47 @@
+.w3-row-padding {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 1000px;
+	height: 500px;
+}
+
+td {
+	padding: 3px;
+}
+
+tr td:nth-child(1) {
+	background: #fcd5a5;
+	border: 1px solid black;
+	margin: auto;
+	text-align: center;
+}
+
+tr td:nth-child(2) {
+	background: #fffcf9;
+}
+
+.btn {
+	padding: 10px;
+}
+
+.btnBox {
+	padding: 5px 17px;
+	border-radius: 5px;
+	background: #feea9a;
+
+}
+
+.btnBox:hover {
+	color: orange;
+	background: #ffffff;
+
+}
+
+.

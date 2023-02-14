@@ -1,0 +1,38 @@
+.updateInfo {
+	width: 500px;
+	height: 32px;
+	border: 0;
+	outline: black !important;
+	background: #e8e8e8 !important;
+	border-radius: 0px  !important;
+}
+
+td {
+	padding: 3px;
+}
+
+tr td:nth-child(1) {
+	background: #fcd5a5;
+	border: 1px solid black;
+	margin: auto;
+	text-align: center;
+}
+
+tr td:nth-child(2) {
+	background: #fffcf9;
+}
+
+.btnBox {
+	width: 200px;
+	height: 32px;
+	padding: 5px 17px;
+	margin: 10px 5px;
+	border-radius: 5px;
+	background: #feea9a;
+}
+
+.btnBox:hover {
+	color: orange;
+	background: #ffffff;
+
+}

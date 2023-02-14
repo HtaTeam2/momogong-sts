@@ -26,52 +26,20 @@ public class NoticeController {
 	public NoticeDAO notdao;
 
 	// 글 등록 폼
-//	@GetMapping(value = "/insertview", produces = "application/json; charset=UTF-8")
-//	protected ModelAndView noticenisertView() throws SQLException {
-//
-//		ModelAndView mv = new ModelAndView();
-//		System.out.println("insertForm() -----");
-//
-//		mv.setViewName("notice/writeform");
-//		return mv;
-//	}
-
-	
 	@GetMapping(value = "/insertview", produces = "application/json; charset=UTF-8")
 	public String writeform() {
 		return "forward:/notice/writeform.jsp";
 	}
-	// 글 등록
-
-	/*
-	 * @RequestMapping(value = "/insertNotice", method = RequestMethod.POST) public
-	 * String insert(Model sessionData, Notice ndto) throws SQLException {
-	 * System.out.println("insert()"); notdao.insertNotice(ndto);
-	 * sessionData.addAttribute("ndto", ndto); return "redirect:/Notice/list"; }
-	 */
-	
-//	@PostMapping(value = "/insert", produces = "application/json; charset=UTF-8")
-//	protected ModelAndView noticeInsert(Model sessionData, NoticeDTO ndto) throws SQLException {
-//		ModelAndView mv = new ModelAndView();
-//		System.out.println("insert() -----");
-//
-//		sessionData.addAttribute("dto", ndto);
-//		
-//		mv.setViewName("notice/list"); 
-//		
-//		return mv;
-//		return "redirect:/Notice/list";
-//	}
 	
 	// 글등록
 	@PostMapping(value = "/insertNotice", produces = "application/json; charset=UTF-8")
 	public String write(Model model, @ModelAttribute Notice ndto) throws Exception{
 		System.out.println("insert()----------");
 		
-		Notice dto = notdao.insertNotice(ndto);
-		model.addAttribute("dto", dto);
+		Notice notice = notdao.insertNotice(ndto);
+		model.addAttribute("ndto", notice);
 
-		return "redirect:/Notice/list";
+		return "redirect:/Notice/detail";
 	}
 
 	// 글 삭제
