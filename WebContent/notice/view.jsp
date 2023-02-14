@@ -34,7 +34,7 @@
 	</div>
 	</header>
 	
-	<div id="searchList" class="w3-row-padding">
+	<div id="searchList" class="w3-row-padding" div style="text-align: center;">
 <form action="${pageContext.request.contextPath}/Notice/insertview"
 			method="get">
 			<input type="submit" value="작성">
