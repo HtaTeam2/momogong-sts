@@ -10,7 +10,7 @@
     <title>스터디 생성</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/lists/stdlist.css" />
+    <link rel="stylesheet" href="" />
 
 </head>
 <style>
