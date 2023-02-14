@@ -7,42 +7,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<<<<<<< HEAD
 <link rel="stylesheet" href="table.css" type="text/css"/>
 <script src="${pageContext.request.contextPath}/comm/ckeditor/ckeditor.js"></script>
 <title>Insert title here</title>
 </head>
 
-=======
-<script src="${pageContext.request.contextPath}/comm/ckeditor/ckeditor.js"></script>
-<title>Insert title here</title>
-	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<style>
-		body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
-		
-		td{font-family: "Raleway", sans-serif; font-size: 18px; align:center;}
-		
-		input[type=text] {
-			width: 500px;
-			height: 32px;
-			font-size: 15px;
-			border: 0;
-			border-radius: 15px;
-			outline: none;
-			padding-left: 10px;
-			background-color: rgb(233, 233, 233);
-		}
-		
-		footer {
-			width: 100%; 
-			bottom:0; 
-		}
-	</style>
-</head>
- 	<jsp:include page="/header.jsp"></jsp:include>
->>>>>>> 8fd569769644628d30742270ebebd4fb54e9e322
 	<script>
 	
 	function checkValid() {
@@ -69,10 +38,7 @@
 	</script>
 
 <body>
-<<<<<<< HEAD
 <jsp:include page="/header.jsp"></jsp:include>
-=======
->>>>>>> 8fd569769644628d30742270ebebd4fb54e9e322
 <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-8">
@@ -125,11 +91,7 @@
                 <td colspan="2"  class="text-center">
                     <input type="submit" value="글쓰기" class="btn btn-success">
                     <!-- <input type="reset" value="다시작성" class="btn btn-warning"> -->
-<<<<<<< HEAD
                     <button type="button" onclick="location.href='${pageContext.request.contextPath}/Community/list'">전체 게시글보기</button>
-=======
-                    <button type="button"  class="btn btn-primary">전체 게시글보기</button>
->>>>>>> 8fd569769644628d30742270ebebd4fb54e9e322
                 </td>
             </tr>
              
