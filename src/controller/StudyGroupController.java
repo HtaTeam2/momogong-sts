@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.HttpSessionRequiredException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -110,6 +111,14 @@ public class StudyGroupController {
 	public String totalEx(Exception e, HttpServletRequest request) {
 		System.out.println("예외처리 전담 Exception");
 		request.setAttribute("errorMsg", e.getMessage());
+		e.printStackTrace();
+		return "group/error";
+	}
+	//HttpSessionRequiredException
+	@ExceptionHandler
+	public String totalSession(HttpSessionRequiredException e, HttpServletRequest request) {
+		System.out.println("예외처리 전담 Exception");
+		request.setAttribute("errorMsg", "로그인 후 이용하실 수 있습니다.");
 		e.printStackTrace();
 		return "group/error";
 	}
