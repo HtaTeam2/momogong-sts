@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../css/viewOne.css">
 <style>
 body,h1,h2,h3,h4,h5,h6,ul,li,p,footer {font-family: "Raleway", sans-serif; font-size: 18px;}
 footer {
@@ -94,14 +95,17 @@ input[type=text] {
 		즉 현 jsp의 실행 위치가 어디에 있던 "http://ip:port/context명/" 을 의미하는 코드
 		
 		-->
-		<input type="button" value="update"
-			Onclick="location.href='${pageContext.request.contextPath}/StdMembers/updatepage?id=${allData.id}'">&nbsp;
+			<div class="btn">
+				<input class="btnBox" type="button" value="수정하기"
+					Onclick="location.href='${pageContext.request.contextPath}/StdMembers/updatepage?id=${allData.id}'">&nbsp;
+				<br>
+				<br>
+				<button class="btnBox"
+					onclick='location.href="${pageContext.request.contextPath}/StdMembers/delete?id=${allData.id}"'>
+					탈퇴하기</button>
+			</div>
 
-		<button
-			onclick='location.href="${pageContext.request.contextPath}/StdMembers/delete?id=${allData.id}"'>
-			탈퇴하기</button>
-
-	</form>
+		</form>
   </div> 
     <!-- 외부로 별도로 분리해 놓은 js 파일만 include -->
   <!-- axios 사용을 위한 추가 설정 -->
