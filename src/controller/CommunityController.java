@@ -36,8 +36,15 @@ public class CommunityController {
 
 	@Autowired
 	public CommunityDAO comdao;
-
-	//글쓰기
+	
+	
+	//글쓰기화면
+	@RequestMapping(value = "/writeform", method = RequestMethod.GET, produces="application/json;charset=UTF-8")
+	public String writeform() {
+		return "forward:/comm/write.jsp";
+	}
+	
+	//입력
 	@RequestMapping(value = "/write", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
 	public String write(Model model, @ModelAttribute CommunityDTO dto) throws Exception{
 		System.out.println("insert()----------");
@@ -46,10 +53,11 @@ public class CommunityController {
 				dto.getComTitle() == null || dto.getComTitle().trim().length() == 0 || dto.getSubject() == null) {
 			throw new RuntimeException("입력값이 충분하지 않습니다.");
 		}
-		
-		model.addAttribute("dto", comdao.write(dto));
+		CommunityDTO dto2 = comdao.write(dto);
+		model.addAttribute("dto", dto2);
 
-		return "forward:/comm/read.jsp"; //상세 글 페이지로 이동
+		return "forward:/comm/read.jsp";
+//		return "redirect:/Community/view/"+dto2.getComNo(); //상세 글 페이지로 이동
 	}
 
 
@@ -93,7 +101,7 @@ public class CommunityController {
 			CommunityDTO dto = comdao.view(comNo, false);
 			model.addAttribute("dto", dto);
 		}
-		return "update";
+		return "forward:/comm/update.jsp";
 	}
 
 
@@ -112,14 +120,14 @@ public class CommunityController {
 			throw new RuntimeException("게시물이 존재하지 않거나 비밀번호가 틀렸습니다.");
 		}
 
-		return "redirect:/read.jsp"; //상세 글 페이지로 이동
+		return "forward:view";//"redirect:allView"
 	}
 	
 	
 	
 	//삭제
 	@RequestMapping(value = "/delete", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
-	public String delete(@RequestParam("comNo") long comNo, @RequestParam("comPw") String comPw) {
+	public String delete(@RequestParam("comNo") long comNo, @RequestParam("comPw") String comPw) throws Exception {
 		System.out.println("delete()---------");
 		if(comNo == 0 || comPw == null || comPw.trim().length() == 0) {
 			throw new RuntimeException("입력값이 충분하지 않습니다.");
@@ -128,7 +136,7 @@ public class CommunityController {
 		if(!result) {
 			throw new RuntimeException("게시물이 존재하지 않거나 비밀번호가 틀렸습니다.");
 		}
-		return "redirect:/list.jsp";
+		return "redirect:/comm/list.jsp";
 	}
 
 
@@ -165,8 +173,9 @@ public class CommunityController {
 						String fileName = file.getName();
 						//파일 내용
 						byte[] bytes = file.getBytes();
-						//파일이 실제 저장되는 경로
+						//파일이 실제 저장되는 경로(/team2_studyroom/img)
 						String uploadPath = req.getServletContext().getRealPath("/img");
+						System.out.println("====="+uploadPath);
 						//저장되는 파일에 경로 설정
 						File uploadFile = new File(uploadPath);
 						if(!uploadFile.exists()) {
@@ -185,7 +194,7 @@ public class CommunityController {
 						
 						//파일 연결되는 url 주소 설정
 						String fileUrl = req.getContextPath()+"/img/"+fileName;
-						
+						System.out.println("====="+fileUrl);
 						//생성된 json 객체를 이용해 파일 업로드+이름+주소를 ckEditor에 전송
 						json.addProperty("uploaded", 1);
 						json.addProperty("fileName", fileName);

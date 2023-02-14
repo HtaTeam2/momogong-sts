@@ -6,9 +6,36 @@
 <html>
 <head>
 <meta charset="utf-8">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/comm/table.css" type="text/css"/>
 <title>커뮤니티 글 상세페이지</title>
+
+	<script type="text/javascript">
+	//수정
+	function sendUpdate(){
+		document.requestForm.action="${pageContext.request.contextPath}/Community/updateform";
+		document.requestForm.submit();
+	}
+	
+	//삭제
+	function sendDelete(){
+		var pw = prompt("게시글의 비밀번호를 입력하세요.");
+		
+		if(pw){
+			document.requestForm.action="Community/delete";
+			document.requestForm.comPw.value=pw;
+			document.requestForm.submit();
+		}else{
+			return false;
+		}
+	}
+	
+	
+	
+	
+	</script>
 </head>
 <body>
+<jsp:include page="/header.jsp"></jsp:include>
 <div class="container">
     <hr>
 <div class="row">
@@ -17,7 +44,7 @@
             <thead>
                 <tr align="center">
                     <th width="10%">[${requestScope.dto.subject}]</th>
-                    <th width="60%">${requestScope.dto.comTitle}</th>
+                    <th width="60%">${requestScope.dto.comTitle}<span style='float:right'>글번호 : ${requestScope.dto.comNo}</span></th>
                 </tr>
             </thead>
             <tbody>
@@ -64,11 +91,19 @@
                <tr>
                    <td>
                        <span style='float:right'>
-                               <button type="button" id="list" class="btn btn-default">목록</button>
-                               <button type="button" id="modify" class="btn btn-default">수정</button>
-                               <button type="button" id="delete" class="btn btn-default">삭제</button>
-                               <button type="button" id="write" class="btn btn-default">글쓰기</button>
+                               <button type="button" id="list" onclick="location.href='${pageContext.request.contextPath}/Community/list'">목록</button>
+                               <button type="button" id="modify" onclick="location.href='${pageContext.request.contextPath}/Community/updateform'">수정</button>
+                               <button type="button" id="delete" >삭제</button>
+                               <button type="button" onclick="location.href='${pageContext.request.contextPath}/Community/writeform'" >글쓰기</button>
                            </span>
+                           		<form name="requestForm" method="post" action="">
+                           			<input type="hidden" name="comNo" value="${requestScope.dto.comNo}">
+                           			<input type="hidden" name="comPw" value="">
+                           			<input type="button" value="수정" onclick="sendUpdate()">
+                           			<input type="button" value="삭제" onclick="sendDelete()">
+                           		</form>
+                           
+                           
                        </td>
                    </tr>
                </thead>

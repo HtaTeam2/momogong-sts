@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.transaction.Transactional;
 
 import org.junit.Test;
 import org.springframework.stereotype.Repository;
@@ -30,10 +31,10 @@ public class CommunityDAO {
 			StudyMembers member = em.find(StudyMembers.class, dto.getMemberid());
 			Community community = new Community(dto.getComTitle(), dto.getSubject(), dto.getComContent(), dto.getComPw(), 0);
 			community.setStudymembers(member);
-			em.persist(community);
-			
-			tx.commit();
-			return CommunityDTO.fromEntity(community);
+			em.persist(community);//entity 영속성 저장
+			tx.commit();//db까지저장
+			CommunityDTO a = CommunityDTO.fromEntity(community);
+			return a;//entity를 dto로 변환해서 전송
 			
 		}catch(Exception e) {
 			tx.rollback();
@@ -87,10 +88,10 @@ public class CommunityDAO {
 		
 		List<Community> list = null;
 		try {
-			String sql = "select c from Community c";
+			String sql = "select c from Community c order by c.comNo desc";
 			list = em.createQuery(sql).getResultList();
 			
-			list.forEach(v->System.out.println(v));
+			//list.forEach(v->System.out.println(v));
 			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -127,7 +128,7 @@ public class CommunityDAO {
 		
 	}
 
-	public boolean delete(long comNo, String comPw) {
+	public boolean delete(long comNo, String comPw) throws Exception{
 		Connection con = null;	
 		PreparedStatement pstmt = null;
 		try{
@@ -143,6 +144,7 @@ public class CommunityDAO {
 		}catch(SQLException s) {
 			s.printStackTrace();
 			DBUtil2.close(con, pstmt);
+			throw new Exception("게시물이 존재하지 않거나 비밀번호가 틀렸습니다.");
 		}
 		return false;
 	}
