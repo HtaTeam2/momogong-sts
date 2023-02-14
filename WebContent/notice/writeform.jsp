@@ -1,52 +1,31 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
- 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
- 
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
+<!DOCTYPE html>
 <html>
- 
 <head>
- 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
- 
-<title>Insert title here</title>
- 
+<title>게시글 작성</title>
 </head>
-<form action='<c:url value='/Notice/insertNotice'/>' method="post">
- 
 <body>
- 
-        <table width="500" cellpadding="0" cellspacing="0" border="1">
+<h2>게시글 작성</h2>
 
-			
-			 
-<tr>
-				<td width=30% align=center>글 제목</td>
-				<td width=70%><input type="text" name="noticeTitle">
-				</td>
-			</tr>
- 
-	<tr>
-				<td width=30% align=center>글 내용</td>
-				<td width=70%><input type="text" name="noticeContent">
-				</td>
-			</tr>
-			
+ <form name="writeForm" action="${pageContext.request.contextPath}/Notice/insert" accept-charset="utf-8" method="post" >
 
- 
-<tr >
- 
-<td colspan="2"> <input type="submit" value="입력"> &nbsp;&nbsp; 
- 
-</tr>
- 
+
+		<div>
+			제목 <input name="noticeTitle" size="80" placeholder="제목을 입력해주세요">
+		</div>
+		<div>
+        내용
+        <textarea name="noticeContent"  rows="4" cols="80" placeholder="내용을 입력해주세요"></textarea>
+    </div>
+
+    <div style="width:650px; text-align: center;">
+        <button type="button" id="btnSave">확인</button>
+        <button type="reset">취소</button>
+    </div>
 </form>
- 
-</table>
- 
- 
 </body>
- 
 </html>
