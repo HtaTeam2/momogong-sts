@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>내 스터디</title>
+<title>삭제 성공뷰</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
@@ -35,12 +35,16 @@
 		}
 	</style>
 </head>
-<body>
-​<jsp:include page="/header.jsp"></jsp:include>
-  
-<h1>탈퇴가 완료되었습니다.</h1>
+<body onload='succ()'>
 
-<a href='${pageContext.request.contextPath}/main.jsp'>메인으로 이동하기</a>
+<script type="text/javascript">
+
+	function succ(msg){
+		alert('탈퇴가 완료되었습니다.');
+		window.location.href ="/main.jsp";
+	} 
+
+</script>
 
 </body>
 </html>
