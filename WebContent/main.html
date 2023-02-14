@@ -42,43 +42,23 @@ input[type=text] {
     </div>
   </header>
   
-  <!-- !PAGE CONTENT! -->
-<div class="w3-main"">
-  
-  <!-- 추천스터디 1-->
-  <div id = "searchList" class="w3-row-padding">
-  	 <div class="w3-section w3-bottombar w3-padding-16">
-	  <button class="w3-button w3-white">추천 스터디</button>
-	  <span> </span>
-	  
-      <button class="w3-button w3-white">All</button>
-      <button class="w3-button w3-white">자율</button>
-      <button class="w3-button w3-white w3-hide-small">자격증</button>
-      <button class="w3-button w3-white w3-hide-small">수능</button>
-      <button class="w3-button w3-white w3-hide-small">취업</button>
-    </div>
-    <div class="w3-third w3-container w3-margin-bottom">
-      <img src="./images/profile.png" alt="Norway" style="width:100%" class="w3-hover-opacity">
-      <div class="w3-container w3-white">
-        <p><b>추천 스터디명 1</b></p>
-      </div>
-    </div>
-    <div class="w3-third w3-container w3-margin-bottom">
-      <img src="./images/profile.png" alt="Norway" style="width:100%" class="w3-hover-opacity">
-      <div class="w3-container w3-white">
-        <p><b>추천 스터디명 2</b></p>
-      </div>
-    </div>
-    <div class="w3-third w3-container">
-      <img src="./images/profile.png" alt="Norway" style="width:100%" class="w3-hover-opacity">
-      <div class="w3-container w3-white">
-        <p><b>추천 스터디명 3</b></p>
-      </div>
-    </div>
-  	</div>
-  </div> 
-<!--     axios 사용을 위한 추가 설정
+	<!-- searchList: 스터디 검색, allstudy: 모든 스터디 onload-->
+	<div id="searchList" class="w3-row-padding">
+		<div class="w3-section w3-bottombar w3-padding-16">
+			<span> </span>
+			<p style="font-size: 25px; font-weight: bold; color: #5a5a5a;">
+				<i class="fa fa-th-list" style="font-size: 25px;"></i>카테고리별 스터디 보기
+			</p>
+			<button id="cate" class="w3-button w3-white" value="All">All</button>
+			<button id="cate" class="w3-button w3-white" value="자율">자율</button>
+			<button id="cate" class="w3-button w3-white" value="자격증">자격증</button>
+			<button id="cate" class="w3-button w3-white" value="수능">수능</button>
+			<button id="cate" class="w3-button w3-white" value="취업">취업</button>
+		</div>
+		<div id="allstudy"></div>
+	</div>
+	<!-- axios 사용을 위한 추가 설정 -->
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src="main.js"></script> -->
+  <script src="main.js"></script>
 </body>
 </html>
