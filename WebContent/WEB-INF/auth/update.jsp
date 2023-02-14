@@ -6,6 +6,11 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../css/infoUpdate.css">
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -76,7 +81,7 @@ footer {
 			  <tr>
 				<td width="30%">비밀번호 수정</td>
 				<td width="70%">
-					<input type="password" name="password" value="${allData.password}">
+					<input class="updateInfo" type="password" name="password" value="${allData.password}">
 				</td>
 			  </tr>			  
 			
@@ -84,21 +89,21 @@ footer {
 			
 				<td width="30%">이메일 수정</td>
 				<td width="70%">
-					<input type="text" name="email" value="${allData.email}">
+					<input class="updateInfo" type="text" name="email" value="${allData.email}">
 				</td>		  
 			  <tr>	
 			  <tr>
 			
 				<td width="30%">닉네임 수정</td>
 				<td width="70%">
-					<input type="text" name="nickname" value="${allData.nickname}">
+					<input class="updateInfo" type="text" name="nickname" value="${allData.nickname}">
 				</td>		  
 			  <tr>		
 			  <tr>
 			
 				<td width="30%">목표 수정</td>
 				<td width="70%">
-					<input type="text" name="goal" value="${allData.goal}">
+					<input class="updateInfo" type="text" name="goal" value="${allData.goal}">
 				</td>		  
 			  <tr>			  
 		</table>  
@@ -108,8 +113,8 @@ footer {
 				 value값으로 설정해야 하는 값은? 
 		--%>
 	
-		<input type="submit" value="수정" > &nbsp;
-		<input type="reset" value="취소">&nbsp;
+		<input class="btnBox" type="submit" value="수정" > &nbsp;
+		<input class="btnBox" type="reset" value="취소">&nbsp;
 	</form>
 	</div>
 	<!-- axios 사용을 위한 추가 설정 -->
