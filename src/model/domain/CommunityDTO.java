@@ -29,10 +29,6 @@ public class CommunityDTO {
 	private String comContent; // 게시글 내용
 	private int comViewCount; //조회수
 	
-	/* ? ModelMapper 
-	 * 
-	 */ 
-	
 	public static CommunityDTO fromEntity(Community community) {
 		return CommunityDTO.builder()
 				.comNo(community.getComNo())
@@ -47,3 +43,4 @@ public class CommunityDTO {
 	}
 
 }
+

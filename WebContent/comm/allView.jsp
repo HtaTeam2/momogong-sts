@@ -6,6 +6,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<<<<<<< HEAD
+<link rel="stylesheet" href="${pageContext.request.contextPath}/comm/table.css" type="text/css"/>
+<title>커뮤니티 목록</title>
+</head>
+<body>
+<jsp:include page="/header.jsp"></jsp:include>
+=======
 <!--  <link rel="stylesheet" href="list.css"/> -->
 <title>커뮤니티 목록</title>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -36,6 +43,7 @@
 <body>
 	 <jsp:include page="/header.jsp"></jsp:include>
 	<section class="notice">
+>>>>>>> 8fd569769644628d30742270ebebd4fb54e9e322
 		<div class="page-title">
 			<div class="container">
 				<h2>커뮤니티</h2>
@@ -73,7 +81,11 @@
 									<td>${c.subject}</td>
 									<td><a href="${pageContext.request.contextPath}/Community/view/${c.comNo}">${c.comTitle}</a></td>
 									<td>${c.studymembers.id}</td>
+<<<<<<< HEAD
+									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${c.comRegdate}"/></td>
+=======
 									<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${c.comRegdate}"/></td>
+>>>>>>> 8fd569769644628d30742270ebebd4fb54e9e322
 									<td>${c.comViewCount}</td>
 								</tr>
 							
@@ -91,6 +103,27 @@
 			</div>
 		</div>
 
+<<<<<<< HEAD
+		<!-- board search area -->
+		<div id="comm-search" class="container">
+			<form method="post" name="search" action="search">
+				<select name="type">
+						<option value="">-선택-</option>
+						<option value="title">제목</option>
+						<option value="content">내용</option>
+						<option value="writer">작성자</option>
+				</select>
+				<input type="text" placeholder="검색어 입력" name="searchText">
+				<button type="submit" >검색</button>
+
+			</form>
+			
+			<button type="submit" class="btn btn-dark" 
+					onclick="location.href='${pageContext.request.contextPath}/Community/writeform'">글쓰기</button>
+		</div>
+
+
+=======
 		<!-- board seach area -->
 		<div id="board-search">
 			<div class="container">
@@ -108,5 +141,6 @@
 		</div>
 
 	</section>
+>>>>>>> 8fd569769644628d30742270ebebd4fb54e9e322
 </body>
 </html>
