@@ -21,7 +21,7 @@
 		var pw = prompt("게시글의 비밀번호를 입력하세요.");
 		
 		if(pw){
-			document.requestForm.action="Community/delete";
+			document.requestForm.action="${pageContext.request.contextPath}/Community/delete";
 			document.requestForm.comPw.value=pw;
 			document.requestForm.submit();
 		}else{
@@ -92,10 +92,8 @@
                    <td>
                        <span style='float:right'>
                                <button type="button" id="list" onclick="location.href='${pageContext.request.contextPath}/Community/list'">목록</button>
-                               <button type="button" id="modify" onclick="location.href='${pageContext.request.contextPath}/Community/updateform'">수정</button>
-                               <button type="button" id="delete" >삭제</button>
                                <button type="button" onclick="location.href='${pageContext.request.contextPath}/Community/writeform'" >글쓰기</button>
-                           </span>
+                      </span>
                            		<form name="requestForm" method="post" action="">
                            			<input type="hidden" name="comNo" value="${requestScope.dto.comNo}">
                            			<input type="hidden" name="comPw" value="">

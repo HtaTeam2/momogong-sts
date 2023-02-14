@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,7 +24,7 @@ import model.domain.StudyMembersDTO;
 import model.domain.entity.StudyMembers;
 
 
-@RestController
+@Controller
 @RequestMapping("StdMembers")
 @SessionAttributes({"dto", "id"})
 public class StudyMembersController {
@@ -41,7 +41,7 @@ public class StudyMembersController {
 	
 	//로그인
 	@RequestMapping(value = "/login", method=RequestMethod.POST)
-	public String login(Model sessionData, @RequestParam("id") String id, @RequestParam("pw") String password) throws SQLException {
+	public String login(Model sessionData, @RequestParam("id") String id, @RequestParam("password") String password) throws SQLException {
 		
 		boolean validate = memdao.loginMember(id, password);
 		System.out.println("----"+validate);
