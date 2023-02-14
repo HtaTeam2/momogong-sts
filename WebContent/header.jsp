@@ -54,7 +54,7 @@ input[type=text] {
 		</div>
 	</div>
 	</header>
-    
+     <div id="searchList" class="w3-row-padding" align="center"></div>
     
       <!-- axios 사용을 위한 추가 설정 -->
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
