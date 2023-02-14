@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 59d22dfe75dc202126bff9090d54b5b434776fc2
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,6 +18,7 @@
 
 	</center>
 </body>
+<<<<<<< HEAD
 =======
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -57,4 +61,6 @@
 	</center>
 </body>
 >>>>>>> 8fd569769644628d30742270ebebd4fb54e9e322
+=======
+>>>>>>> 59d22dfe75dc202126bff9090d54b5b434776fc2
 </html>

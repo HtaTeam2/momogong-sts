@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 59d22dfe75dc202126bff9090d54b5b434776fc2
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -8,7 +11,11 @@ pageEncoding="UTF-8"%>
 
 <div class="row" style="margin-bottom:20px; margin-left:1px;">
 <div class="col-lg-12">
+<<<<<<< HEAD
 <h1 class="page-header">상세 페이지</h1>
+=======
+<h2 class="page-header">상세 페이지</h2>
+>>>>>>> 59d22dfe75dc202126bff9090d54b5b434776fc2
 </div>
 </div>
 
@@ -61,9 +68,18 @@ pageEncoding="UTF-8"%>
 </table>
 </div>
 <div style="margin-left:1px;">
+<<<<<<< HEAD
 <a href="/Notice/list" class="btn btn-primary">목록</a>
 <button type="submit">수정</button>
 </form>
+=======
+
+	<input type="button" value="목록으로"
+				Onclick="location.href='${pageContext.request.contextPath}/Notice/list'">
+<button type="submit">수정</button>
+</form>
+
+>>>>>>> 59d22dfe75dc202126bff9090d54b5b434776fc2
 <form id="delFrm" action="${pageContext.request.contextPath}/Notice/deleteNotice/${dto.noticeNo}" method="post">
 	<input type="hidden" name="noticeNo" value="${dto.noticeNo}">
 	<button type="submit" >삭제</button>
@@ -76,6 +92,7 @@ pageEncoding="UTF-8"%>
 </div>
 
 
+<<<<<<< HEAD
 =======
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
@@ -154,3 +171,5 @@ pageEncoding="UTF-8"%>
 </div>
 
 >>>>>>> 8fd569769644628d30742270ebebd4fb54e9e322
+=======
+>>>>>>> 59d22dfe75dc202126bff9090d54b5b434776fc2
