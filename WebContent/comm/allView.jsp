@@ -48,7 +48,7 @@
 									<td>${c.subject}</td>
 									<td><a href="${pageContext.request.contextPath}/Community/view/${c.comNo}">${c.comTitle}</a></td>
 									<td>${c.studymembers.id}</td>
-									<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${c.comRegdate}"/></td>
+									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${c.comRegdate}"/></td>
 									<td>${c.comViewCount}</td>
 								</tr>
 							

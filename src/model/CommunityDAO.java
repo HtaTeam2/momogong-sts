@@ -33,12 +33,11 @@ public class CommunityDAO {
 			community.setStudymembers(member);
 			em.persist(community);//entity 영속성 저장
 			tx.commit();//db까지저장
-			CommunityDTO a = CommunityDTO.fromEntity(community);
-			return a;//entity를 dto로 변환해서 전송
+			
+			return CommunityDTO.fromEntity(community);//entity를 dto로 변환해서 전송
 			
 		}catch(Exception e) {
 			tx.rollback();
-			e.printStackTrace();
 			throw e;
 		}finally {
 			em.close();
