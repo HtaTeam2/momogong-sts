@@ -20,42 +20,42 @@ import util.DBUtil2;
 public class NoticeDAO {
 	
 	// 글 추가
-	public void insertNotice(Notice ndto)  {
-		EntityManager em = DBUtil.getEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		
-		try {
-			tx.begin();
-			Notice notice = new Notice(ndto.getNoticeTitle(), ndto.getNoticeContent(), 0);
-			em.persist(notice);
-			tx.commit();
-		} catch (Exception e) {
-			tx.rollback();
-			e.printStackTrace();
-		}finally {
-			em.close();
-		}
-	}
-	
-//	public static NoticeDTO insertNotice(NoticeDTO ndto) throws SQLException {
+//	public void insertNotice(Notice ndto)  {
 //		EntityManager em = DBUtil.getEntityManager();
 //		EntityTransaction tx = em.getTransaction();
+//		
 //		try {
 //			tx.begin();
-//			em.persist(ndto);
+//			Notice notice = new Notice(ndto.getNoticeTitle(), ndto.getNoticeContent(), 0);
+//			em.persist(notice);
 //			tx.commit();
-//			
 //		} catch (Exception e) {
 //			tx.rollback();
 //			e.printStackTrace();
-//			
-//		} finally {
+//		}finally {
 //			em.close();
 //		}
-//		
-//        return ndto;
-//    }
-//	
+//	}
+	
+	public static Notice insertNotice(Notice ndto) throws SQLException {
+		EntityManager em = DBUtil.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		try {
+			tx.begin();
+			em.persist(ndto);
+			tx.commit();
+			
+		} catch (Exception e) {
+			tx.rollback();
+			e.printStackTrace();
+			
+		} finally {
+			em.close();
+		}
+		
+        return ndto;
+    }
+	
 
 	// 글 수정
 	// 내용, 제목만 변경 
