@@ -61,12 +61,13 @@ input[type=text] {
 		</div>
 	</div>
 	</header>
+<div id="searchList" class="w3-row-padding" align="center">								       
 	<center>
 		그동안 이용해 주셔서 감사합니다.
 		탈퇴를 완료하였습니다.
 		<a href="${pageContext.request.contextPath}/main.html">메인으로 이동</a>
 	</center>
-								          
+</div>								          
       <!-- axios 사용을 위한 추가 설정 -->
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="main.js"></script>
