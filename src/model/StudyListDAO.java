@@ -96,7 +96,7 @@ public class StudyListDAO {
 	}
 	
 	//방 전체조회
-	public List<StudyLists> AllList() throws Exception {
+	public List<StudyLists> allList() throws Exception {
 		EntityManager em = DBUtil.getEntityManager();
 		List<StudyLists> list = null;
 		
