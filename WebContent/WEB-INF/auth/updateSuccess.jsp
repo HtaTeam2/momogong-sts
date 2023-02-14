@@ -31,7 +31,6 @@ input[type=text] {
 </style>
 </head>
 <body>
-	<!-- Header -->
 	<!-- header -->
 	<div class="w3-container">
 	    <div class="w3-section w3-bottombar w3-padding-16">
@@ -46,12 +45,13 @@ input[type=text] {
 	    </div>
 	</div>
 	
-	<div id="searchList" class="w3-row-padding"></div>
-	<center>
-		축하합니다. 회원정보 update 성공하셨습니다. <a
-			href="${pageContext.request.contextPath}/StdMembers/viewOne2">정보
-			보기</a>
-	</center>
+	<div id="searchList" class="w3-row-padding">
+		<center>
+			축하합니다. 회원정보 update 성공하셨습니다. <a
+				href="${pageContext.request.contextPath}/StdMembers/viewOne2">정보
+				보기</a>
+		</center>
+	</div>
 	<!-- axios 사용을 위한 추가 설정 -->
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script src="main.js"></script>	
