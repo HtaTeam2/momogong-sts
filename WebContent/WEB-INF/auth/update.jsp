@@ -60,6 +60,7 @@ input[type=text] {
 		</div>
 	</div>
 	</header>
+	  <div id="searchList" class="w3-row-padding" align="center">
 	<br>
 	<center>
 	<h3>개인 정보 수정하기</h3>
@@ -117,6 +118,7 @@ input[type=text] {
 		<input type="submit" value="수정" > &nbsp;
 		<input type="reset" value="취소">&nbsp;
 	</form>
+</div>		
       <!-- axios 사용을 위한 추가 설정 -->
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="main.js"></script>
