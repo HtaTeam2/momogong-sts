@@ -6,36 +6,26 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<!--  <link rel="stylesheet" href="list.css"/> -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/comm/table.css" type="text/css"/>
 <title>커뮤니티 목록</title>
-	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<style>
-		body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
-		
-		td{font-family: "Raleway", sans-serif; font-size: 18px; align:center;}
-		
-		input[type=text] {
-			width: 500px;
-			height: 32px;
-			font-size: 15px;
-			border: 0;
-			border-radius: 15px;
-			outline: none;
-			padding-left: 10px;
-			background-color: rgb(233, 233, 233);
-		}
-		
-		footer {
-			width: 100%; 
-			bottom:0; 
-		}
-	</style>
 </head>
 <body>
-	 <jsp:include page="/header.jsp"></jsp:include>
-	<section class="notice">
+	<!-- header -->
+	<header>
+	<div class="w3-container">
+	    <div class="w3-section w3-bottombar w3-padding-16">
+		  <img src="${pageContext.request.contextPath}/images/momogong.png" onclick='location.href="${pageContext.request.contextPath}/main.jsp"' style="width:10%" class="w3-hover-opacity">
+	      <button class="w3-button w3-white" onclick='location.href="${pageContext.request.contextPath}/StdGroup/mystudy"'>내 스터디</button>
+	      <button class="w3-button w3-white" onclick='location.href="${pageContext.request.contextPath}/lists/createStdList.jsp"'>스터디 생성</button>
+	      <button class="w3-button w3-white" onclick='location.href="${pageContext.request.contextPath}/Community/list"'>커뮤니티</button>
+	      <button class="w3-button w3-white w3-hide-small" onclick='location.href="${pageContext.request.contextPath}/Notice/list"'>공지사항</button>
+	      	 스터디 검색 : <input type="text" id="study" name="study" value=""><button id="btn1" class="w3-button w3-white w3-hide-small"><i class="fa fa-search"></i></button>
+	      <button class="w3-button w3-white w3-hide-small w3-right" onclick='location.href="${pageContext.request.contextPath}/StdMembers/logout"'>로그아웃</button>
+	      <button class="w3-button w3-white w3-hide-small w3-right" onclick='location.href="${pageContext.request.contextPath}/StdMembers/viewOne2"'>내 정보</button>
+	    </div>
+	</div>
+	</header>
+	<div id="searchList" class="w3-row-padding">
 		<div class="page-title">
 			<div class="container">
 				<h2>커뮤니티</h2>
@@ -73,7 +63,7 @@
 									<td>${c.subject}</td>
 									<td><a href="${pageContext.request.contextPath}/Community/view/${c.comNo}">${c.comTitle}</a></td>
 									<td>${c.studymembers.id}</td>
-									<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${c.comRegdate}"/></td>
+									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${c.comRegdate}"/></td>
 									<td>${c.comViewCount}</td>
 								</tr>
 							
@@ -91,22 +81,26 @@
 			</div>
 		</div>
 
-		<!-- board seach area -->
-		<div id="board-search">
-			<div class="container">
-				<div class="search-window">
-					<form action="">
-						<div class="search-wrap">
-							<label for="search" class="blind">커뮤니티 내용 검색</label> <input
-								id="search" type="search" name="" placeholder="검색어를 입력해주세요."
-								value="">
-							<button type="submit" class="btn btn-dark">검색</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
+		<!-- board search area -->
+		<div id="comm-search" class="container">
+			<form method="get" name="search" action="${pageContext.request.contextPath}/Community/search">
+				<select name="searchType">
+						<option value="title" selected="selected">제목</option>
+						<option value="content">내용</option>
+						<option value="writer">작성자</option>
+				</select>
+				<input type="text" placeholder="검색어 입력" name="searchText">
+				<button type="submit" >검색</button>
 
-	</section>
+			</form>
+			
+			<button type="submit" class="btn btn-dark" 
+					onclick="location.href='${pageContext.request.contextPath}/Community/writeform'">글쓰기</button>
+		</div>
+	</div>
+	<!-- axios 사용을 위한 추가 설정 -->
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="main.js"></script>	
+
 </body>
 </html>
