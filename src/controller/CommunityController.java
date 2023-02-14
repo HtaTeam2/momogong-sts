@@ -121,7 +121,7 @@ public class CommunityController {
 			throw new RuntimeException("게시물이 존재하지 않거나 비밀번호가 틀렸습니다.");
 		}
 
-		return "forward:view/"+dto.getComNo(); //post에러
+		return "redirect:view/"+dto.getComNo();
 //		return "redirect:list";
 	}
 	

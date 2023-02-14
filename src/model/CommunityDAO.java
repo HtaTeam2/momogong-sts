@@ -32,9 +32,12 @@ public class CommunityDAO {
 			Community community = new Community(dto.getComTitle(), dto.getSubject(), dto.getComContent(), dto.getComPw(), 0);
 			community.setStudymembers(member);
 			em.persist(community);//entity 영속성 저장
+			
+			CommunityDTO dto2 = CommunityDTO.fromEntity(community);//entity를 dto로 변환
+			
 			tx.commit();//db까지저장
 			
-			return CommunityDTO.fromEntity(community);//entity를 dto로 변환해서 전송
+			return dto2;//entity를 dto로 변환한 것 전송
 			
 		}catch(Exception e) {
 			tx.rollback();
