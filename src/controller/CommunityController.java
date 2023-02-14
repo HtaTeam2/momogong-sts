@@ -94,14 +94,19 @@ public class CommunityController {
 
 	//수정화면(read.jsp에서 수정버튼 클릭시 실행되는 로직)
 	@RequestMapping(value = "/updateform", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
-	public String updateForm(Model model, @RequestParam("comNo") long comNo) throws SQLException{
+	public String updateForm(Model model, @RequestParam("comNo") long comNo, @RequestParam("comPw") String comPw) throws SQLException{
 		System.out.println("updateForm()---------"+comNo);
 
-		if(comNo == 0) {
-			throw new RuntimeException("게시물이 존재하지 않습니다.");
-		}else {
+		if(comNo == 0 || comPw == null || comPw.trim().length() == 0) { //입력 덜했을때
+			throw new RuntimeException("입력값이 충분하지 않습니다.");
+		}else {//일단입력은했을때
 			CommunityDTO dto = comdao.view(comNo, false);
-			model.addAttribute("dto", dto);
+			
+			if(dto.getComPw().equals(comPw)) {
+				model.addAttribute("dto", dto);
+			}else {
+				throw new RuntimeException("비밀번호가 틀렸습니다.");
+			}
 		}
 		return "forward:/comm/update.jsp";
 	}

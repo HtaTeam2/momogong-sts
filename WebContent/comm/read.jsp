@@ -13,8 +13,16 @@
 	<script type="text/javascript">
 	//수정
 	function sendUpdate(){
+		var pw = prompt("게시글의 비밀번호를 입력하세요.");
+		
+		if(pw){
 		document.requestForm.action="${pageContext.request.contextPath}/Community/updateform";
+		document.requestForm.comPw.value=pw;
 		document.requestForm.submit();
+			
+		}else{
+			return false;
+		}
 	}
 	
 	//삭제
@@ -62,7 +70,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>작성일</td>
+                    <td>등록일</td>
                     <td>${requestScope.dto.comRegdate}</td>
                 </tr>
                 <tr>
