@@ -29,101 +29,30 @@ public class StudyMembersDAO {
 	}
 	
 	//가입 insert 로직
-	public void insertMember(StudyMembersDTO dto) {
-		EntityManager em = DBUtil.getEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		try {
-			tx.begin();
-			//방법2 기본생성자 생성 후 setxXX()메소드로 인자 집어넣어줌. 단, not null인 컬럼들은 필수로 값 삽입
-//			StudyMembers members = new StudyMembers();
-//			members.setId(dto.getId());
-//			members.setPassword(dto.getPassword());
-//
-//			em.persist(members);
+// 	public void insertMember(StudyMembersDTO dto) {
+// 		EntityManager em = DBUtil.getEntityManager();
+// 		EntityTransaction tx = em.getTransaction();
+// 		try {
+// 			tx.begin();
+// 			//방법2 기본생성자 생성 후 setxXX()메소드로 인자 집어넣어줌. 단, not null인 컬럼들은 필수로 값 삽입
+// //			StudyMembers members = new StudyMembers();
+// //			members.setId(dto.getId());
+// //			members.setPassword(dto.getPassword());
+// //
+// //			em.persist(members);
 			
-			//엔티티의 @nonnull이 붙은 컬럼들을 파라미터로 받아서 생성자 생성 후 
-			StudyMembers members = new StudyMembers(dto.getId(), dto.getPassword(), dto.getNickname(), dto.getEmail(), dto.getGrade());
-			//persist(객체의 변수) insert 실행
-			em.persist(members);
-			tx.commit();
-		} catch (Exception e) {
-			tx.rollback();
-			e.printStackTrace();
-		}finally {
-			em.close();
-		}
-	}
-	
-	//goal 하나 수정 파라미터 인자값 수정 고려, 여러개 update는 방법을 찾지 못함 -> Spring Data 프레임 워크 어쩌구..
-	public void updateMember(String goal, String id) {
-		EntityManager em = DBUtil.getEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		StudyMembers members = null;
-		try {
-			tx.begin();
-			//pk를 기준으로 class로부터 데이터를 찾음
-			members = em.find(StudyMembers.class, id);
-			if (members != null) {
-				// before update
-				System.out.println("update 전 : " + members);
-				members.setGoal(goal);
-			}else {
-				System.out.println("업데이트 하려는 사람의 정보를 찾지 못하였습니다");
-			}
-			//persist -> update
-			em.persist(members);
-			tx.commit();
-		} catch (Exception e) {
-			tx.rollback();
-			e.printStackTrace();
-		}finally {
-			em.close();
-		}
-	}
-	
-	// delete
-	public void deleteMember(String id) {
-		EntityManager em = DBUtil.getEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		try {
-			tx.begin();
-			//find로 찾기 
-			StudyMembers members = em.find(StudyMembers.class, id);
-			if (members != null) {
-				em.remove(members);
-			}else {
-				System.out.println("이미 탈퇴처리가 완료된 회원입니다.");
-			}
-			tx.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			em.close();
-		}
-	}
-	
-	// select 한명 => 마이페이지
-	public StudyMembers findOneMember(String id) {
-		EntityManager em = DBUtil.getEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		StudyMembers members = null;
-		try {
-			tx.begin();
-			//단순 조회 후 
-			members = em.find(StudyMembers.class, id);
-		
-			tx.commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			em.close();
-		}
-		//해당 객체 출력
-		return members;
-	}
-	
-
-		
+// 			//엔티티의 @nonnull이 붙은 컬럼들을 파라미터로 받아서 생성자 생성 후 
+// 			StudyMembers members = new StudyMembers(dto.getId(), dto.getPassword(), dto.getNickname(), dto.getEmail(), dto.getGrade());
+// 			//persist(객체의 변수) insert 실행
+// 			em.persist(members);
+// 			tx.commit();
+// 		} catch (Exception e) {
+// 			tx.rollback();
+// 			e.printStackTrace();
+// 		}finally {
+// 			em.close();
+// 		}
+// 	}
 	
 		//회원가입 - jpa
 	public static StudyMembers insertMember(StudyMembers member) throws SQLException {
@@ -144,7 +73,8 @@ public class StudyMembersDAO {
 		
         return member;
     }
-	//회원가입 - 아이디 중복 확인
+	
+		//회원가입 - 아이디 중복 확인
 	public static int duplecateID(String id){
 		int cnt=0;
 	    try{
@@ -170,12 +100,9 @@ public class StudyMembersDAO {
 	    }
 		return cnt;
 	}
-		
-
 	
 	
-	
-	//멤버 본인 프로필 수정 - jpa
+		//멤버 본인 프로필 수정 - jpa
 	public static boolean memUpdate (String id, String email, String goal, String nick, String pw) throws SQLException {
 		EntityManager em = DBUtil.getEntityManager();
 		EntityTransaction tx = em.getTransaction();
@@ -208,8 +135,6 @@ public class StudyMembersDAO {
 		return false;
 		
 	}
-
-
 	
 		//본인 조회 - jpa
 	public static StudyMembers getMember (String id) {
@@ -232,6 +157,75 @@ public class StudyMembersDAO {
 		return stdmember;
 	}
 	
+	
+	//goal 하나 수정 파라미터 인자값 수정 고려, 여러개 update는 방법을 찾지 못함 -> Spring Data 프레임 워크 어쩌구..
+// 	public void updateMember(String goal, String id) {
+// 		EntityManager em = DBUtil.getEntityManager();
+// 		EntityTransaction tx = em.getTransaction();
+// 		StudyMembers members = null;
+// 		try {
+// 			tx.begin();
+// 			//pk를 기준으로 class로부터 데이터를 찾음
+// 			members = em.find(StudyMembers.class, id);
+// 			if (members != null) {
+// 				// before update
+// 				System.out.println("update 전 : " + members);
+// 				members.setGoal(goal);
+// 			}else {
+// 				System.out.println("업데이트 하려는 사람의 정보를 찾지 못하였습니다");
+// 			}
+// 			//persist -> update
+// 			em.persist(members);
+// 			tx.commit();
+// 		} catch (Exception e) {
+// 			tx.rollback();
+// 			e.printStackTrace();
+// 		}finally {
+// 			em.close();
+// 		}
+// 	}
+	
+	// delete
+	public void deleteMember(String id) {
+		EntityManager em = DBUtil.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		try {
+			tx.begin();
+			//find로 찾기 
+			StudyMembers members = em.find(StudyMembers.class, id);
+			if (members != null) {
+				em.remove(members);
+			}else {
+				System.out.println("이미 탈퇴처리가 완료된 회원입니다.");
+			}
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			em.close();
+		}
+	}
+
+	// select 한명 => 마이페이지
+	public StudyMembers findOneMember(String id) {
+		EntityManager em = DBUtil.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		StudyMembers members = null;
+		try {
+			tx.begin();
+			//단순 조회 후 
+			members = em.find(StudyMembers.class, id);
+		
+			tx.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			em.close();
+		}
+		//해당 객체 출력
+		return members;
+	}
+
 	//jpa 로그인 : 네임드 쿼리 사용해서 id,pw로 1명의 회원정보 조회
 	//@NamedQuery(name = "StudyMembers.findByLoginInfo", query = "select m from StudyMembers m where m.id=:id and m.password=:password")
 	//로그인
