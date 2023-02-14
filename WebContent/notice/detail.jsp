@@ -7,7 +7,7 @@ pageEncoding="UTF-8"%>
 
 <div class="row" style="margin-bottom:20px; margin-left:1px;">
 <div class="col-lg-12">
-<h1 class="page-header">상세 페이지</h1>
+<h2 class="page-header">상세 페이지</h2>
 </div>
 </div>
 
@@ -60,9 +60,12 @@ pageEncoding="UTF-8"%>
 </table>
 </div>
 <div style="margin-left:1px;">
-<a href="/Notice/list" class="btn btn-primary">목록</a>
+
+	<input type="button" value="목록으로"
+				Onclick="location.href='${pageContext.request.contextPath}/Notice/list'">
 <button type="submit">수정</button>
 </form>
+
 <form id="delFrm" action="${pageContext.request.contextPath}/Notice/deleteNotice/${dto.noticeNo}" method="post">
 	<input type="hidden" name="noticeNo" value="${dto.noticeNo}">
 	<button type="submit" >삭제</button>
@@ -73,4 +76,5 @@ pageEncoding="UTF-8"%>
 </div>
 </div>
 </div>
+
 
