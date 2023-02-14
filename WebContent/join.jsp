@@ -12,7 +12,7 @@
 	rel="stylesheet">
 <script src="https://kit.fontawesome.com/f51a30e87b.js"
 	crossorigin="anonymous"></script>
-<link rel="stylesheet" href="../css/join.css">
+<link rel="stylesheet" href="./css/join.css">
 <title>회원가입 페이지</title>
 </head>
 <script>

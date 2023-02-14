@@ -29,57 +29,161 @@ public class StudyMembersDAO {
 	}
 	
 	//가입 insert 로직
-	public void insertMember(StudyMembersDTO dto) {
+// 	public void insertMember(StudyMembersDTO dto) {
+// 		EntityManager em = DBUtil.getEntityManager();
+// 		EntityTransaction tx = em.getTransaction();
+// 		try {
+// 			tx.begin();
+// 			//방법2 기본생성자 생성 후 setxXX()메소드로 인자 집어넣어줌. 단, not null인 컬럼들은 필수로 값 삽입
+// //			StudyMembers members = new StudyMembers();
+// //			members.setId(dto.getId());
+// //			members.setPassword(dto.getPassword());
+// //
+// //			em.persist(members);
+			
+// 			//엔티티의 @nonnull이 붙은 컬럼들을 파라미터로 받아서 생성자 생성 후 
+// 			StudyMembers members = new StudyMembers(dto.getId(), dto.getPassword(), dto.getNickname(), dto.getEmail(), dto.getGrade());
+// 			//persist(객체의 변수) insert 실행
+// 			em.persist(members);
+// 			tx.commit();
+// 		} catch (Exception e) {
+// 			tx.rollback();
+// 			e.printStackTrace();
+// 		}finally {
+// 			em.close();
+// 		}
+// 	}
+	
+		//회원가입 - jpa
+	public static StudyMembers insertMember(StudyMembers member) throws SQLException {
 		EntityManager em = DBUtil.getEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		try {
 			tx.begin();
-			//방법2 기본생성자 생성 후 setxXX()메소드로 인자 집어넣어줌. 단, not null인 컬럼들은 필수로 값 삽입
-//			StudyMembers members = new StudyMembers();
-//			members.setId(dto.getId());
-//			members.setPassword(dto.getPassword());
-//
-//			em.persist(members);
-			
-			//엔티티의 @nonnull이 붙은 컬럼들을 파라미터로 받아서 생성자 생성 후 
-			StudyMembers members = new StudyMembers(dto.getId(), dto.getPassword(), dto.getNickname(), dto.getEmail(), dto.getGrade());
-			//persist(객체의 변수) insert 실행
-			em.persist(members);
+			em.persist(member);
 			tx.commit();
+			
 		} catch (Exception e) {
 			tx.rollback();
 			e.printStackTrace();
-		}finally {
+			
+		} finally {
 			em.close();
 		}
+		
+        return member;
+    }
+	
+		//회원가입 - 아이디 중복 확인
+	public static int duplecateID(String id){
+		int cnt=0;
+	    try{
+	    	Connection con=DBUtil2.getConnection();
+	        StringBuilder sql=new StringBuilder();
+	        
+	        //아이디 중복 확인
+	        sql.append(" SELECT count(id) as cnt ");
+	        sql.append(" FROM studymembers ");
+	        sql.append(" WHERE id = ? ");
+	        
+	        PreparedStatement pstmt=con.prepareStatement(sql.toString());
+	        pstmt.setString(1, id);
+	        
+	        ResultSet rs=pstmt.executeQuery();
+	        if(rs.next()){
+	        	cnt=rs.getInt("cnt");
+	 
+	        }
+	        
+	    }catch(Exception e){
+	     	System.out.println("아이디 중복 확인 실패 : " + e);
+	    }
+		return cnt;
 	}
 	
-	//goal 하나 수정 파라미터 인자값 수정 고려, 여러개 update는 방법을 찾지 못함 -> Spring Data 프레임 워크 어쩌구..
-	public void updateMember(String goal, String id) {
+	
+		//멤버 본인 프로필 수정 - jpa
+	public static boolean memUpdate (String id, String email, String goal, String nick, String pw) throws SQLException {
 		EntityManager em = DBUtil.getEntityManager();
 		EntityTransaction tx = em.getTransaction();
-		StudyMembers members = null;
+		StudyMembers mem = null;
+		
 		try {
 			tx.begin();
-			//pk를 기준으로 class로부터 데이터를 찾음
-			members = em.find(StudyMembers.class, id);
-			if (members != null) {
+			mem = em.find(StudyMembers.class, id);
+			if (mem != null) {
 				// before update
-				System.out.println("update 전 : " + members);
-				members.setGoal(goal);
-			}else {
+				System.out.println("update 전 : " + mem);
+				mem.setEmail(email);
+				mem.setGoal(goal);
+				mem.setNickname(nick);
+				mem.setPassword(pw);
+				
+			} else {
 				System.out.println("업데이트 하려는 사람의 정보를 찾지 못하였습니다");
 			}
-			//persist -> update
-			em.persist(members);
-			tx.commit();
+			em.persist(mem); //persist -> update
+			tx.commit(); 
+			// after update
+			System.out.println("update 후 : " + mem);
 		} catch (Exception e) {
-			tx.rollback();
 			e.printStackTrace();
+		} finally {
+			em.close();
+		}
+
+		return false;
+		
+	}
+	
+		//본인 조회 - jpa
+	public static StudyMembers getMember (String id) {
+		EntityManager em = DBUtil.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		StudyMembers stdmember = null;
+		
+		try {
+			tx.begin();
+			stdmember = em.find(StudyMembers.class, id);
+			tx.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
 		}finally {
 			em.close();
 		}
+		
+		return stdmember;
 	}
+	
+	
+	//goal 하나 수정 파라미터 인자값 수정 고려, 여러개 update는 방법을 찾지 못함 -> Spring Data 프레임 워크 어쩌구..
+// 	public void updateMember(String goal, String id) {
+// 		EntityManager em = DBUtil.getEntityManager();
+// 		EntityTransaction tx = em.getTransaction();
+// 		StudyMembers members = null;
+// 		try {
+// 			tx.begin();
+// 			//pk를 기준으로 class로부터 데이터를 찾음
+// 			members = em.find(StudyMembers.class, id);
+// 			if (members != null) {
+// 				// before update
+// 				System.out.println("update 전 : " + members);
+// 				members.setGoal(goal);
+// 			}else {
+// 				System.out.println("업데이트 하려는 사람의 정보를 찾지 못하였습니다");
+// 			}
+// 			//persist -> update
+// 			em.persist(members);
+// 			tx.commit();
+// 		} catch (Exception e) {
+// 			tx.rollback();
+// 			e.printStackTrace();
+// 		}finally {
+// 			em.close();
+// 		}
+// 	}
 	
 	// delete
 	public void deleteMember(String id) {
@@ -101,7 +205,7 @@ public class StudyMembersDAO {
 			em.close();
 		}
 	}
-	
+
 	// select 한명 => 마이페이지
 	public StudyMembers findOneMember(String id) {
 		EntityManager em = DBUtil.getEntityManager();
@@ -121,8 +225,67 @@ public class StudyMembersDAO {
 		//해당 객체 출력
 		return members;
 	}
+
+	//jpa 로그인 : 네임드 쿼리 사용해서 id,pw로 1명의 회원정보 조회
+	//@NamedQuery(name = "StudyMembers.findByLoginInfo", query = "select m from StudyMembers m where m.id=:id and m.password=:password")
+	//로그인
+	public boolean loginMember(String id, String password) throws SQLException {
+		EntityManager em = DBUtil.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		
+		try {
+			tx.begin();
+
+			StudyMembers loginData = (StudyMembers) em.createNamedQuery("StudyMembers.findByLoginInfo").setParameter("id", id).setParameter("password", password).getSingleResult();
+			
+			em.persist(loginData);
+			System.out.println(loginData);
+
+			tx.commit();
+			
+			return true;
+			
+		} catch (Exception e) {
+			tx.rollback();
+			e.printStackTrace();
+		} finally {
+			em.close();
+		}
+		return false;
+	}
+
 	
-	//모든 회원 검색(Empcopy 배열 출력) 반환타입
+	//jdbc 로그인 : sql문 사용해서 id,pw로 1명의 회원정보 조회
+	//sql = "select * from studymembers where id=? and password=?";
+	public boolean loginMember2(String id, String pw) throws SQLException {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		try {
+			conn = DBUtil2.getConnection();
+			pstmt = conn.prepareStatement("select * from studymembers where id=? and password=?");
+			pstmt.setString(1, id);
+			pstmt.setString(2, pw);
+			
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				return true;
+			}
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			throw sqle;
+		} finally {
+			DBUtil2.close(conn, pstmt, rset);
+		}
+		
+		return false;
+	}
+	
+	
+	//관리자
+	//jpa - 모든 회원 검색
 	public List<StudyMembers> getAllMembers() {
 		EntityManager em = DBUtil.getEntityManager();
 		
@@ -138,35 +301,9 @@ public class StudyMembersDAO {
 	}
 		
 	
+
 	
-	//로그인 grade로 뽑아서 관리자,일반회원 구분?
-		//sql = "select grade from studymembers where id=? and password=?";
-		public boolean getMemberInfo(String id, String pw) throws SQLException {
-			Connection conn = null;
-			PreparedStatement pstmt = null;
-			ResultSet rset = null;
-			
-			try {
-				conn = DBUtil2.getConnection();
-				pstmt = conn.prepareStatement("select grade from studymembers where id=? and password=?");
-				pstmt.setString(1, id);
-				pstmt.setString(2, pw);
-				
-				rset = pstmt.executeQuery();
-				
-				if (rset.next()) {
-					return true;
-				}
-			} catch (SQLException sqle) {
-				sqle.printStackTrace();
-				throw sqle;
-			} finally {
-				DBUtil2.close(conn, pstmt, rset);
-			}
-			
-			return false;
-		}
-		
+	//관리자 - jdbc
 		/**
 		 * 가입한 모든 회원 검색 (admin 제외/pw,goal 제외)
 		 * sql = "SELECT id, nickname, email, regdate, grade  FROM studymembers where grade in('free','premium')";
@@ -199,7 +336,7 @@ public class StudyMembersDAO {
 		}
 		
 		/**
-		 * 회원 삭제
+		 * 회원 1명 삭제
 		 */
 		public boolean delete(String id) throws SQLException {
 			Connection con = null;
@@ -246,111 +383,5 @@ public class StudyMembersDAO {
 			}
 		}
 	
-		//회원가입 - jpa
-	public static StudyMembers insertMember(StudyMembers member) throws SQLException {
-		EntityManager em = DBUtil.getEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		try {
-			tx.begin();
-			em.persist(member);
-			tx.commit();
-			
-		} catch (Exception e) {
-			tx.rollback();
-			e.printStackTrace();
-			
-		} finally {
-			em.close();
-		}
-		
-        return member;
-    }
-	//회원가입 - 아이디 중복 확인
-	public static int duplecateID(String id){
-		int cnt=0;
-	    try{
-	    	Connection con=DBUtil2.getConnection();
-	        StringBuilder sql=new StringBuilder();
-	        
-	        //아이디 중복 확인
-	        sql.append(" SELECT count(id) as cnt ");
-	        sql.append(" FROM studymembers ");
-	        sql.append(" WHERE id = ? ");
-	        
-	        PreparedStatement pstmt=con.prepareStatement(sql.toString());
-	        pstmt.setString(1, id);
-	        
-	        ResultSet rs=pstmt.executeQuery();
-	        if(rs.next()){
-	        	cnt=rs.getInt("cnt");
-	 
-	        }
-	        
-	    }catch(Exception e){
-	     	System.out.println("아이디 중복 확인 실패 : " + e);
-	    }
-		return cnt;
-	}
-		
-
-	
-	
-	
-	//멤버 본인 프로필 수정 - jpa
-	public static boolean memUpdate (String id, String email, String goal, String nick, String pw) throws SQLException {
-		EntityManager em = DBUtil.getEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		StudyMembers mem = null;
-		
-		try {
-			tx.begin();
-			mem = em.find(StudyMembers.class, id);
-			if (mem != null) {
-				// before update
-				System.out.println("update 전 : " + mem);
-				mem.setEmail(email);
-				mem.setGoal(goal);
-				mem.setNickname(nick);
-				mem.setPassword(pw);
-				
-			} else {
-				System.out.println("업데이트 하려는 사람의 정보를 찾지 못하였습니다");
-			}
-			em.persist(mem); //persist -> update
-			tx.commit(); 
-			// after update
-			System.out.println("update 후 : " + mem);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			em.close();
-		}
-
-		return false;
-		
-	}
-
-
-	
-		//본인 조회 - jpa
-	public static StudyMembers getMember (String id) {
-		EntityManager em = DBUtil.getEntityManager();
-		EntityTransaction tx = em.getTransaction();
-		StudyMembers stdmember = null;
-		
-		try {
-			tx.begin();
-			stdmember = em.find(StudyMembers.class, id);
-			tx.commit();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			
-		}finally {
-			em.close();
-		}
-		
-		return stdmember;
-	}
 	
 }

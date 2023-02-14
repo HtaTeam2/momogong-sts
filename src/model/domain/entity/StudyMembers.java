@@ -32,6 +32,8 @@ import lombok.Setter;
 //수정해서 사용 => 부분검색
 //@NamedQuery(name = "Player.findByLikePlayer", query = "select p from Player p where p.name like :name")
 
+//id,pw로 로그인
+@NamedQuery(name = "StudyMembers.findByLoginInfo", query = "select m from StudyMembers m where m.id=:id and m.password=:password")
 
 @Entity
 public class StudyMembers {

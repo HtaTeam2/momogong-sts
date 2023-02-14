@@ -67,8 +67,8 @@ public class StudyListController {
 	}
 	
 	//리스트
-	@RequestMapping(value = "/AllList", method = RequestMethod.GET) 
-	public String AllList(Model model) throws Exception {
+	@RequestMapping(value = "/allList", method = RequestMethod.GET) 
+	public String allList(Model model) throws Exception {
 		System.out.println("AllList() 확인----");
 		
 		model.addAttribute("AllList", listdao.AllList());
