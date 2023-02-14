@@ -56,8 +56,9 @@ public class CommunityController {
 		CommunityDTO dto2 = comdao.write(dto);
 		model.addAttribute("dto", dto2);
 
-		return "forward:/comm/read.jsp";
-//		return "redirect:/Community/view/"+dto2.getComNo(); //상세 글 페이지로 이동
+//		return "forward:/comm/read.jsp";
+		return "redirect:/Community/view/"+dto2.getComNo(); //상세 글 페이지로 이동
+//		return "redirect:list";
 	}
 
 
@@ -120,7 +121,8 @@ public class CommunityController {
 			throw new RuntimeException("게시물이 존재하지 않거나 비밀번호가 틀렸습니다.");
 		}
 
-		return "forward:view";//"redirect:allView"
+		return "forward:view/"+dto.getComNo(); //post에러
+//		return "redirect:list";
 	}
 	
 	
@@ -136,7 +138,7 @@ public class CommunityController {
 		if(!result) {
 			throw new RuntimeException("게시물이 존재하지 않거나 비밀번호가 틀렸습니다.");
 		}
-		return "redirect:/comm/list.jsp";
+		return "redirect:list";
 	}
 
 
