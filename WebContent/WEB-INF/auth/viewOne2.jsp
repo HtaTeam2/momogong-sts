@@ -6,10 +6,7 @@
 <%@ page import="model.StudyMembersDAO"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-	session.setAttribute("id", "test1");
-	session.setAttribute("password", "testpw");
-%> 
+
 
 <!DOCTYPE html>
 <html>
