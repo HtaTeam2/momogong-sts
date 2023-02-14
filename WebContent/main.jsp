@@ -1,6 +1,7 @@
 <%@page import="model.domain.entity.StudyMembers"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
 	/* 	session.setAttribute("id", "test1");
@@ -10,6 +11,9 @@ session.setAttribute("email", "test1@gmail.com");
 session.setAttribute("goal", "");
 session.setAttribute("regdate", "2023-02-11");
 session.setAttribute("grade", "FREE"); */
+
+//System.out.println("id: "+session.getAttribute("id")+", grade: "+session.getAttribute("grade"));
+//id, 등급 확인용 : 세션에 전체 데이터 들어오도록 StudyMembers컨트롤러 수정필요
 %>
 
 <!DOCTYPE html>
@@ -80,6 +84,10 @@ footer {
 			<button class="w3-button w3-white w3-hide-small w3-right"
 				onclick='location.href="${pageContext.request.contextPath}/StdMembers/viewOne2"'>내
 				정보</button>
+			<c:if test="${sessionScope.id == 'admin'}">
+		     		<button class="w3-button w3-white w3-hide-small w3-right" 
+		    	 		onclick='location.href="${pageContext.request.contextPath}/StdMembers/adPage"'>관리자메뉴</button>
+		   	 </c:if>
 		</div>
 	</div>
 	</header>
