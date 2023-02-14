@@ -31,10 +31,15 @@ footer {
 }
 </style>
 </head>
-<body>
-	<jsp:include page="/header.jsp"></jsp:include>
+<body onload='error("${errorMsg}")'>
 
-	<h3>-예외 발생: ${errorMsg}-</h3>
+<script type="text/javascript">
 
+	function error(msg){
+		alert('예외 발생: ' + msg);
+		history.back();
+	} 
+
+</script>
 </body>
 </html>
