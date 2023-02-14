@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -19,6 +20,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 
 @NoArgsConstructor
@@ -26,11 +28,13 @@ import lombok.Setter;
 @RequiredArgsConstructor
 @Getter
 @Setter
+@ToString
 
-//수정해서 사용 => 모든 검색 일치
-//@NamedQuery(name = "Player.findByTeamPlayers", query = "select p from Player p where p.team.tname = :name")
-//수정해서 사용 => 부분검색
-//@NamedQuery(name = "Player.findByLikePlayer", query = "select p from Player p where p.name like :name")
+
+@NamedQuery(name = "Community.findByComTitle", query = "select c from Community c where c.comTitle like :comTitle")
+@NamedQuery(name = "Community.findByComContent", query = "select c from Community c where c.comContent like :comContent")
+@NamedQuery(name = "Community.findByMemberid", query = "select c from Community c where c.studymembers.id like :memberid")
+
 
 @Entity
 @SequenceGenerator(
