@@ -25,7 +25,8 @@
 	    </div>
 	</div>
 	</header>
-	<div id="searchList" class="w3-row-padding">
+	
+		<div id="searchList" class="w3-row-padding">
 		<div class="page-title">
 			<div class="container">
 				<h2>커뮤니티</h2>
@@ -53,7 +54,7 @@
 					
 					<c:choose>
 						<c:when test="${empty requestScope.list}">
-							<p align="center"><b><span style="font-size:20pt;">등록된 커뮤니티 글이 없습니다.</span></b></p>
+							<p align="center"><b><span style="font-size:15pt;">${requestScope.errorMsg}</span></b></p>
 						</c:when>
 						
 						<c:otherwise>
@@ -94,13 +95,15 @@
 
 			</form>
 			
-			<button type="submit" class="btn btn-dark" 
-					onclick="location.href='${pageContext.request.contextPath}/Community/writeform'">글쓰기</button>
+			<span style='float:right'>
+                               <button type="button" id="list" onclick="location.href='${pageContext.request.contextPath}/Community/list'">목록</button>
+                               <button type="button" onclick="location.href='${pageContext.request.contextPath}/Community/writeform'" >글쓰기</button>
+                      </span>
 		</div>
 	</div>
 	<!-- axios 사용을 위한 추가 설정 -->
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script src="main.js"></script>	
-
+	
 </body>
 </html>

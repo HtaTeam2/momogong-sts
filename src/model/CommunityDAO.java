@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -20,7 +21,8 @@ import util.DBUtil2;
 
 @Repository
 public class CommunityDAO {
-
+	
+	//입력
 	public CommunityDTO write(CommunityDTO dto) throws Exception{
 		EntityManager em = DBUtil.getEntityManager();
 		EntityTransaction tx = em.getTransaction();
@@ -46,7 +48,8 @@ public class CommunityDAO {
 		}
 		
 	}
-
+	
+	//읽기
 	public CommunityDTO view(long comNo, boolean flag) throws SQLException{
 //		EntityManager em = DBUtil.getEntityManager();
 //		EntityTransaction tx = em.getTransaction();
@@ -84,6 +87,7 @@ public class CommunityDAO {
 		
 	}
 
+	//목록
 	public List<Community> list() throws Exception{
 		EntityManager em = DBUtil.getEntityManager();
 		
@@ -102,7 +106,9 @@ public class CommunityDAO {
 		}
 		return list;
 	}
-
+	
+	
+	//수정
 	public boolean update(CommunityDTO dto) throws SQLException{
 		Connection con = null;	
 		PreparedStatement pstmt = null;
@@ -129,6 +135,8 @@ public class CommunityDAO {
 		
 	}
 
+	
+	//삭제
 	public boolean delete(long comNo, String comPw) throws Exception{
 		Connection con = null;	
 		PreparedStatement pstmt = null;
@@ -150,15 +158,44 @@ public class CommunityDAO {
 		return false;
 	}
 	
+	//검색
+	public List<CommunityDTO> search(String searchType, String searchText) {
+		EntityManager em = DBUtil.getEntityManager();
+		List<Community> all = null;
+		List<CommunityDTO> all2 = new ArrayList<CommunityDTO>();
+		
+		if("title".equals(searchType)) {
+			all = em.createNamedQuery("Community.findByComTitle").setParameter("comTitle", "%"+searchText+"%").getResultList();
+//			System.out.println(all);
+			
+		}else if("content".equals(searchType)) {
+			all = em.createNamedQuery("Community.findByComContent").setParameter("comContent", "%"+searchText+"%").getResultList();
+//			System.out.println(all);
+			
+		}else if("writer".equals(searchType)) {
+			all = em.createNamedQuery("Community.findByMemberid").setParameter("memberid", "%"+searchText+"%").getResultList();
+			System.out.println(all);
+		}
+		for(Community v:all) {
+			all2.add(CommunityDTO.fromEntity(v));
+			System.out.println(all2);
+		}
+		return all2;
+	}
+	
+	
 	@Test
 	public void dataTest() {
 		try {
-			write(new CommunityDTO(0, "제목", "아이디", "말머리", "비번", null, "내용..", 0));
-			list();
+//			write(new CommunityDTO(0, "제목", "아이디", "말머리", "비번", null, "내용..", 0));
+//			list();
+			search("writer", "te");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 
 
 }

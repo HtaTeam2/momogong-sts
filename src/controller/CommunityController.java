@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -141,9 +142,24 @@ public class CommunityController {
 		return "redirect:list";
 	}
 
+	
+	//검색
+	@RequestMapping(value = "/search", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	public String search(Model model, @RequestParam String searchType, @RequestParam String searchText) throws Exception{
+		System.out.println("search()---------------"+searchType+" "+searchText);
+		
+		if(searchText == null || searchText.trim().length() == 0) {
+			throw new RuntimeException("검색어를 입력하세요.");
+		}
+		
+		List<CommunityDTO> list = comdao.search(searchType, searchText);
+		model.addAttribute("list", list);
+		return "forward:/comm/searchView.jsp";
+	}
 
 
-
+	
+	
 	//예외 처리에 대한 중복 코드를 분리해서 예외처리 전담 메소드
 	@ExceptionHandler(Exception.class)
 	public String totalEx(Exception e, HttpServletRequest req) { 
@@ -151,7 +167,7 @@ public class CommunityController {
 		e.printStackTrace(); //개발자 관점에서 필요한 정보, 서버 콘솔창에만 출력
 
 		req.setAttribute("errorMsg", e.getMessage());
-		return "forward:/error.jsp"; 
+		return "forward:/comm/error.jsp"; 
 	}
 	
 	//이미지파일 업로드

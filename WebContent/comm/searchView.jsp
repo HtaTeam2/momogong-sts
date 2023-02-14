@@ -53,7 +53,7 @@
 					
 					<c:choose>
 						<c:when test="${empty requestScope.list}">
-							<p align="center"><b><span style="font-size:20pt;">등록된 커뮤니티 글이 없습니다.</span></b></p>
+							<p align="center"><b><span style="font-size:15pt;">등록된 커뮤니티 글이 없습니다.</span></b></p>
 						</c:when>
 						
 						<c:otherwise>
@@ -62,7 +62,7 @@
 									<td>${c.comNo}</td>
 									<td>${c.subject}</td>
 									<td><a href="${pageContext.request.contextPath}/Community/view/${c.comNo}">${c.comTitle}</a></td>
-									<td>${c.studymembers.id}</td>
+									<td>${c.memberid}</td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${c.comRegdate}"/></td>
 									<td>${c.comViewCount}</td>
 								</tr>
@@ -93,9 +93,10 @@
 				<button type="submit" >검색</button>
 
 			</form>
-			
-			<button type="submit" class="btn btn-dark" 
-					onclick="location.href='${pageContext.request.contextPath}/Community/writeform'">글쓰기</button>
+			<span style='float:right'>
+                               <button type="button" id="list" onclick="location.href='${pageContext.request.contextPath}/Community/list'">목록</button>
+                               <button type="button" onclick="location.href='${pageContext.request.contextPath}/Community/writeform'" >글쓰기</button>
+                      </span>
 		</div>
 	</div>
 	<!-- axios 사용을 위한 추가 설정 -->

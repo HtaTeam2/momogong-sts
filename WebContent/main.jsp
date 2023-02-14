@@ -3,13 +3,13 @@
 	pageEncoding="UTF-8"%>
 
 <%
-	/* 	session.setAttribute("id", "test1");
+session.setAttribute("id", "test1");
 session.setAttribute("password", "testpw");
 session.setAttribute("nickname", "테스트1");
 session.setAttribute("email", "test1@gmail.com");
 session.setAttribute("goal", "");
 session.setAttribute("regdate", "2023-02-11");
-session.setAttribute("grade", "FREE"); */
+session.setAttribute("grade", "FREE");
 %>
 
 <!DOCTYPE html>
