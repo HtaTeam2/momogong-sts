@@ -31,12 +31,15 @@
 		}
 	</style>
 </head>
-<body>
-<jsp:include page="/header.jsp"></jsp:include>
+<body onload='succ()'>
 
-<h1>성공적으로 방을 생성하였습니다!</h1>
+<script type="text/javascript">
 
-<a href='${pageContext.request.contextPath}/main.jsp'>메인으로 이동하기</a>
+	function succ(msg){
+		alert('성공적으로 방을 생성하였습니다');
+		window.location.href ="/main.jsp";
+	} 
 
+</script>
 </body>
 </html>
