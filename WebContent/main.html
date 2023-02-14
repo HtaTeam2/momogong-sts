@@ -22,20 +22,19 @@ input[type=text] {
 }
 </style>
 </head>
-<body class="w3-white w3-content" style="max-width:1600px">
+<body class="w3-white w3-content" style="max-width:1600px" onload="allStudy()">
 
 
 
   <!-- Header -->
   <header id="portfolio">
-    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
     <div class="w3-container">
     <div class="w3-section w3-bottombar w3-padding-16">
        
-	  <img src="./images/momogong.png" alt="Norway" style="width:10%" class="w3-hover-opacity" onclick='location'>
+	  <img src="./images/momogong.png" alt="Norway" style="width:10%" class="w3-hover-opacity" onclick='location.href="main.html"'>
       <button class="w3-button w3-white" onclick='location.href="login.jsp"'>내 스터디</button>
       <button class="w3-button w3-white" onclick='location.href="login.jsp"'>커뮤니티</button>
-      <button class="w3-button w3-white w3-hide-small" onclick='location.href="/Notice/list"'>공지사항</button>
+      <button class="w3-button w3-white w3-hide-small" onclick='location.href="Notice/list"'>공지사항</button>
 		스터디 검색 : <input type="text" id="study" name="study" value=""><button id="btn1" class="w3-button w3-white w3-hide-small"><i class="fa fa-search"></i></button>
       <button class="w3-button w3-white w3-hide-small w3-right" onclick='location.href="login.jsp"'>로그인</button>
     </div>
