@@ -51,9 +51,10 @@ footer {
 }
 </style>
 </head>
-<body class="w3-white w3-content" style="max-width: 1600px">
+<body class="w3-white w3-content" style="max-width: 1600px" onload="allStudy()">
 	
 	<!-- header -->
+	<header>
 	<div class="w3-container">
 		<div class="w3-section w3-bottombar w3-padding-16">
 
@@ -81,9 +82,10 @@ footer {
 				정보</button>
 		</div>
 	</div>
+	</header>
 
 
-	<!-- 추천스터디 1 배열로 3개까지 나열? rownum..-->
+	<!-- searchList: 스터디 검색, allstudy: 모든 스터디 onload-->
 	<div id="searchList" class="w3-row-padding">
 		<div class="w3-section w3-bottombar w3-padding-16">
 			<span> </span>
@@ -96,34 +98,12 @@ footer {
 			<button id="cate" class="w3-button w3-white" value="수능">수능</button>
 			<button id="cate" class="w3-button w3-white" value="취업">취업</button>
 		</div>
-		<div >
-			<div class="w3-third w3-container w3-margin-bottom">
-				<img src="./images/profile.png" alt="Norway" style="width: 100%"
-					class="w3-hover-opacity">
-				<p class="w3-center">
-					<b>추천 스터디명 1</b>
-				</p>
-			</div>
-
-			<div class="w3-third w3-container w3-margin-bottom">
-				<img src="./images/profile.png" alt="Norway" style="width: 100%"
-					class="w3-hover-opacity">
-				<p class="w3-center">
-					<b>추천 스터디명 1</b>
-				</p>
-			</div>
-
-			<div class="w3-third w3-container w3-margin-bottom">
-				<img src="./images/profile.png" alt="Norway" style="width: 100%"
-					class="w3-hover-opacity">
-				<p class="w3-center">
-					<b>추천 스터디명 1</b>
-				</p>
-			</div>
-		</div>
+		<div id="allstudy"></div>
 	</div>
 	<!-- axios 사용을 위한 추가 설정 -->
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="main.js"></script>
+
+  
 </body>
 </html>
