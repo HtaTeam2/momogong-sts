@@ -31,34 +31,31 @@ input[type=text] {
 </style>
 </head>
 <body>
-	<!-- Header -->
-	<header id="portfolio">
-		<span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey"
-			onclick="w3_open()"><i class="fa fa-bars"></i></span>
-		<div class="w3-container">
-			<div class="w3-section w3-bottombar w3-padding-16">
-
-				<img src="../images/momogong.png" alt="Norway" style="width: 10%"
-					class="w3-hover-opacity" onclick='location.href="../main.html"'>
-				<button class="w3-button w3-white"
-					onclick='location.href="../login.jsp"'>내 스터디</button>
-				<button class="w3-button w3-white"
-					onclick='location.href="../login.jsp"'>커뮤니티</button>
-				<button class="w3-button w3-white w3-hide-small"
-					onclick='location.href="/Notice/list"'>공지사항</button>
-				스터디 검색 : <input type="text" id="study" name="study" value="">
-				<button id="btn1" class="w3-button w3-white w3-hide-small">
-					<i class="fa fa-search"></i>
-				</button>
+	<!-- header -->
+	<header>
+	<div class="w3-container">
+	    <div class="w3-section w3-bottombar w3-padding-16">
+		  <img src="${pageContext.request.contextPath}/images/momogong.png" onclick='location.href="${pageContext.request.contextPath}/main.jsp"' style="width:10%" class="w3-hover-opacity">
+	      <button class="w3-button w3-white" onclick='location.href="${pageContext.request.contextPath}/StdGroup/mystudy"'>내 스터디</button>
+	      <button class="w3-button w3-white" onclick='location.href="${pageContext.request.contextPath}/lists/createStdList.jsp"'>스터디 생성</button>
+	      <button class="w3-button w3-white" onclick='location.href="${pageContext.request.contextPath}/Community/list"'>커뮤니티</button>
+	      <button class="w3-button w3-white w3-hide-small" onclick='location.href="${pageContext.request.contextPath}/Notice/list"'>공지사항</button>
+	      	 스터디 검색 : <input type="text" id="study" name="study" value=""><button id="btn1" class="w3-button w3-white w3-hide-small"><i class="fa fa-search"></i></button>
 	      <button class="w3-button w3-white w3-hide-small w3-right" onclick='location.href="${pageContext.request.contextPath}/StdMembers/logout"'>로그아웃</button>
 	      <button class="w3-button w3-white w3-hide-small w3-right" onclick='location.href="${pageContext.request.contextPath}/StdMembers/viewOne2"'>내 정보</button>
-			</div>
-		</div>
+	    </div>
+	</div>
 	</header>
-	<center>
-		축하합니다. 회원정보 update 성공하셨습니다. <a
-			href="${pageContext.request.contextPath}/StdMembers/viewOne2">정보
-			보기</a>
-	</center>
+	
+	<div id="searchList" class="w3-row-padding">
+		<center>
+			축하합니다. 회원정보 update 성공하셨습니다. <a
+				href="${pageContext.request.contextPath}/StdMembers/viewOne2">정보
+				보기</a>
+		</center>
+	</div>
+	<!-- axios 사용을 위한 추가 설정 -->
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="main.js"></script>	
 </body>
 </html>

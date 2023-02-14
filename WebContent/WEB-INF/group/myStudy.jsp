@@ -36,6 +36,7 @@
 </head>
 <body>
 	<!-- header -->
+	<header>
 	<div class="w3-container">
 		<div class="w3-section w3-bottombar w3-padding-16">
 
@@ -63,8 +64,10 @@
 				정보</button>
 		</div>
 	</div>
+	</header>
 
 <!-- 비동기로 변경 -->
+	<div id="searchList" class="w3-row-padding">
 	<h1>&nbsp;&nbsp;<i class="fa fa-pencil-square-o" style="font-size:40px;color:#3c3c3c;"></i>내스터디</h1>
 		<div class="w3-row-padding" style="margin:0 -16px">
 	      <div class="w3-margin-bottom">
@@ -105,9 +108,9 @@
 					</c:forEach>
 				</tr>
 			</table>
-		
+	</div>
 	<!-- axios 사용을 위한 추가 설정 -->
-<!--   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src="main.js"></script> -->
+ <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
