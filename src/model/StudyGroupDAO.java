@@ -25,7 +25,7 @@ import util.DBUtil2;
 public class StudyGroupDAO {
 	
 	//그룹원 가입
-	public StudyGroup joinGroup(String joinId, long roomNo) throws Exception{
+	public StudyGroup joinGroup(String joinId, long roomNo) throws Exception, SQLException{
 		System.out.println("joinGroup DAO");
 		EntityManager em = DBUtil.getEntityManager();
 		EntityTransaction tx = em.getTransaction();
@@ -36,7 +36,6 @@ public class StudyGroupDAO {
 			tx.begin();
 			lists= em.find(StudyLists.class, roomNo);
 			mem = em.find(StudyMembers.class, joinId);
-			//namedQuery 사용법 1. 그룹내에서 해당 id로 조회.. 없으면 예외가 발생해버린다ㅜ NoResultException: No entity found for query
 			group = (StudyGroup)em.createNamedQuery("Group.findByJoinId").setParameter("roomNo", roomNo).setParameter("name", joinId).getSingleResult();
 		}catch (NoResultException e) {
 			try {
@@ -49,14 +48,13 @@ public class StudyGroupDAO {
 					// before update
 					System.out.println("update 전 : " + lists.getMemNum());
 					if(lists.getMemNum() < lists.getMaxMem()) {
-						//1 추가. 다만 4명이 넘어야 한다는 조건은...
 						lists.setMemNum(lists.getMemNum() + 1);
 						em.persist(lists);
 					}else {
 						throw new Exception("인원을 초과하여 가입하실 수 없습니다.");
 					}
 				}else {
-					System.out.println("업데이트 하려는 사람의 정보를 찾지 못하였습니다");
+					throw new Exception("업데이트 하려는 사람의 정보를 찾지 못하였습니다");
 				}
 				tx.commit();
 				return group;
@@ -73,33 +71,33 @@ public class StudyGroupDAO {
 		return group;
 	}
 	
-	//그룹원 조회. namedQuery
-	public List<StudyGroup> getCustomers1(long roomNo) throws SQLException {
+	//XXXXXXX그룹원 조회(JPA 사용X) namedQuery join문이 잘못된걸까
+	public List getCustomers(long roomNo) throws SQLException {
 		EntityManager em = DBUtil.getEntityManager();
 		
-		List<StudyGroup> all = em.createNamedQuery("GroupMembers.findByRoomNo").setParameter("roomNo", roomNo).getResultList();
-		
+		List all = em.createNamedQuery("GroupMembers.findByRoomNo").setParameter("roomNo", roomNo).getResultList();
+		System.out.println("DAO에서 출력" + all.get(0));
 		em.close();
 		
 		return all;
 	}
 	
-	//그룹원 조회. join문을 써서 닉네임 뽑음
-	public ArrayList<StudyGroupMembersDTO> getCustomers(long roomNum) throws SQLException {
+	//그룹원 조회. join문을 써서 닉네임 뽑음	
+	public ArrayList<StudyGroupMembersDTO> getCustomers1(long roomNum) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<StudyGroupMembersDTO> allList = null;
 		try {
 			con = DBUtil2.getConnection();
-			pstmt = con.prepareStatement("SELECT g.studylists_no, m.id, m.nickname, m.goal FROM studygroup g, studymembers m WHERE g.studymembers_id = m.id AND g.studylists_no = ?;");
+			pstmt = con.prepareStatement("SELECT l.roomNo, l.roomTitle, m.id, m.nickname, m.goal FROM studygroup g, studymembers m, studylists l WHERE g.studymembers_id = m.id AND g.studylists_no = l.roomNo AND g.studylists_no = ?;");
 			pstmt.setLong(1, roomNum);
 			rset = pstmt.executeQuery();
 			
 			allList = new ArrayList<>();
 			
 			while (rset.next()) {
-				allList.add(new StudyGroupMembersDTO(roomNum, rset.getString(2), rset.getString(3), rset.getString(4)));
+				allList.add(new StudyGroupMembersDTO(roomNum, rset.getString(2), rset.getString(3), rset.getString(4), rset.getString(5)));
 			}
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
@@ -158,10 +156,7 @@ public class StudyGroupDAO {
 		}
 		return result;
 	}
-//	public ArrayList<MyStudyDTO> getMyStudy(String id) throws SQLException{
-//		System.out.println("DAO getMyStudy " + id);
-//		
-//	}
+
 	//mystudy 조회
 	public ArrayList<MyStudyDTO> getMyStudy(String id) throws SQLException{
 		System.out.println("DAO getMyStudy " + id);
@@ -187,51 +182,4 @@ public class StudyGroupDAO {
 		}
 		return allList;
 	}
-	//가입. JDBC 리스트 update -> 인원수 증가시켜야 함. 그럼 초기값을 0으로 줘야겠다
-	//존재하는 id라면 false 리턴해서 바로 입장
-//	public boolean joinGroup1(String joinId, long roomNo) throws SQLException, Exception {
-//		Connection con = null;
-//		PreparedStatement pstmt1 = null;
-//		PreparedStatement pstmt2 = null;
-//		PreparedStatement pstmt3 = null;
-//		ResultSet rset = null; 
-//		boolean find = false;
-//		
-//		try {
-//			con = DBUtil2.getConnection();
-//			con.setAutoCommit(false);
-//			pstmt1 = con.prepareStatement("INSERT INTO studygroup(memNo, studylists_no, studymembers_id) VALUES(STUDYGROUP_SEQ.NEXTVAL, ? , ?)");
-//			//조건을 아래와 같이 걸어준 뒤 update되지 않으면 rollback. 문제 -> SQL 오류가 나는게 아니라 업데이트만 안됨
-//			pstmt2 = con.prepareStatement("UPDATE studylists SET memNum = (memNum + 1) WHERE roomNo = ? and memNum < maxMem");
-//			pstmt3 = con.prepareStatement("SELECT studymembers_id FROM studygroup WHERE studylists_no = ?");
-//			pstmt3.setLong(1, roomNo);
-//			pstmt3.executeUpdate();
-//			pstmt1.setLong(1, roomNo);
-//			pstmt1.setString(2, joinId);
-//			pstmt2.setLong(1, roomNo);
-//			rset = pstmt1.executeQuery();
-//			while(rset.next()) {
-//				//방 안에 중복되는 ID가 있으면 false 리턴. 가입안하고 입장 
-//				if(rset.getString(1).equals(joinId)){
-//					return find;
-//				}
-//			}
-//			int result = pstmt2.executeUpdate();
-//			//실행된 sql문이 0일때 예외 발생. 알림창에 뜨도록?
-//			if(result == 0) {
-//				con.rollback();
-//				throw new Exception("인원을 초과하여 가입하실 수 없습니다.");
-//			}else {
-//				find = true;
-//				con.commit();
-//			}
-//		} catch (SQLException s) {
-//			s.printStackTrace();
-//			con.rollback();
-//			throw new SQLException("내부적인 오류로 가입에 실패하였습니다. 잠시 후 재시도 해주십시오. ");
-//		} finally {
-//			DBUtil2.close(con, pstmt1, pstmt2);
-//		}
-//		return find;
-//	}
 }

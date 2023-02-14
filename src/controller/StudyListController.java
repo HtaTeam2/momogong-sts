@@ -21,20 +21,75 @@ public class StudyListController {
 	@Autowired
 	public StudyListDAO listdao;
 
-
-	
-
-	
-	
-	@RequestMapping(value = "/insert", method = RequestMethod.POST)
-	public String insert(Model sessionData, StudyListsDTO sdto) throws SQLException {
-		System.out.println("insert()메소드 호출 확인~^^");
-		listdao.createStdList(sdto);
+	//스터디 생성
+	@RequestMapping(value = "/insertList", method = RequestMethod.POST)
+	public String insert(Model sessionData, StudyListsDTO sdto) throws Exception {
+		System.out.println("insert()메소드 호출 확인");
+		listdao.insertList(sdto);
 		sessionData.addAttribute("sdto", sdto);
 		
 		//가입 후엔 Group원 추가로 넘겨줌 - 그룹원 가입 url = /insert
 		return "/StdGroup/insert";
 	}
+	
+	//스터디 삭제
+	@RequestMapping(value = "/deleteList", method = RequestMethod.POST)
+	public String delete(@RequestParam("roomNo") long roomNo) throws Exception {
+		System.out.println("delete()메소드 호출 확인");
+		
+		listdao.deleteList(roomNo);
+		
+		return "redirect:list.jsp"; //수정해야함
+	}
+	
+	
+	//스터디 수정
+	@RequestMapping(value = "/updateList", method=RequestMethod.POST)
+	public String update(@RequestParam("roomTitle") String roomTitle,
+						@RequestParam("roomDesc") String roomDesc, 
+						@RequestParam("category") String category, 
+						@ModelAttribute("sdto") StudyListsDTO sdto) throws Exception {
+
+		System.out.println("update() 확인----" + sdto );
+		
+		sdto.setRoomTitle(roomTitle);
+		sdto.setRoomDesc(roomDesc);
+		sdto.setCategory(category);
+			
+		listdao.updateList(sdto);	
+		
+		return "forward:/updateSuccess.jsp";//수정해야함
+	}
+	
+	//리스트
+	@RequestMapping(value = "/AllList", method = RequestMethod.GET) 
+	public String AllList(Model model) throws Exception {
+		System.out.println("AllList() 확인----");
+		
+		model.addAttribute("AllList", listdao.AllList());
+		
+		return "redirect:list.jsp";//수정해야함	
+	}
+	
+
+	//예외처리에 대한 중복 코드를 분리해서 예외처리 전담 메소드
+	@ExceptionHandler(SQLException.class)
+	public String tatalEx(SQLException e, HttpServletRequest req) { //예외중 SQLException만 처리하는 핸들러 메소드
+		System.out.println("예외처리전담");
+		e.printStackTrace();
+		
+		req.setAttribute("errorMasg", e.getMessage());
+		
+		return "forward:/error.jsp"; // /가 없을 경우
+	}
+	
+	@ExceptionHandler(NullPointerException.class)
+	public String tatalEx2(NullPointerException e) { //예외중 NullPointerException만 처리하는 핸들러 메소드
+		System.out.println("예외처리전담");
+		e.printStackTrace();
+		return "forward:/error.jsp";
+	}
+	
 	
 	//스터디 검색. Model에 JSONArray데이터 담은 후 res.jsp로 forward전송
 	@RequestMapping(value = "search/{title}", method = RequestMethod.POST )

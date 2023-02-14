@@ -15,7 +15,7 @@ pageEncoding="UTF-8"%>
 <div id="contAreaBox">
 <div class="panel">
 <div class="panel-body">
-<form role="form" action="/Notice/view" method="post">
+<form role="form" action="${pageContext.request.contextPath}/Notice/updateNotice/${dto.noticeNo}" method="get">
 <div class="table-responsive" style="text-align:center;">
 <table id="datatable-scroller"
 	class="table table-bordered tbl_Form">
@@ -28,32 +28,32 @@ pageEncoding="UTF-8"%>
 		<tr>
 			<th class="active" >글번호</th>
 			<td>
-				${ndto.noticeNo}
+				${dto.noticeNo}
 				
 			</td>
 		</tr>
 		<tr>
 			<th class="active">글내용</th>
 			<td>
-				${ndto.noticeContent}
+				${dto.noticeContent}
 			</td>
 		</tr>
 		<tr>
 			<th class="active" >작성일</th>
 			<td>
-			${ndto.noticeRegdate}
+			<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${dto.noticeRegdate}"/>
 			</td>
 		</tr>
 		<tr>
 			<th class="active" >글제목</th>
 			<td>
-			${ndto.noticeTitle}
+			${dto.noticeTitle}
 			</td>
 		</tr>
 		<tr>
 			<th class="active" >조회수</th>
 			<td>
-			${ndto.viewCount}
+			${dto.viewCount}
 			</td>
 		</tr>
 	</tbody>
@@ -61,8 +61,14 @@ pageEncoding="UTF-8"%>
 </div>
 <div style="margin-left:1px;">
 <a href="/Notice/list" class="btn btn-primary">목록</a>
-</div>
+<button type="submit">수정</button>
 </form>
+<form id="delFrm" action="${pageContext.request.contextPath}/Notice/deleteNotice/${dto.noticeNo}" method="post">
+	<input type="hidden" name="noticeNo" value="${dto.noticeNo}">
+	<button type="submit" >삭제</button>
+</form>
+
+</div>
 </div>
 </div>
 </div>

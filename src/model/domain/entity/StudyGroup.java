@@ -27,13 +27,12 @@ import lombok.Setter;
 //수정해서 사용 => 2개 이상의 조건을 주고 검색
 @NamedQuery(name = "Group.findByJoinId", 
 			query = "select g from StudyGroup g where g.studyMembers.id = :name and g.studyLists.roomNo = :roomNo")
-//수정해서 사용 => 부분검색
-//@NamedQuery(name = "Player.findByLikePlayer", query = "select p from Player p where p.name like :name")
 //SELECT DISTINCT * FROM studygroup g INNER JOIN studymembers m WHERE g.studymembers_id = m.id AND g.studylists_no = 1;
-// g.studylists_no, m.id, m.nickname, m.goal
-//@NamedQuery(name = "GroupMembers.findByRoomNo", 
-//			query = "SELECT g.studylists_no, g.studymembers.id, g.studymembers.nickname, m.goal FROM studygroup g WHERE g.studyLists.roomNo = :roomNo;")
-
+// 결과는 나오나 jsp el태그로 안뽑힘
+@NamedQuery(name = "GroupMembers.findByRoomNo", 
+			query = "SELECT m.nickname AS nick, l.roomTitle AS title "
+					+ "FROM StudyGroup g JOIN g.studyLists l JOIN g.studyMembers m "
+					+ "WHERE g.studyLists.roomNo = :roomNo")
 @Entity
 @SequenceGenerator(
         name="STUDYGROUP_SEQ_GEN", //시퀀스 제너레이터 이름
@@ -57,5 +56,7 @@ public class StudyGroup {
 	
 	@CreationTimestamp
 	private Date regdate;
+
+	
 
 }

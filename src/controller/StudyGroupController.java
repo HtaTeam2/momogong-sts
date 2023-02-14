@@ -3,6 +3,8 @@ package controller;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,13 +22,13 @@ import model.domain.StudyGroupMembersDTO;
 
 @Controller
 @RequestMapping("StdGroup")
-@SessionAttributes({"allGroup", "id"}) //저장될 값은 allGroup,  id, roomNo
+@SessionAttributes({"id"}) //저장될 값은 id
 public class StudyGroupController {
 	
 	@Autowired
 	public StudyGroupDAO groupdao;
 	
-	//List나 검색결과에서 특정방 클릭하는 순간 해당방에 가입 . 필요한 값 roomNo, 세션id
+	//List나 검색결과에 특정방 클릭하는 순간 해당방에 가입 . 필요한 값 roomNo, 세션id
 	//@RequestParam getParameter("roomNo")
 	//방에 가입 -> 방번호만 넘겨서 해당 방 멤버(group) 전체 조회(ArrayList) -> 방 전체조회 후 뷰로 넘기기 
 	@GetMapping(value = "/insert/{roomNo}", produces = "application/json; charset=UTF-8")
@@ -38,13 +40,14 @@ public class StudyGroupController {
 		return "forward:/StdGroup/enterRoom/" + roomNo; 
 	}
 	
-	//그룹원 조회 후 roomView로 입장 
+	//방번호로 그룹원 조회 후 roomView로 입장 
 	@GetMapping(value = "/enterRoom/{roomNo}", produces = "application/json; charset=UTF-8")
 	public ModelAndView enterRoom(@PathVariable("roomNo") long roomNo) throws SQLException, Exception{
 		System.out.println("enterRoom" + roomNo);
 		ModelAndView mv = new ModelAndView();
-		ArrayList<StudyGroupMembersDTO> allGroup = groupdao.getCustomers(roomNo);
-		System.out.println(allGroup);
+//		List allGroup = groupdao.getCustomers(roomNo);
+		ArrayList<StudyGroupMembersDTO> allGroup = groupdao.getCustomers1(roomNo);
+		System.out.println(allGroup.get(0).getNickname());
 		mv.addObject("allGroup", allGroup);
 		mv.setViewName("group/roomView"); //WEB-INF/group/roomView.jsp
 		
@@ -83,15 +86,17 @@ public class StudyGroupController {
 	
 	//예외처리
 	@ExceptionHandler
-	public String totalSQLEx(SQLException s) {
+	public String totalSQLEx(SQLException s, HttpServletRequest request) {
 		System.out.println("예외처리 전담 SQLException");
+		request.setAttribute("errorMsg", s.getMessage());
 		s.printStackTrace();
 		return "group/error";
 	}
 	
 	@ExceptionHandler
-	public String totalEx(Exception e) {
+	public String totalEx(Exception e, HttpServletRequest request) {
 		System.out.println("예외처리 전담 Exception");
+		request.setAttribute("errorMsg", e.getMessage());
 		e.printStackTrace();
 		return "group/error";
 	}
