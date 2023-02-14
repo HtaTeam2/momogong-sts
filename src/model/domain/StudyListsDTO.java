@@ -15,7 +15,7 @@ import lombok.ToString;
 
 public class StudyListsDTO {
 
-	private int roomNo; //방번호
+	private long roomNo; //방번호
 	private String category; //카테고리
 	private String roomTitle; //방 제목
 	private String roomPw; //방 비밀번호

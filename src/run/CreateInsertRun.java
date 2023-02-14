@@ -50,6 +50,7 @@ public class CreateInsertRun {
 		g1.setStudyLists(l1);
 		g1.setStudyMembers(m1);
 		
+		
 		//l2방의 관리자 m2
 		StudyGroup g2 = new StudyGroup();
 		g2.setStudyLists(l2);

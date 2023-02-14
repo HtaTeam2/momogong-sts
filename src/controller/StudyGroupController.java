@@ -3,50 +3,63 @@ package controller;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import model.StudyGroupDAO;
+import model.domain.MyStudyDTO;
 import model.domain.StudyGroupMembersDTO;
 
 @Controller
 @RequestMapping("StdGroup")
-@SessionAttributes({"allGroup", "id"})
+@SessionAttributes({"id"}) //저장될 값은 id
 public class StudyGroupController {
 	
 	@Autowired
 	public StudyGroupDAO groupdao;
 	
-	//List에서 특정방 클릭하는 순간 해당방 List가 들어가야 함 
-	@PostMapping(value = "/insert", produces = "application/json; charset=UTF-8")
-	public ModelAndView insertGroup(Model sessionData, @ModelAttribute("id") String joinId, @RequestParam("roomNo") long roomNo) throws SQLException, Exception{
-		ModelAndView mv = new ModelAndView();
-		groupdao.joinGroup(joinId, roomNo);
-		//방번호 저장해서 전체 그룹원 찾을 수 있도록 함
-		mv.addObject("roomNo", roomNo);
-		mv.setViewName("group/roomView"); //WEB-INF/group/roomView.jsp
+	//스터디 개설시 호스트 그룹원 추가
+	@PostMapping(value = "/hostJoin/{roomNo}", produces = "application/json; charset=UTF-8")
+	public String updateGroup(@ModelAttribute("id") String joinId, @PathVariable("roomNo") long roomNo) throws SQLException, Exception{
+		System.out.println(joinId + " insertGroup() 호출 "  + roomNo);
+		groupdao.hostJoin(joinId, roomNo);
+		System.out.println("가입완료");
 		
-		//채팅페이지 비동기로 연결
-		//forward형식으로 넘어감
-		return mv; // WEB-INF/group/roomView.jsp
+		return "redirect:/group/joinSuccessView.jsp"; 
 	}
 	
-	//그룹원 조회 후 roomView로 입장
-	@GetMapping(value = "/group", produces = "application/json; charset=UTF-8")
-	public ModelAndView selectGroup(Model sessionData, @RequestParam("roomNo") long roomNo) throws SQLException, Exception{
-		System.out.println("getMyStudy " + roomNo);
-		ModelAndView mv = new ModelAndView();
-		ArrayList<StudyGroupMembersDTO> allGroup = groupdao.getCustomers(roomNo);
+	
+	//List나 검색결과에 특정방 클릭하는 순간 해당방에 가입 . 필요한 값 roomNo, 세션id
+	//@RequestParam getParameter("roomNo")
+	//방에 가입 -> 방번호만 넘겨서 해당 방 멤버(group) 전체 조회(ArrayList) -> 방 전체조회 후 뷰로 넘기기 
+	@GetMapping(value = "/insert/{roomNo}", produces = "application/json; charset=UTF-8")
+	public String insertGroup(@ModelAttribute("id") String joinId, @PathVariable("roomNo") long roomNo) throws SQLException, Exception{
+		System.out.println(joinId + " insertGroup() 호출 "  + roomNo);
+		groupdao.joinGroup(joinId, roomNo);
+		System.out.println("가입완료");
 		
+		return "forward:/StdGroup/enterRoom/" + roomNo; 
+	}
+	
+	//방번호로 그룹원 조회 후 roomView로 입장 
+	@GetMapping(value = "/enterRoom/{roomNo}", produces = "application/json; charset=UTF-8")
+	public ModelAndView enterRoom(@PathVariable("roomNo") long roomNo) throws SQLException, Exception{
+		System.out.println("enterRoom" + roomNo);
+		ModelAndView mv = new ModelAndView();
+//		List allGroup = groupdao.getCustomers(roomNo);
+		ArrayList<StudyGroupMembersDTO> allGroup = groupdao.getCustomers1(roomNo);
+//		System.out.println(allGroup.get(0).getNickname());
 		mv.addObject("allGroup", allGroup);
 		mv.setViewName("group/roomView"); //WEB-INF/group/roomView.jsp
 		
@@ -56,18 +69,18 @@ public class StudyGroupController {
 	}
 	
 	
-	//그룹원 삭제(방장인 경우, 비방장인 경우)
-	@PostMapping(value = "/group", produces = "application/json; charset=UTF-8")
-	public String deleteGroup(Model sessionData, @ModelAttribute("id") String deleteId, @RequestParam("roomNo") long roomNo) throws SQLException, Exception{
+	//그룹 탈퇴(방장인 경우, 비방장인 경우).
+	@PostMapping(value = "/delete/{roomNo}", produces = "application/json; charset=UTF-8")
+	public String deleteGroup(Model sessionData, @ModelAttribute("id") String deleteId, @PathVariable("roomNo") long roomNo) throws SQLException, Exception{
 		System.out.println("deleteGroup() " + deleteId);
 		int result = groupdao.delete(deleteId, roomNo);
 		
 		if(result == 1) { //방 관리자 => list테이블에서 해당 방 번호 삭제
-		  	sessionData.addAttribute("roomNo", roomNo);
-			return "StdList/lists테이블 방삭제url";
+			sessionData.addAttribute("roomNo", roomNo);
+			return "forward:/StdList/deleteList";
 		}
-		//삭제 후에는 main페이지로 돌아감
-		return "redirect:로그인 후 main페이지.html";
+		//삭제 후에 삭제 성공페이지로 돌아감
+		return "redirect:/group/deleteSucc.jsp";
 	}
 	
 	//내 스터디 클릭시 로그인한 회원의 방가입정보 나옴
@@ -75,8 +88,10 @@ public class StudyGroupController {
 	public ModelAndView getMyStudy(Model sessionData, @ModelAttribute("id") String id) throws SQLException{
 		System.out.println("getMyStudy " + id);
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("allData", groupdao.getMyStudy(id));
-		mv.setViewName("group/MyStudy"); //WEB-INF/group/MyStudy.jsp
+		ArrayList<MyStudyDTO> all = groupdao.getMyStudy(id);
+		System.out.println(all);
+		mv.addObject("allData", all);
+		mv.setViewName("/group/myStudy"); //WEB-INF/group/myStudy.jsp
 		return mv;
 		
 	}
@@ -84,14 +99,18 @@ public class StudyGroupController {
 	
 	//예외처리
 	@ExceptionHandler
-	public String totalSQLEx(SQLException s) {
-		System.out.println("예외처리 전담");
+	public String totalSQLEx(SQLException s, HttpServletRequest request) {
+		System.out.println("예외처리 전담 SQLException");
+		request.setAttribute("errorMsg", s.getMessage());
+		s.printStackTrace();
 		return "group/error";
 	}
 	
 	@ExceptionHandler
-	public String totalEx(Exception e) {
-		System.out.println("예외처리 전담");
+	public String totalEx(Exception e, HttpServletRequest request) {
+		System.out.println("예외처리 전담 Exception");
+		request.setAttribute("errorMsg", e.getMessage());
+		e.printStackTrace();
 		return "group/error";
 	}
 	

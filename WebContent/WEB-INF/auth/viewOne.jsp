@@ -1,26 +1,63 @@
-<%@page import="model.StudyMembersDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
+    
+<%@ page import="java.io.PrintWriter"%>
+<%@ page import="model.domain.entity.StudyMembers"%>
+<%@ page import="model.StudyMembersDAO"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <%
-	System.out.println("viewOne.jsp실행 확인 -----------");
-
-%>
+	session.setAttribute("id", "test1");
+	session.setAttribute("password", "testpw");
+%> 
 
 <!DOCTYPE html>
 <html>
 <head>
+<title>내 정보보기</title>
 <meta charset="UTF-8">
-<title>내 정보 보기</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6,ul,li,p,footer {font-family: "Raleway", sans-serif; font-size: 18px;}
+footer {
+	width: 100%; 
+	bottom:0; 
+}
+input[type=text] {
+	width: 500px;
+	height: 32px;
+	font-size: 15px;
+	border: 0;
+	border-radius: 15px;
+	outline: none;
+	padding-left: 10px;
+	background-color: rgb(233, 233, 233);
+}
+</style>
 </head>
+<body class="w3-white w3-content" style="max-width:1600px">
+​
+  <!-- Header -->
+  <header id="portfolio">
+    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+    <div class="w3-container">
+    <div class="w3-section w3-bottombar w3-padding-16">
+       
+	  <img src="../images/momogong.png" alt="Norway" style="width:10%" class="w3-hover-opacity" onclick='location.href="../main.html"'>
+      <button class="w3-button w3-white" onclick='location.href="../login.jsp"'>내 스터디</button>
+      <button class="w3-button w3-white" onclick='location.href="../login.jsp"'>커뮤니티</button>
+      <button class="w3-button w3-white w3-hide-small" onclick='location.href="/Notice/list"'>공지사항</button>
+		스터디 검색 : <input type="text" id="study" name="study" value=""><button id="btn1" class="w3-button w3-white w3-hide-small"><i class="fa fa-search"></i></button>
+      <button class="w3-button w3-white w3-hide-small w3-right" onclick='location.href="../login.jsp"'>로그인</button>
+    </div>
+    </div>
+  </header>
+  
 
-<body>
-
-	<h3>내 개인 정보 보기</h3>
-	<br>
-	<!-- view Form  -->
+  <div id="searchList" class="w3-row-padding" align="center">
 	<form action="StdMembers/viewOne">
 
 		<table border="1" cellspacing="1" width="60%">
@@ -54,21 +91,8 @@
 			</tr>
 		</table>
 		<br> <br>
-		<!--
-			 http://ip:port/context명/update.jsp  
-		${pageContext.request.contextPath} : 코드 사용 권장
-		즉 현 jsp의 실행 위치가 어디에 있던 "http://ip:port/context명/" 을 의미하는 코드
-		
-		-->
-		<input type="button" value="update"
-			Onclick="location.href='${pageContext.request.contextPath}/update.jsp'">&nbsp;
-
-		<button
-			onclick='location.href="${pageContext.request.contextPath}/StdMembers/delete?id=${dto.id}"'>
-			탈퇴하기</button>
 
 	</form>
-
-
+  </div> 
 </body>
 </html>

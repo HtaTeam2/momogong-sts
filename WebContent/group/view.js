@@ -1,5 +1,7 @@
 
 
+
+
 //채팅창 비동기
 function chat(){
 	axios({
