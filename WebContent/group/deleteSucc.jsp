@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<% System.out.println("myStudy.jsp 호출확인"); %>
+<% System.out.println("deleteSucc.jsp.jsp 호출확인"); %>
   
 <!DOCTYPE html>
 <html>
