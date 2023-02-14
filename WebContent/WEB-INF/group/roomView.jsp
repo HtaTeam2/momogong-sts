@@ -14,7 +14,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
-
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 
@@ -39,7 +38,7 @@ footer {
 
 </head>
 <body style = "width: 100%;">
-	<jsp:include page="../../header.jsp"></jsp:include>
+
 	<div id="full" class="w3-row w3-padding-64" style="max-width:100%;max-height:900px;margin-top:100px">
 	<!-- 추후 script로 변경 -->
 		<div class="w3-col m9 w3-padding-large">
