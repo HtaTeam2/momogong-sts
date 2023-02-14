@@ -61,10 +61,12 @@ input[type=text] {
 		</div>
 	</div>
 	</header>
+<div id="searchList" class="w3-row-padding" align="center">													       
 	<center>
 		축하합니다. 회원정보 update 성공하셨습니다. 
 		<a href="${pageContext.request.contextPath}/StdMembers/viewOne2">모두 보기</a>
 	</center>
+</div>										
       <!-- axios 사용을 위한 추가 설정 -->
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="main.js"></script>							
