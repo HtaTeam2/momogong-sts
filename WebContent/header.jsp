@@ -11,21 +11,36 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
+	<!-- header -->
+	<header>
+	<div class="w3-container">
+		<div class="w3-section w3-bottombar w3-padding-16">
 
-    <div class="w3-container">
-	    <div class="w3-section w3-bottombar w3-padding-16">
-	       
-		  <img src="${pageContext.request.contextPath}/images/momogong.png" onclick='location.href="${pageContext.request.contextPath}/main.jsp"' style="width:10%" class="w3-hover-opacity">
-	      <button class="w3-button w3-white" onclick='location.href="${pageContext.request.contextPath}/StdGroup/mystudy"'>내 스터디</button>
-	      <button class="w3-button w3-white" onclick='location.href="${pageContext.request.contextPath}/lists/createStdList.jsp"'>스터디 생성</button>
-	      <button class="w3-button w3-white" onclick='location.href="${pageContext.request.contextPath}/Community/list"'>커뮤니티</button>
-	      <button class="w3-button w3-white w3-hide-small" onclick='location.href="${pageContext.request.contextPath}/Notice/list"'>공지사항</button>
-	      	 스터디 검색 : <input type="text" id="study" name="study" value=""><button id="btn1" class="w3-button w3-white w3-hide-small"><i class="fa fa-search"></i></button>
-	      <button class="w3-button w3-white w3-hide-small w3-right" onclick='location.href="${pageContext.request.contextPath}/StdMembers/logout"'>로그아웃</button>
-	      <button class="w3-button w3-white w3-hide-small w3-right" onclick='location.href="${pageContext.request.contextPath}/StdMembers/viewOne2"'>내 정보</button>
-	    </div>
-	    <div id="allstudy"></div>
-    </div>
+			<img src="${pageContext.request.contextPath}/images/momogong.png"
+				onclick='location.href="${pageContext.request.contextPath}/main.jsp"'
+				style="width: 10%" class="w3-hover-opacity">
+			<button class="w3-button w3-white"
+				onclick='location.href="${pageContext.request.contextPath}/StdGroup/mystudy"'>내
+				스터디</button>
+			<button class="w3-button w3-white"
+				onclick='location.href="${pageContext.request.contextPath}/lists/createStdList.jsp"'>스터디
+				생성</button>
+			<button class="w3-button w3-white"
+				onclick='location.href="${pageContext.request.contextPath}/Community/list"'>커뮤니티</button>
+			<button class="w3-button w3-white w3-hide-small"
+				onclick='location.href="${pageContext.request.contextPath}/Notice/list"'>공지사항</button>
+			스터디 검색 : <input type="text" id="study" name="study" value="">
+			<button id="btn1" class="w3-button w3-white w3-hide-small">
+				<i class="fa fa-search"></i>
+			</button>
+			<button class="w3-button w3-white w3-hide-small w3-right"
+				onclick='location.href="${pageContext.request.contextPath}/StdMembers/logout"'>로그아웃</button>
+			<button class="w3-button w3-white w3-hide-small w3-right"
+				onclick='location.href="${pageContext.request.contextPath}/StdMembers/viewOne2"'>내
+				정보</button>
+		</div>
+	</div>
+	</header>
     
     
       <!-- axios 사용을 위한 추가 설정 -->
