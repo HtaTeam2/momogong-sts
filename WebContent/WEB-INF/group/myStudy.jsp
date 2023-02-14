@@ -101,6 +101,7 @@
 						<td class = "w3-center w3-container w3-third">
 					  	<form action="${pageContext.request.contextPath}/StdGroup/delete/${e.studyListNo}" method=post >
 							<button type="submit" >탈퇴</button></a></td>
+							<input type="hidden" name="roomNo" value="${e.studyListNo}"/>
 						</form>
 					</c:forEach>
 				</tr>
