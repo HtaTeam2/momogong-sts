@@ -51,7 +51,7 @@ footer {
 	    </div>
 	</div>
 	
-	<div id="searchList" class="w3-row-padding"></div>
+	<div id="searchList" class="w3-row-padding">
 	
 	<br>
 	<center>
@@ -110,6 +110,7 @@ footer {
 		<input type="submit" value="수정" > &nbsp;
 		<input type="reset" value="취소">&nbsp;
 	</form>
+	</div>
 	<!-- axios 사용을 위한 추가 설정 -->
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script src="main.js"></script>	
