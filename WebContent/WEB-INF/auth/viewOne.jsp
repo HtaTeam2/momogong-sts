@@ -91,5 +91,8 @@ input[type=text] {
 
 	</form>
   </div> 
+	<!-- axios 사용을 위한 추가 설정 -->
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="main.js"></script>	
 </body>
 </html>
