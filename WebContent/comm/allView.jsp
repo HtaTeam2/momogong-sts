@@ -6,11 +6,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<!--  <link rel="stylesheet" href="list.css"/> -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/comm/table.css" type="text/css"/>
 <title>커뮤니티 목록</title>
 </head>
 <body>
-	<section class="notice">
+<jsp:include page="/header.jsp"></jsp:include>
 		<div class="page-title">
 			<div class="container">
 				<h2>커뮤니티</h2>
@@ -66,22 +66,24 @@
 			</div>
 		</div>
 
-		<!-- board seach area -->
-		<div id="board-search">
-			<div class="container">
-				<div class="search-window">
-					<form action="">
-						<div class="search-wrap">
-							<label for="search" class="blind">커뮤니티 내용 검색</label> <input
-								id="search" type="search" name="" placeholder="검색어를 입력해주세요."
-								value="">
-							<button type="submit" class="btn btn-dark">검색</button>
-						</div>
-					</form>
-				</div>
-			</div>
+		<!-- board search area -->
+		<div id="comm-search" class="container">
+			<form method="post" name="search" action="search">
+				<select name="type">
+						<option value="">-선택-</option>
+						<option value="title">제목</option>
+						<option value="content">내용</option>
+						<option value="writer">작성자</option>
+				</select>
+				<input type="text" placeholder="검색어 입력" name="searchText">
+				<button type="submit" >검색</button>
+
+			</form>
+			
+			<button type="submit" class="btn btn-dark" 
+					onclick="location.href='${pageContext.request.contextPath}/Community/writeform'">글쓰기</button>
 		</div>
 
-	</section>
+
 </body>
 </html>
