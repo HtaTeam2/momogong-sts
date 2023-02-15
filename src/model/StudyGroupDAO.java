@@ -60,7 +60,7 @@ public class StudyGroupDAO {
 	}
 	
 	//스터디 가입 또는 입장 후 목록 조회. 그룹 내에 해당 Id가 없으면 가입 발생(예외)
-	public StudyGroup joinGroup(String joinId, long roomNo) throws Exception, SQLException{
+	public StudyGroup joinGroup(String joinId, long roomNo) throws NoResultException, SQLException, Exception{
 		System.out.println("joinGroup DAO");
 		EntityManager em = DBUtil.getEntityManager();
 		EntityTransaction tx = em.getTransaction();
@@ -158,7 +158,7 @@ public class StudyGroupDAO {
 		PreparedStatement pstmt2 = null;
 		PreparedStatement pstmt3 = null;
 		PreparedStatement pstmt4 = null;
-		ResultSet rset = null;
+		ResultSet rs = null;
 		int result = 0;
 		try {
 			con = DBUtil2.getConnection();
@@ -169,10 +169,10 @@ public class StudyGroupDAO {
 			pstmt4 = con.prepareStatement("UPDATE studylists SET memNum = (memNum - 1) WHERE roomNo = ?"); //후 list테이블 멤버수 -1
 			
 			pstmt1.setLong(1, roomNum);
-			rset = pstmt1.executeQuery();	//관리자id 추출
+			rs = pstmt1.executeQuery();	//관리자id 추출
 			//id 비교를 위한 조건문
-			if(rset.next()) {
-				if((rset.getString(1)).equals(id)){
+			if(rs.next()) {
+				if((rs.getString(1)).equals(id)){
 					//일치하면 방 관리자 = 해당 방번호로 그룹원 전체 삭제
 					pstmt2.setLong(1, roomNum);
 					pstmt2.executeUpdate();
@@ -194,7 +194,7 @@ public class StudyGroupDAO {
 			con.rollback();
 			throw se;
 		} finally {
-			DBUtil2.close(con, pstmt1);
+			DBUtil2.close(con, pstmt1, pstmt2, pstmt3, pstmt4, rs);
 		}
 		return result;
 	}
