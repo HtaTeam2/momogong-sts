@@ -58,6 +58,10 @@ input[type=text] {
 			<button class="w3-button w3-white w3-hide-small w3-right"
 				onclick='location.href="${pageContext.request.contextPath}/StdMembers/viewOne2"'>내
 				정보</button>
+			<c:if test="${sessionScope.id == 'admin'}">
+				<button class="w3-button w3-white w3-hide-small w3-right" 
+				 	onclick='location.href="${pageContext.request.contextPath}/StdMembers/adPage"'>관리자메뉴</button>
+			 </c:if>
 		</div>
 	</div>
 	</header>
