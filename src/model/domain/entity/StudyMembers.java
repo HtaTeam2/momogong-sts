@@ -34,6 +34,10 @@ import lombok.Setter;
 
 //id,pw로 로그인
 @NamedQuery(name = "StudyMembers.findByLoginInfo", query = "select m from StudyMembers m where m.id=:id and m.password=:password")
+//id 찾기 (email 입력으로 찾기)
+@NamedQuery(name = "StudyMembers.findMemId", query = "select m from StudyMembers m where m.email = :email")
+//pw찾기(id,email 입력으로 찾기)
+@NamedQuery(name = "StudyMembers.findMemPwd", query = "select m from StudyMembers m where m.id=:id and m.email = :email")
 
 @Entity
 public class StudyMembers {
