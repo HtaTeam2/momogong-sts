@@ -34,6 +34,9 @@ import lombok.Setter;
 //다음 sql문과 같습니다.(검색어: 테) => select * from StudyLists where roomTitle like '%테%';
 @NamedQuery(name = "StudyLists.findByLikeLists", 
 			query = "select s from StudyLists s where s.roomTitle like :title")
+//해당 방 번호의 방장 찾는 sql입니다.
+@NamedQuery(name = "StudyLists.findById",
+			query = "select s.studyMembers.id from StudyLists s where s.roomNo = :roomNo")
 
 @Entity
 @SequenceGenerator(
