@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>updateSuccess.jsp</title>
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">	
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 td{font-family: "Raleway", sans-serif; font-size: 18px; align:center;}
