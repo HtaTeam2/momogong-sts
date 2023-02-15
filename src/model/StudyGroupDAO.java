@@ -198,10 +198,7 @@ public class StudyGroupDAO {
 		}
 		return result;
 	}
-//	public ArrayList<MyStudyDTO> getMyStudy(String id) throws SQLException{
-//		System.out.println("DAO getMyStudy " + id);
-//		
-//	}
+
 	//mystudy 조회
 	public ArrayList<MyStudyDTO> getMyStudy(String id) throws SQLException{
 		System.out.println("DAO getMyStudy " + id);
@@ -227,51 +224,5 @@ public class StudyGroupDAO {
 		}
 		return allList;
 	}
-	//가입. JDBC 리스트 update -> 인원수 증가시켜야 함. 그럼 초기값을 0으로 줘야겠다
-	//존재하는 id라면 false 리턴해서 바로 입장
-//	public boolean joinGroup1(String joinId, long roomNo) throws SQLException, Exception {
-//		Connection con = null;
-//		PreparedStatement pstmt1 = null;
-//		PreparedStatement pstmt2 = null;
-//		PreparedStatement pstmt3 = null;
-//		ResultSet rset = null; 
-//		boolean find = false;
-//		
-//		try {
-//			con = DBUtil2.getConnection();
-//			con.setAutoCommit(false);
-//			pstmt1 = con.prepareStatement("INSERT INTO studygroup(memNo, studylists_no, studymembers_id) VALUES(STUDYGROUP_SEQ.NEXTVAL, ? , ?)");
-//			//조건을 아래와 같이 걸어준 뒤 update되지 않으면 rollback. 문제 -> SQL 오류가 나는게 아니라 업데이트만 안됨
-//			pstmt2 = con.prepareStatement("UPDATE studylists SET memNum = (memNum + 1) WHERE roomNo = ? and memNum < maxMem");
-//			pstmt3 = con.prepareStatement("SELECT studymembers_id FROM studygroup WHERE studylists_no = ?");
-//			pstmt3.setLong(1, roomNo);
-//			pstmt3.executeUpdate();
-//			pstmt1.setLong(1, roomNo);
-//			pstmt1.setString(2, joinId);
-//			pstmt2.setLong(1, roomNo);
-//			rset = pstmt1.executeQuery();
-//			while(rset.next()) {
-//				//방 안에 중복되는 ID가 있으면 false 리턴. 가입안하고 입장 
-//				if(rset.getString(1).equals(joinId)){
-//					return find;
-//				}
-//			}
-//			int result = pstmt2.executeUpdate();
-//			//실행된 sql문이 0일때 예외 발생. 알림창에 뜨도록?
-//			if(result == 0) {
-//				con.rollback();
-//				throw new Exception("인원을 초과하여 가입하실 수 없습니다.");
-//			}else {
-//				find = true;
-//				con.commit();
-//			}
-//		} catch (SQLException s) {
-//			s.printStackTrace();
-//			con.rollback();
-//			throw new SQLException("내부적인 오류로 가입에 실패하였습니다. 잠시 후 재시도 해주십시오. ");
-//		} finally {
-//			DBUtil2.close(con, pstmt1, pstmt2);
-//		}
-//		return find;
-//	}
+
 }
