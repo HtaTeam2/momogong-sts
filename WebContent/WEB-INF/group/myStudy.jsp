@@ -2,21 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <% System.out.println("myStudy.jsp 호출확인"); %>
-<%
-//테스트코드
-/* 
-session.setAttribute("id", "test1");
-session.setAttribute("password", "testpw");
-session.setAttribute("nickname", "테스트1");
-session.setAttribute("email", "test1@gmail.com");
-session.setAttribute("goal", "");
-session.setAttribute("regdate", "2023-02-11");
-session.setAttribute("grade", "FREE");
-*/
-//실제 로그인했을때 확인
-//System.out.println("id: "+session.getAttribute("id")+", grade: "+session.getAttribute("grade"));
-//id, 등급 확인용 : 현재 id만 세션에 저장중이라 세션에 전체 데이터 들어오도록 StudyMembers컨트롤러 수정필요
-%>
   
 <!DOCTYPE html>
 <html>
@@ -27,7 +12,7 @@ session.setAttribute("grade", "FREE");
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 	<style>
 		body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 		
@@ -108,21 +93,17 @@ session.setAttribute("grade", "FREE");
 					<c:forEach items="${allData}" var="e" varStatus="status">
 						<td class = "w3-center w3-container w3-third">
 							<img src="${pageContext.request.contextPath}/images/profile.png" style="width:60%;" onclick='location.href="${pageContext.request.contextPath}/StdGroup/insert/${e.studyListNo}"' class="w3-container w3-hover-opacity">
+							<br><a href="${pageContext.request.contextPath}/StdGroup/insert/${e.studyListNo}">${e.roomTitle}</a>
+							<br>
+							<form action="${pageContext.request.contextPath}/StdList/oneRoom/${e.studyListNo}" method=get >
+								<button type="submit" class="w3-button w3-white w3-hide-small">정보보기</button>
+								<input type="hidden" name="roomNo" value="${e.studyListNo}"/>
+							</form>
+							<form action="${pageContext.request.contextPath}/StdGroup/delete/${e.studyListNo}" method=post >
+								<button type="submit" class="w3-button w3-white w3-hide-small">탈퇴</button>
+								<input type="hidden" name="roomNo" value="${e.studyListNo}"/>
+							</form>
 						</td>
-					</c:forEach>
-				</tr>
-				<tr>
-					<c:forEach items="${allData}" var="e" varStatus="status">
-						<td class = "w3-center w3-container w3-third"><a href="${pageContext.request.contextPath}/StdGroup/insert/${e.studyListNo}">${e.roomTitle}</a></td>
-					</c:forEach>
-				</tr>
-				<tr >
-					<c:forEach items="${allData}" var="e" varStatus="status">
-						<td class = "w3-center w3-container w3-third">
-					  	<form action="${pageContext.request.contextPath}/StdGroup/delete/${e.studyListNo}" method=post >
-							<button type="submit" >탈퇴</button></a></td>
-							<input type="hidden" name="roomNo" value="${e.studyListNo}"/>
-						</form>
 					</c:forEach>
 				</tr>
 			</table>
