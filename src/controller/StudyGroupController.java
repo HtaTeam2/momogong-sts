@@ -72,13 +72,12 @@ public class StudyGroupController {
 	
 	//그룹 탈퇴(방장인 경우, 비방장인 경우).
 	@PostMapping(value = "/delete/{roomNo}", produces = "application/json; charset=UTF-8")
-	public String deleteGroup(Model sessionData, @ModelAttribute("id") String deleteId, @PathVariable("roomNo") long roomNo) throws SQLException, Exception{
+	public String deleteGroup(@ModelAttribute("id") String deleteId, @PathVariable("roomNo") long roomNo) throws SQLException, Exception{
 		System.out.println("deleteGroup() " + deleteId);
 		int result = groupdao.delete(deleteId, roomNo);
 		
 		if(result == 1) { //방 관리자 => list테이블에서 해당 방 번호 삭제
-			sessionData.addAttribute("roomNo", roomNo);
-			return "forward:/StdList/deleteList";
+			return "forward:/StdList/deleteList/"+roomNo;
 		}
 		//삭제 후에 삭제 성공페이지로 돌아감
 		return "redirect:/group/deleteSucc.jsp";
@@ -86,7 +85,7 @@ public class StudyGroupController {
 	
 	//내 스터디 클릭시 로그인한 회원의 방가입정보 나옴
 	@GetMapping(value = "/mystudy", produces = "application/json; charset=UTF-8")
-	public ModelAndView getMyStudy(Model sessionData, @ModelAttribute("id") String id) throws SQLException{
+	public ModelAndView getMyStudy(Model sessionData, @ModelAttribute("id") String id) throws SQLException, Exception{
 		System.out.println("getMyStudy " + id);
 		ModelAndView mv = new ModelAndView();
 		ArrayList<MyStudyDTO> all = groupdao.getMyStudy(id);
