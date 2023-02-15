@@ -23,6 +23,12 @@ input[type=text] {
 	padding-left: 10px;
 	background-color: rgb(233, 233, 233);
 }
+img {
+  width: 17px;
+  top: 10px;
+  right: 12px;
+  margin: 0;
+}
 </style>
 <title>검색결과 없음</title>
 </head>
@@ -112,7 +118,7 @@ input[type=text] {
 						<option value="writer">작성자</option>
 				</select>
 				<input type="text" placeholder="검색어 입력" name="searchText">
-				<button type="submit" >검색</button>
+				<button type="submit" ><img src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png"></button>
 
 			</form>
 			
