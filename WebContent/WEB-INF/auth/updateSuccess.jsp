@@ -70,7 +70,7 @@ input[type=text] {
 <div id="searchList" class="w3-row-padding" align="center">													       
 	<center>
 		축하합니다. 회원정보 update 성공하셨습니다. 
-		<a href="${pageContext.request.contextPath}/StdMembers/viewOne2">모두 보기</a>
+		<a href="${pageContext.request.contextPath}/StdMembers/viewOne2">내 정보 보기</a>
 	</center>
 </div>										
       <!-- axios 사용을 위한 추가 설정 -->
