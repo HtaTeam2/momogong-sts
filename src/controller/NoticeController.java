@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import model.NoticeDAO;
@@ -21,6 +22,7 @@ import model.domain.entity.Notice;
 
 @Controller
 @RequestMapping("Notice")
+@SessionAttributes({"id"})
 public class NoticeController {
 	@Autowired
 	public NoticeDAO notdao;
@@ -95,6 +97,10 @@ public class NoticeController {
 		}
 		return "forward:/notice/detail.jsp";
 	}
+	
+	// 이미지 첨부
+	
+	
 
 	// 예외 처리에 대한 중복 코드를 분리해서 예외처리 전담 메소드
 	@ExceptionHandler

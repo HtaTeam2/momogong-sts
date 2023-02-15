@@ -66,6 +66,10 @@ public class StudyMembers {
 	//참조
 	@OneToMany(mappedBy = "studyMembers") //StudyGroup에 매핑설정된 변수 이름으로 지정해야 함
 	private List<StudyGroup> studygroup = new ArrayList<StudyGroup>();
+	
+	//참조-커뮤니티
+	@OneToMany(mappedBy = "studymembers") //Community에 매핑설정된 변수 이름으로 지정해야 함
+	private List<Community> community = new ArrayList<Community>();
 
 	
 	@Builder

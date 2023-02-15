@@ -62,7 +62,7 @@ input[type=text] {
 				<div class="col-lg-8">
 					<!--게시판 넓이 -->
 					<div class="col-lg-12">
-						<h1 class="page-header">공지사항</h1>
+						
 					</div>
 					<div class="row">
 						<div class="col-lg-12"></div>
@@ -100,7 +100,9 @@ input[type=text] {
 				</div>
 			</div>
 		</div>
-		<input type="button" value="작성" onclick='location.href="${pageContext.request.contextPath}/Notice/insertview"'>
+		<c:if test="${sessionScope.id == 'admin'}">
+			<input type="button" value="작성" onclick='location.href="${pageContext.request.contextPath}/Notice/insertview"'>
+		</c:if>
 	</div>
 	<!-- axios 사용을 위한 추가 설정 -->
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
