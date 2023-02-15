@@ -135,5 +135,9 @@ footer {
 				Onclick="location.href='${pageContext.request.contextPath}/update.jsp'">&nbsp;
 		<input type="submit" value="allView">
 	</form>
+	
+		<!-- axios 사용을 위한 추가 설정 js 사용해서 목록 출력해보기...-->
+<!--   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="main.js"></script> -->
 </body>
 </html>
