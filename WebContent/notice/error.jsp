@@ -6,16 +6,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>에러 처리 page</title>
-<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">	
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">	
 <style>
-body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
-td{font-family: "Raleway", sans-serif; font-size: 18px; align:center;}
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif; font-size: 18px;}
 input[type=text] {
-	width: 500px;
+	width: 300px;
 	height: 32px;
 	font-size: 15px;
 	border: 0;
@@ -23,10 +21,6 @@ input[type=text] {
 	outline: none;
 	padding-left: 10px;
 	background-color: rgb(233, 233, 233);
-}
-footer {
-	width: 100%; 
-	bottom:0; 
 }
 </style>
 </head>
