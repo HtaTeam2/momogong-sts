@@ -6,19 +6,28 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../css/infoUpdate.css">
+
 <!DOCTYPE html>
 <html>
 <head>
 <title>개인 정보 수정</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
 <style>
-body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif; font-size: 18px;}
+body, h1, h2, h3, h4, h5, h6 {
+	font-family: "Raleway", sans-serif
+}
+td {
+	font-family: "Raleway", sans-serif;
+	font-size: 18px;
+	align: center;
+}
 input[type=text] {
-	width: 300px;
+	width: 500px;
 	height: 32px;
 	font-size: 15px;
 	border: 0;
@@ -27,40 +36,29 @@ input[type=text] {
 	padding-left: 10px;
 	background-color: rgb(233, 233, 233);
 }
+footer {
+	width: 100%;
+	bottom: 0;
+}
 </style>
-</head>
 <body>
 	<!-- header -->
 	<header>
 	<div class="w3-container">
-		<div class="w3-section w3-bottombar w3-padding-16">
-
-			<img src="${pageContext.request.contextPath}/images/momogong.png"
-				onclick='location.href="${pageContext.request.contextPath}/main.jsp"'
-				style="width: 10%" class="w3-hover-opacity">
-			<button class="w3-button w3-white"
-				onclick='location.href="${pageContext.request.contextPath}/StdGroup/mystudy"'>내
-				스터디</button>
-			<button class="w3-button w3-white"
-				onclick='location.href="${pageContext.request.contextPath}/lists/createStdList.jsp"'>스터디
-				생성</button>
-			<button class="w3-button w3-white"
-				onclick='location.href="${pageContext.request.contextPath}/Community/list"'>커뮤니티</button>
-			<button class="w3-button w3-white w3-hide-small"
-				onclick='location.href="${pageContext.request.contextPath}/Notice/list"'>공지사항</button>
-			스터디 검색 : <input type="text" id="study" name="study" value="">
-			<button id="btn1" class="w3-button w3-white w3-hide-small">
-				<i class="fa fa-search"></i>
-			</button>
-			<button class="w3-button w3-white w3-hide-small w3-right"
-				onclick='location.href="${pageContext.request.contextPath}/StdMembers/logout"'>로그아웃</button>
-			<button class="w3-button w3-white w3-hide-small w3-right"
-				onclick='location.href="${pageContext.request.contextPath}/StdMembers/viewOne2"'>내
-				정보</button>
-		</div>
+	    <div class="w3-section w3-bottombar w3-padding-16">
+		  <img src="${pageContext.request.contextPath}/images/momogong.png" onclick='location.href="${pageContext.request.contextPath}/main.jsp"' style="width:10%" class="w3-hover-opacity">
+	      <button class="w3-button w3-white" onclick='location.href="${pageContext.request.contextPath}/StdGroup/mystudy"'>내 스터디</button>
+	      <button class="w3-button w3-white" onclick='location.href="${pageContext.request.contextPath}/lists/createStdList.jsp"'>스터디 생성</button>
+	      <button class="w3-button w3-white" onclick='location.href="${pageContext.request.contextPath}/Community/list"'>커뮤니티</button>
+	      <button class="w3-button w3-white w3-hide-small" onclick='location.href="${pageContext.request.contextPath}/Notice/list"'>공지사항</button>
+	      	 스터디 검색 : <input type="text" id="study" name="study" value=""><button id="btn1" class="w3-button w3-white w3-hide-small"><i class="fa fa-search"></i></button>
+	      <button class="w3-button w3-white w3-hide-small w3-right" onclick='location.href="${pageContext.request.contextPath}/StdMembers/logout"'>로그아웃</button>
+	      <button class="w3-button w3-white w3-hide-small w3-right" onclick='location.href="${pageContext.request.contextPath}/StdMembers/viewOne2"'>내 정보</button>
+	    </div>
 	</div>
 	</header>
-	  <div id="searchList" class="w3-row-padding" align="center">
+	
+	<div id="searchList" class="w3-row-padding">
 	<br>
 	<center>
 	<h3>개인 정보 수정하기</h3>
@@ -83,7 +81,7 @@ input[type=text] {
 			  <tr>
 				<td width="30%">비밀번호 수정</td>
 				<td width="70%">
-					<input type="password" name="password" value="${allData.password}">
+					<input class="updateInfo" type="password" name="password" value="${allData.password}">
 				</td>
 			  </tr>			  
 			
@@ -91,21 +89,21 @@ input[type=text] {
 			
 				<td width="30%">이메일 수정</td>
 				<td width="70%">
-					<input type="text" name="email" value="${allData.email}">
+					<input class="updateInfo" type="text" name="email" value="${allData.email}">
 				</td>		  
 			  <tr>	
 			  <tr>
 			
 				<td width="30%">닉네임 수정</td>
 				<td width="70%">
-					<input type="text" name="nickname" value="${allData.nickname}">
+					<input class="updateInfo" type="text" name="nickname" value="${allData.nickname}">
 				</td>		  
 			  <tr>		
 			  <tr>
 			
 				<td width="30%">목표 수정</td>
 				<td width="70%">
-					<input type="text" name="goal" value="${allData.goal}">
+					<input class="updateInfo" type="text" name="goal" value="${allData.goal}">
 				</td>		  
 			  <tr>			  
 		</table>  
@@ -115,12 +113,12 @@ input[type=text] {
 				 value값으로 설정해야 하는 값은? 
 		--%>
 	
-		<input type="submit" value="수정" > &nbsp;
-		<input type="reset" value="취소">&nbsp;
+		<input class="btnBox" type="submit" value="수정" > &nbsp;
+		<input class="btnBox" type="reset" value="취소">&nbsp;
 	</form>
-</div>		
-      <!-- axios 사용을 위한 추가 설정 -->
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src="main.js"></script>
+	</div>
+	<!-- axios 사용을 위한 추가 설정 -->
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="main.js"></script>	
 </body>
 </html>
