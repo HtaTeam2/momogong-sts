@@ -260,7 +260,7 @@ public class StudyMembersDAO {
 	}
 
 	//jpa - id찾기 (email 입력으로 찾기)
-	//@NamedQuery(name = "StudyMembers.findByEmail", query = "select m.id from StudyMembers m where m.email = :email")
+	//@NamedQuery(name = "StudyMembers.findByEmail", query = "select m from StudyMembers m where m.email = :email")
 	
 	public StudyMembers findId(String email) throws SQLException{
 		EntityManager em = DBUtil.getEntityManager();
@@ -270,8 +270,32 @@ public class StudyMembersDAO {
 			
 			tx.begin();
 			
-//			members = em.find(StudyMembers.class, email);
 			members = (StudyMembers) em.createNamedQuery("StudyMembers.findByEmail").setParameter("email", email).getSingleResult();
+			
+			System.out.println(members); //테스트
+
+			tx.commit();
+			
+		} catch (Exception e) {
+			tx.rollback();
+			e.printStackTrace();
+		} finally {
+			em.close();
+		}
+		return members;
+	}
+	
+	//jpa - pw찾기 (id,email 입력으로 찾기)
+	//@NamedQuery(name = "StudyMembers.findPassword", query = "select m from StudyMembers m where m.id=:id and m.email = :email")
+	public StudyMembers findPwd(String id, String email) throws SQLException{
+		EntityManager em = DBUtil.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		StudyMembers members = null;
+		try {
+			
+			tx.begin();
+			
+			members = (StudyMembers) em.createNamedQuery("StudyMembers.findPassword").setParameter("id", id).setParameter("email", email).getSingleResult();
 			
 			System.out.println(members); //테스트
 

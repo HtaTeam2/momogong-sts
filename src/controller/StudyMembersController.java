@@ -102,6 +102,32 @@ public class StudyMembersController {
 		return mv;
 	}
 	
+	@RequestMapping(value="/findPwdForm", method = RequestMethod.GET)
+	public String findPwdForm() {
+		return "auth/findPwd";
+	}
+	
+	//pwd 찾기
+	@RequestMapping(value = "/findPwd", method=RequestMethod.POST)
+	public ModelAndView findPwd(Model model, @RequestParam("id") String id, @RequestParam("email") String email, StudyMembersDTO dto) throws SQLException {
+		
+		ModelAndView mv = new ModelAndView();
+		try {
+			dto.setId(id);
+			dto.setEmail(email);
+			StudyMembers findPwd = memdao.findPwd(id,email);
+			model.addAttribute("StudyMembers", findPwd);
+			
+			mv.setViewName("auth/findPwdResult");   
+//			System.out.println(model.addAttribute("StudyMembers", findPwd));
+		} catch (Exception e) {
+		    System.out.println(e.toString());
+		    model.addAttribute("msg", "오류가 발생되었습니다.");
+		}
+		 
+		return mv;
+	}
+	
 	
 	
 	//회원가입 입력 폼 

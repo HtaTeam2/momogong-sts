@@ -60,7 +60,7 @@
 						<a href="StdMembers/findIdForm">아이디 찾기</a>
 					</div>
 					<div class="forgot_pw">
-						<a href="">비밀번호 찾기</a>
+						<a href="StdMembers/findPwdForm">비밀번호 찾기</a>
 					</div>
 				</div>
 				<div class="submit">
