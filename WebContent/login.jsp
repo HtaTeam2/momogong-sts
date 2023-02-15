@@ -38,7 +38,6 @@
 </script>
 <body>
 
-
 	<div class="wrap">
 		<div class="login">
 			<h2>로그인</h2>
@@ -52,14 +51,10 @@
 					<input type="password" name="password"
 						" placeholder="비밀번호를 입력해주세요.">
 				</div>
-				<div class="login_cb">
+				<div class="login_etc">
 					<div class="checkbox">
-						<input type="checkbox"> 아이디 저장
-					</div>
-					<div class="forgot_id">
+						<input type="checkbox"> 아이디 저장<br>
 						<a href="StdMembers/findIdForm">아이디 찾기</a>
-					</div>
-					<div class="forgot_pw">
 						<a href="StdMembers/findPwdForm">비밀번호 찾기</a>
 					</div>
 				</div>
