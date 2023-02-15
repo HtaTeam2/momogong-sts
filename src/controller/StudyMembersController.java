@@ -35,7 +35,7 @@ public class StudyMembersController {
 	
 	//로그인 화면으로 이동
 	@RequestMapping(value="/loginForm", method = RequestMethod.GET)
-	public String login() {
+	public String loginForm() {
 		return "login.html";
 	}
 	
@@ -77,6 +77,57 @@ public class StudyMembersController {
 		return "redirect:/main.html"; //로그인 전 메인화면			
 	}
 	
+	@RequestMapping(value="/findIdForm", method = RequestMethod.GET)
+	public String findIdForm() {
+		return "auth/findId";
+	}
+	
+	//id 찾기
+	@RequestMapping(value = "/findId", method=RequestMethod.POST)
+	public ModelAndView findId(Model model, @RequestParam("email") String email, StudyMembersDTO dto) throws SQLException {
+		
+		ModelAndView mv = new ModelAndView();
+		try {
+			dto.setEmail(email);
+			StudyMembers findMemId = memdao.findId(email);
+			model.addAttribute("StudyMembers", findMemId);
+			
+			mv.setViewName("auth/findIdResult");   
+//			System.out.println(model.addAttribute("StudyMembers", findMemId));
+		} catch (Exception e) {
+		    System.out.println(e.toString());
+		    model.addAttribute("msg", "오류가 발생되었습니다.");
+		}
+		 
+		return mv;
+	}
+	
+	@RequestMapping(value="/findPwdForm", method = RequestMethod.GET)
+	public String findPwdForm() {
+		return "auth/findPwd";
+	}
+	
+	//pwd 찾기
+	@RequestMapping(value = "/findPwd", method=RequestMethod.POST)
+	public ModelAndView findPwd(Model model, @RequestParam("id") String id, @RequestParam("email") String email, StudyMembersDTO dto) throws SQLException {
+		
+		ModelAndView mv = new ModelAndView();
+		try {
+			dto.setId(id);
+			dto.setEmail(email);
+			StudyMembers findPwd = memdao.findPwd(id,email);
+			model.addAttribute("StudyMembers", findPwd);
+			
+			mv.setViewName("auth/findPwdResult");   
+//			System.out.println(model.addAttribute("StudyMembers", findPwd));
+		} catch (Exception e) {
+		    System.out.println(e.toString());
+		    model.addAttribute("msg", "오류가 발생되었습니다.");
+		}
+		 
+		return mv;
+	}
+	
 	
 	
 	//회원가입 입력 폼 
@@ -106,31 +157,25 @@ public class StudyMembersController {
 		return mv;
 	}
 	
-	//아이디 중복 체크 화면 띄우기
-	//http://localhost/team2_studyroom/StdMembers/check
-	@GetMapping(value = "/check", produces = "application/json; charset=UTF-8")
-	protected ModelAndView idCheckView() throws SQLException {
-		
-		ModelAndView mv = new ModelAndView();
-		System.out.println("check() -----");
-		
-		mv.setViewName("auth/idCheckForm");   
-		return mv;
+	
+	// 아이디 중복 체크 확인 
+	// http://localhost/team2_studyroom/StdMembers/checkOk?id=값
+	@RequestMapping(value = "/checkOk", method = RequestMethod.GET)
+	protected String idCheck(String id) throws Exception {
+
+		String check = "아이디 중복입니다.";
+
+		boolean result = memdao.duplecateID(id);
+
+		if (result == true) {
+			check = "사용가능한 아이디 입니다.";
+		}
+		System.out.println("checkOk() -----" + result);
+
+		return check;
 	}
 	
-	//아이디 중복 체크 확인 -- 에러
-	//http://localhost/team2_studyroom/StdMembers/checkOk
-	@GetMapping(value = "/checkOk", produces = "application/json; charset=UTF-8")
-	protected ModelAndView idCheck() throws SQLException {
-		
-		ModelAndView mv = new ModelAndView();
-		System.out.println("checkOk() -----");
-		
-		mv.setViewName("auth/idCheckProc");   
-		return mv;
-	}
-	
-	//프로필 수정 
+	//프로필 수정 페이지 이동
 	@RequestMapping(value = "/updatepage", method = RequestMethod.GET)
 	public ModelAndView updatePage(String id) throws SQLException {
 
@@ -142,17 +187,12 @@ public class StudyMembersController {
 		return mv;
 	}
 	
+	//프로필 수정 기능
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public String update(@ModelAttribute("id") String id, @RequestParam("nickname") String nickname, @RequestParam("email") String email, @RequestParam("password") String pw, @RequestParam("goal") String goal) throws SQLException {
 
 		System.out.println("update() ----- " + id);
 		
-//		dto.setNickname(nickname);
-//		dto.setEmail(email);
-//		dto.setPassword(pw);
-//		dto.setGoal(goal);
-		
-
 		memdao.memUpdate(id, email, goal, nickname, pw);
 
 		return "auth/updateSuccess";
@@ -164,7 +204,7 @@ public class StudyMembersController {
 		
 		memdao.delete(deleteId);
 		
-		return "redirect:/auth/deleteSuccess"; 
+		return "auth/deleteSuccess"; 
 	}
 
 	//로그인 후 조회
