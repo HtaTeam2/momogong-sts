@@ -59,7 +59,7 @@ public class StudyGroupDAO {
 		
 	}
 	
-	//스터디 목록 조회
+	//스터디 가입 또는 입장 후 목록 조회. 그룹 내에 해당 Id가 없으면 가입 발생(예외)
 	public StudyGroup joinGroup(String joinId, long roomNo) throws Exception, SQLException{
 		System.out.println("joinGroup DAO");
 		EntityManager em = DBUtil.getEntityManager();
@@ -97,16 +97,16 @@ public class StudyGroupDAO {
 				}
 				tx.commit();
 				return group;
-			}catch (SQLException s) {
-				s.printStackTrace();
-				tx.rollback();
+			
 			}catch (Exception s) {
 				s.printStackTrace();
 				tx.rollback();
+				throw s;
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
 			tx.rollback();
+			throw e;
 		}finally {
 			em.close();
 		}
@@ -198,7 +198,10 @@ public class StudyGroupDAO {
 		}
 		return result;
 	}
-
+//	public ArrayList<MyStudyDTO> getMyStudy(String id) throws SQLException{
+//		System.out.println("DAO getMyStudy " + id);
+//		
+//	}
 	//mystudy 조회
 	public ArrayList<MyStudyDTO> getMyStudy(String id) throws SQLException{
 		System.out.println("DAO getMyStudy " + id);
