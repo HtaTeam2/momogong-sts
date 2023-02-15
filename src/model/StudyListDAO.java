@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 
 import org.springframework.stereotype.Repository;
 
@@ -82,30 +83,80 @@ public class StudyListDAO {
 		}	
 	}
 	
-	
-	//방수정, 스터디이름, 스터디상세설명, 스터디 카테고리만 수정.
-	public boolean updateList(StudyListsDTO sdto) throws SQLException {
+	//방 하나 보기
+	public StudyLists oneRoom(long roomNo) throws SQLException {
 		EntityManager em = DBUtil.getEntityManager();
 		EntityTransaction tx = em.getTransaction();
 		StudyLists lists = null;
 		
 		try {
 			tx.begin();
+			lists = em.find(StudyLists.class, roomNo);
+			tx.commit();
 			
-			lists = em.find(StudyLists.class, sdto.getRoomNo());
+		}catch (Exception e) {
+			tx.rollback();
+			e.printStackTrace();
+			throw e;
+		}finally {
+			em.close();
+		}
+		return lists;
+	}
+	
+	
+	//방장인지 확인 후 수정
+		public StudyLists updateCheck(long roomNo, String id) throws SQLException, NoResultException {
+			EntityManager em = DBUtil.getEntityManager();
+			EntityTransaction tx = em.getTransaction();
+			StudyLists lists = null;
+			
+			try {
+				tx.begin();
+				String hostId = (String)em.createNamedQuery("StudyLists.findById").setParameter("roomNo", roomNo).getSingleResult();
+				System.out.println(hostId);
+				//방의 호스트 id와 일치하면 수정 가능(true)
+				if (hostId.equals(id)) {
+					lists = em.find(StudyLists.class, roomNo);
+					tx.commit();
+				}
+			}catch (NoResultException e) {
+				tx.rollback();
+				e.printStackTrace();
+				throw e;
+			}catch (Exception e) {
+				tx.rollback();
+				e.printStackTrace();
+				throw e;
+			}finally {
+				em.close();
+			}
+			return lists;
+		}
+	
+	//방수정, 스터디이름, 스터디상세설명, 스터디 카테고리만 수정. 
+	public boolean updateList(long roomNo, String roomTitle, String roomDesc, String roomPw, String category) throws SQLException {
+		EntityManager em = DBUtil.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		StudyLists lists = null;
+		
+		try {
+			tx.begin();
+			System.out.println(roomDesc + ", " + category);
+			lists = em.find(StudyLists.class, roomNo);
 			//리스트가 존재한다면 null이 아님
 			if (lists != null) {
 				// DAO로 넘어왔는지 Test
 				System.out.println("업데이트 전 : " + lists);
-				lists.setRoomTitle(sdto.getRoomTitle());
-				lists.setRoomDesc(sdto.getRoomDesc());
-				lists.setCategory(sdto.getCategory());
+				lists.setRoomTitle(roomTitle);
+				lists.setRoomDesc(roomDesc);
+				lists.setCategory(category);
+				em.persist(lists);
+				tx.commit();
+				return true;
 			}else {
 				System.out.println("다시 시도해 주세요.");
 			}
-			em.persist(lists);
-			tx.commit();
-			
 		}catch (Exception e) {
 			tx.rollback();
 			e.printStackTrace();
