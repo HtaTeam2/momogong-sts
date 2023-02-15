@@ -14,8 +14,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
-<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">	
-
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">	
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdn-icons-png.flaticon.com/512/1828/1828427.png">
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 
@@ -40,8 +41,9 @@ footer {
 
 </head>
 <body style = "width: 100%;">
-	<jsp:include page="../../header.jsp"></jsp:include>
-	<div id="full" class="w3-row w3-padding-64" style="max-width:100%;max-height:900px;margin-top:100px">
+	
+	<h2><i class="fa fa-group" style="font-size:38px;color:gold;"></i> ${allGroup[0].roomTitle}</h2>
+	<div id="full" class="w3-row w3-padding-30" style="max-width:100%;max-height:900px;margin-top:100px">
 	<!-- 추후 script로 변경 -->
 		<div class="w3-col m9 w3-padding-large">
 			<!-- <div class="w3-row"> -->
@@ -50,39 +52,28 @@ footer {
 					<iframe width="100%" height="400" src="https://www.youtube.com/embed/R7TXQF8bW_Y?autoplay=1&mute=1" ></iframe>
 				</div> 
 			</c:forEach>
-				<!-- <div class="w3-half">
-					<iframe width="100%" height="400" src="https://www.youtube.com/embed/R7TXQF8bW_Y?autoplay=1&mute=1"></iframe>
-				</div>
-			</div>
-			<div id="sec" class="w3-row">
-				<div id="third" class="w3-half">
-					<iframe width="100%" height="400" src="https://www.youtube.com/embed/R7TXQF8bW_Y?autoplay=1&mute=1"></iframe>
-				</div> 
-				<div id="fourth" class="w3-half">
-					<iframe width="100%" height="400" src="https://www.youtube.com/embed/R7TXQF8bW_Y?autoplay=1&mute=1"></iframe>
-				</div> -->
-			<!-- </div> -->
 		</div>
-		<div id="side" class="w3-col m5 w3-padding-large w3-hide-small" style="width:20%">
-			<div id="mem" style="height:50%;">
+		<div id="side" class="w3-col m5 w3-padding-small w3-hide-small" style="width:20%;height:800px; border: 3px solid gold;">
+			<div id="mem" style="height:30%;">
 				<ul class="w3-xlarge">MEMBERS
+				<hr>
 					<c:forEach items="${requestScope.allGroup}" var="e" varStatus="status">
 						<li class="w3-large">${e.nickname}</li>
 					</c:forEach>
 				</ul>
 			</div>
-			<br><hr><br>
-			<div id="chat" style="height:50%;"><ul class="w3-xlarge">Chatting</ul></div>
+			<br><hr style="border: 1px solid gold;"><br>
+			<div id="chat" style="height:70%;"><ul class="w3-xlarge">Chatting</ul></div>
 		</div> 
 	</div>
 
 
   <footer class="w3-row-padding w3-padding-32">
     <div class="w3-third">
-   	 <button id="exit" class="w3-button w3-white" onclick='location.href="${pageContext.request.contextPath}/main.jsp"'>나가기</button>
+   	 <button id="exit" class="w3-button w3-white w3-xlarge" onclick='location.href="${pageContext.request.contextPath}/main.jsp"'>나가기</button>
     </div>
   </footer>
-	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  	<script src="/group/view.js"></script>
+<!-- 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  	<script src="/group/view.js"></script> -->
 </body>
 </html>
