@@ -40,9 +40,9 @@
 
 <script type="text/javascript">
 
-	function succ(msg){
+	function succ(){
 		alert('탈퇴가 완료되었습니다.');
-		window.location.href ="/main.jsp";
+		window.location.href ="../main.jsp";
 	} 
 
 </script>
