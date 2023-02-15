@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -15,8 +16,11 @@ import lombok.ToString;
 @ToString
 
 public class StudyGroupDTO {
-	private long memNo;	//그룹원 번호
-	private Date regdate;	//가입날짜
-	private long studyListNo; //방번호fk
-	private String studyMemberId;	//그룹원 아이디
+	
+	private long memNo; //그룹원 번호
+	private Date regdate; //가입날짜
+	private int roomNo; //방번호 fk
+	private String nickname; //닉네임
 }
+
+

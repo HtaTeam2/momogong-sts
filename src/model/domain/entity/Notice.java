@@ -1,4 +1,5 @@
 package model.domain.entity;
+
 import java.sql.Date;
 
 import javax.persistence.Column;
@@ -7,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.SequenceGenerators;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -17,14 +17,18 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Getter
 @Setter
-@ToString
+
+
+//수정해서 사용 => 모든 검색 일치
+//@NamedQuery(name = "Player.findByTeamPlayers", query = "select p from Player p where p.team.tname = :name")
+//수정해서 사용 => 부분검색
+//@NamedQuery(name = "Player.findByLikePlayer", query = "select p from Player p where p.name like :name")
 
 @Entity
 @SequenceGenerator(
@@ -40,27 +44,17 @@ public class Notice {
 	private Long noticeNo;
 	
 	@NonNull
-<<<<<<< main
-	@Column(length = 50)
-	private String noticeTitle;
-	
-	@NonNull
-=======
 	@Column(length = 50, nullable = false)
 	private String noticeTitle;
 	
 	@NonNull
 	@Column(nullable = false)
->>>>>>> local
 	private String noticeContent;
 	
 	@CreationTimestamp
 	private Date noticeRegdate;
 	
-<<<<<<< main
-=======
 	@NonNull
 	@Column(nullable = false)
->>>>>>> local
 	private Integer viewCount;
 }

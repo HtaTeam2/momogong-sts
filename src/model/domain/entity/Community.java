@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -29,6 +30,12 @@ import lombok.ToString;
 @Setter
 @ToString
 
+
+@NamedQuery(name = "Community.findByComTitle", query = "select c from Community c where c.comTitle like :comTitle")
+@NamedQuery(name = "Community.findByComContent", query = "select c from Community c where c.comContent like :comContent")
+@NamedQuery(name = "Community.findByMemberid", query = "select c from Community c where c.studymembers.id like :memberid")
+
+
 @Entity
 @SequenceGenerator(
         name="COMMUNITY_SEQ_GEN", //시퀀스 제너레이터 이름
@@ -40,17 +47,6 @@ public class Community {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="COMMUNITY_SEQ_GEN")
 	private Long comNo;
-<<<<<<< main
-	//글쓴이 회원테이블 참조!
-	@NonNull
-	@Column(length = 50)
-	private String subject;
-	
-	@NonNull
-	private String comContent;
-	
-	@Column(length = 6)
-=======
 	
 	@NonNull
 	@Column(length = 50, nullable = false)
@@ -66,20 +62,16 @@ public class Community {
 	
 	@NonNull
 	@Column(length = 6, nullable = false)
->>>>>>> local
 	private String comPw;
 	
 	@CreationTimestamp
 	private Date comRegdate;
 	
-<<<<<<< main
-=======
 	@NonNull
 	@Column(nullable = false)
->>>>>>> local
 	private Integer comViewCount;
 	
-	//참조
+	//글쓴이 회원테이블 참조!
 	@ManyToOne
 	@JoinColumn(name = "memberid")
 	private StudyMembers studymembers;

@@ -3,7 +3,6 @@ package run;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-
 import model.domain.entity.Community;
 import model.domain.entity.Notice;
 import model.domain.entity.StudyGroup;
@@ -50,6 +49,7 @@ public class CreateInsertRun {
 		StudyGroup g1 = new StudyGroup();
 		g1.setStudyLists(l1);
 		g1.setStudyMembers(m1);
+		
 		
 		//l2방의 관리자 m2
 		StudyGroup g2 = new StudyGroup();

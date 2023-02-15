@@ -10,8 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,18 +28,27 @@ import lombok.Setter;
 @Getter
 @Setter
 
+//수정해서 사용 => 모든 검색 일치
+//@NamedQuery(name = "Player.findByTeamPlayers", query = "select p from Player p where p.team.tname = :name")
+//수정해서 사용 => 부분검색
+//다음 sql문과 같습니다.(검색어: 테) => select * from StudyLists where roomTitle like '%테%';
+@NamedQuery(name = "StudyLists.findByLikeLists", 
+			query = "select s from StudyLists s where s.roomTitle like :title")
+
 @Entity
+@SequenceGenerator(
+        name="STUDYLISTS_SEQ_GEN",
+        sequenceName="STUDYLISTS_SEQ",
+        initialValue=1,
+        allocationSize=1
+        )
 public class StudyLists {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long roomno;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STUDYLISTS_SEQ_GEN")
+	private Long roomNo;
 	
-<<<<<<< main
-	@Column(length = 20)
-=======
 	@NonNull
 	@Column(length = 20, nullable = false)
->>>>>>> local
 	private String roomTitle;
 	
 	@Column(length = 6)
@@ -49,12 +60,6 @@ public class StudyLists {
 	@JoinColumn(name = "memberid")
 	private StudyMembers studyMembers;
 	
-<<<<<<< main
-	private Integer memNum;
-	private Integer maxMem;
-	
-	@Column(length = 10)
-=======
 	@NonNull
 	@Column(nullable = false)
 	private Integer memNum; //생성 시점에서 멤버수는 1명
@@ -65,9 +70,17 @@ public class StudyLists {
 	
 	@NonNull
 	@Column(length = 10, nullable = false)
->>>>>>> local
 	private String category;
 	
 	@OneToMany(mappedBy = "studyLists") //StudyLists에 매핑되어 있는 변수이름으로 지정해야함
-	private List<StudyGroup> studygroup = new ArrayList<StudyGroup>();
+	private List<StudyGroup> studyGroup = new ArrayList<StudyGroup>();
+
+	@Override
+	public String toString() {
+		return "StudyLists [roomNo=" + roomNo + ", roomTitle=" + roomTitle + ", roomPw=" + roomPw + ", roomDesc="
+				+ roomDesc + ", studyMembers=" + studyMembers.getId() + ", memNum=" + memNum + ", maxMem=" + maxMem
+				+ ", category=" + category + "]";
+	}
+	
+	
 }
