@@ -14,6 +14,8 @@
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="./css/join.css">
 <title>회원가입 페이지</title>
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
 </head>
 <script>
 	//아이디 길이 제한
