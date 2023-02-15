@@ -56,11 +56,6 @@ input[type=text] {
 	</header>
 	
 	<div id="searchList" class="w3-row-padding" div style="text-align: center;">
-<form action="${pageContext.request.contextPath}/Notice/insertview" method="get">
-			
-	<form action="${pageContext.request.contextPath}/Notice/list" method="get">
-
-
 		<!-- <form action="Notice/list"> -->
 		<div class="page-wrapper">
 			<div class="container-fluid">
@@ -89,8 +84,6 @@ input[type=text] {
 								<tbody>
 									<c:forEach items="${requestScope.list}" var="n">
 										<tr>
-
-
 											<td><a
 												href="${pageContext.request.contextPath}/Notice/view/${n.noticeNo}">${n.noticeNo}</a></td>
 											<td>${n.noticeTitle}</td>
@@ -98,25 +91,16 @@ input[type=text] {
 											<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
 													value="${n.noticeRegdate}" /></td>
 											<td>${n.viewCount}</td>
-
-
-
 										</tr>
-
 									</c:forEach>
-
 								</tbody>
-
-
 							</table>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		</form>
-		<input type="submit" value="작성">
-	</form>	
+		<input type="button" value="작성" onclick='location.href="${pageContext.request.contextPath}/Notice/insertview"'>
 	</div>
 	<!-- axios 사용을 위한 추가 설정 -->
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
