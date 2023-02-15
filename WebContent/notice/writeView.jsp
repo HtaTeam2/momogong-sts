@@ -16,6 +16,7 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <title>공지사항</title>
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">	
 </head>
 <body>
 	<!-- header -->
