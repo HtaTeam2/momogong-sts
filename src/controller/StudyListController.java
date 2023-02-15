@@ -32,11 +32,18 @@ public class StudyListController {
 
 	//스터디 생성
 	@RequestMapping(value = "/insertList", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
-	public String insert(Model sessionData, @ModelAttribute("id") String hostId, @RequestParam("roomTitle") String roomTitle, @RequestParam("category") String category, @RequestParam("roomDesc") String roomDesc, 
+	public String insert(Model model, @ModelAttribute("id") String hostId, @RequestParam("roomTitle") String roomTitle, @RequestParam("category") String category, @RequestParam("roomDesc") String roomDesc, 
 			 	@RequestParam("maxMem") int maxMem, @RequestParam("roomPw") String roomPw) throws Exception {
 		System.out.println("insert()메소드 호출 확인" + roomTitle + roomPw);
+		String host = listdao.hostCheck(hostId);
+		System.out.println("호스트ID: " +  host);
+		if(host != null){
+			model.addAttribute("errorMsg", "더 이상 스터디를 생성할 수 없습니다.");
+			return "lists/error"; //WEB-INF/lists/error.jsp
+		}
+		
 		StudyLists lists = listdao.insertList(roomTitle, hostId, category, roomDesc, maxMem, roomPw);
-		sessionData.addAttribute("sdto", lists);
+		model.addAttribute("sdto", lists);
 		
 		//가입 후엔 Group원 추가로 넘겨줌 - 그룹원 가입 url = /insert
 		return "forward:/StdGroup/hostJoin/" + lists.getRoomNo();
