@@ -1,5 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+//테스트코드
+/* 
+session.setAttribute("id", "test1");
+session.setAttribute("password", "testpw");
+session.setAttribute("nickname", "테스트1");
+session.setAttribute("email", "test1@gmail.com");
+session.setAttribute("goal", "");
+session.setAttribute("regdate", "2023-02-11");
+session.setAttribute("grade", "FREE");
+*/
+
+//실제 로그인했을때 확인
+//System.out.println("id: "+session.getAttribute("id")+", grade: "+session.getAttribute("grade"));
+//id, 등급 확인용 : 현재 id만 세션에 저장중이라 세션에 전체 데이터 들어오도록 StudyMembers컨트롤러 수정필요
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,6 +68,10 @@ input[type=text] {
 			<button class="w3-button w3-white w3-hide-small w3-right"
 				onclick='location.href="${pageContext.request.contextPath}/StdMembers/viewOne2"'>내
 				정보</button>
+			<c:if test="${sessionScope.id == 'admin'}">
+				<button class="w3-button w3-white w3-hide-small w3-right" 
+				 	onclick='location.href="${pageContext.request.contextPath}/StdMembers/adPage"'>관리자메뉴</button>
+			 </c:if>
 		</div>
 	</div>
 	</header>
