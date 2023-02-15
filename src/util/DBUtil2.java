@@ -83,6 +83,37 @@ public class DBUtil2 {
 		}
 	}
 	
+	public static void close(Connection con, Statement pstmt1, Statement pstmt2, Statement pstmt3, Statement pstmt4, ResultSet rset) {
+		try {
+			if (pstmt1 != null) {
+				pstmt1.close();
+				pstmt1 = null;
+			}
+			if (pstmt2 != null) {
+				pstmt2.close();
+				pstmt2 = null;
+			}
+			if (pstmt3 != null) {
+				pstmt3.close();
+				pstmt3 = null;
+			}
+			if (pstmt4 != null) {
+				pstmt4.close();
+				pstmt4 = null;
+			}
+			if (con != null) {
+				con.close();
+				con = null;
+			}
+			if(rset != null) {
+				rset.close();
+				rset = null;
+			}
+		} catch (SQLException se) {
+			System.out.println(se.getMessage());
+		}
+	}
+	
 	public static void close(Connection con, Statement pstmt, Statement pstmt1, ResultSet rs) {
 		try {
 			if (pstmt1 != null) {
