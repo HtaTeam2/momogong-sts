@@ -32,8 +32,12 @@ import lombok.Setter;
 //수정해서 사용 => 부분검색
 //@NamedQuery(name = "Player.findByLikePlayer", query = "select p from Player p where p.name like :name")
 
-//id,pw로 로그인
-@NamedQuery(name = "StudyMembers.findByLoginInfo", query = "select m from StudyMembers m where m.id=:id and m.password=:password")
+//로그인 (id,pw 입력으로 로그인)
+@NamedQuery(name = "StudyMembers.findByLoginInfo", query = "select m from StudyMembers m where m.id=:id and m.password = :password")
+//id 찾기 (email 입력으로 찾기)
+@NamedQuery(name = "StudyMembers.findByEmail", query = "select m from StudyMembers m where m.email = :email")
+//pw찾기(id,email 입력으로 찾기)
+@NamedQuery(name = "StudyMembers.findByPassword", query = "select m from StudyMembers m where m.id=:id and m.email = :email")
 
 @Entity
 public class StudyMembers {

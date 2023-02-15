@@ -35,7 +35,7 @@ public class StudyMembersController {
 	
 	//로그인 화면으로 이동
 	@RequestMapping(value="/loginForm", method = RequestMethod.GET)
-	public String login() {
+	public String loginForm() {
 		return "login.html";
 	}
 	
@@ -75,6 +75,31 @@ public class StudyMembersController {
 		sess = null;
 		
 		return "redirect:/main.html"; //로그인 전 메인화면			
+	}
+	
+	@RequestMapping(value="/findIdForm", method = RequestMethod.GET)
+	public String findIdForm() {
+		return "auth/findId";
+	}
+	
+	//id 찾기
+	@RequestMapping(value = "/findId", method=RequestMethod.POST)
+	public ModelAndView findId(Model model, @RequestParam("email") String email, StudyMembersDTO dto) throws SQLException {
+		
+		ModelAndView mv = new ModelAndView();
+		try {
+			dto.setEmail(email);
+			StudyMembers findMemId = memdao.findId(email);
+			model.addAttribute("StudyMembers", findMemId);
+			
+			mv.setViewName("auth/findIdResult");   
+//			System.out.println(model.addAttribute("StudyMembers", findMemId));
+		} catch (Exception e) {
+		    System.out.println(e.toString());
+		    model.addAttribute("msg", "오류가 발생되었습니다.");
+		}
+		 
+		return mv;
 	}
 	
 	
