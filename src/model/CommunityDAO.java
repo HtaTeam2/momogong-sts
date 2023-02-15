@@ -88,15 +88,20 @@ public class CommunityDAO {
 	}
 
 	//목록
-	public List<Community> list() throws Exception{
+	public List<CommunityDTO> list() throws Exception{
 		EntityManager em = DBUtil.getEntityManager();
 		
 		List<Community> list = null;
+		List<CommunityDTO> list2 = new ArrayList<CommunityDTO>();
 		try {
 			String sql = "select c from Community c order by c.comNo desc";
 			list = em.createQuery(sql).getResultList();
 			
 			//list.forEach(v->System.out.println(v));
+			for(Community v:list) {
+				list2.add(CommunityDTO.fromEntity(v));
+				System.out.println(list);
+			}
 			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -104,7 +109,7 @@ public class CommunityDAO {
 		}finally {
 			em.close();
 		}
-		return list;
+		return list2;
 	}
 	
 	
