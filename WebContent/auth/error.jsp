@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -61,6 +62,10 @@
 			<button class="w3-button w3-white w3-hide-small w3-right"
 				onclick='location.href="${pageContext.request.contextPath}/StdMembers/viewOne2"'>내
 				정보</button>
+			<c:if test="${sessionScope.id == 'admin'}">
+				<button class="w3-button w3-white w3-hide-small w3-right" 
+				 	onclick='location.href="${pageContext.request.contextPath}/StdMembers/adPage"'>관리자메뉴</button>
+			 </c:if>
 		</div>
 	</div>
 	</header>
