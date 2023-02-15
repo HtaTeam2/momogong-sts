@@ -6,21 +6,6 @@
 <%@ page import="model.StudyMembersDAO"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-//테스트코드
-/* 
-session.setAttribute("id", "test1");
-session.setAttribute("password", "testpw");
-session.setAttribute("nickname", "테스트1");
-session.setAttribute("email", "test1@gmail.com");
-session.setAttribute("goal", "");
-session.setAttribute("regdate", "2023-02-11");
-session.setAttribute("grade", "FREE");
-*/
-//실제 로그인했을때 확인
-//System.out.println("id: "+session.getAttribute("id")+", grade: "+session.getAttribute("grade"));
-//id, 등급 확인용 : 현재 id만 세션에 저장중이라 세션에 전체 데이터 들어오도록 StudyMembers컨트롤러 수정필요
-%>
 
 <!DOCTYPE html>
 <html>
@@ -31,6 +16,8 @@ session.setAttribute("grade", "FREE");
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif; font-size: 18px;}
 input[type=text] {
