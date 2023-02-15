@@ -104,35 +104,50 @@ public class StudyListDAO {
 		return lists;
 	}
 	
+	//방장으로 등록이 되어있는지 확인
+	public String hostCheck(String id) {
+		EntityManager em = DBUtil.getEntityManager();
+		String hostId = null;
+		try {
+			hostId = (String)em.createNamedQuery("StudyLists.findByHostId").setParameter("hostId", id).getSingleResult();
+		}catch(NoResultException e) {
+			System.out.println(e.getMessage());
+			hostId = null;
+			return hostId;
+		}
+		return hostId;
+	}
+	
+	
 	
 	//방장인지 확인 후 수정
-		public StudyLists updateCheck(long roomNo, String id) throws SQLException, NoResultException {
-			EntityManager em = DBUtil.getEntityManager();
-			EntityTransaction tx = em.getTransaction();
-			StudyLists lists = null;
-			
-			try {
-				tx.begin();
-				String hostId = (String)em.createNamedQuery("StudyLists.findById").setParameter("roomNo", roomNo).getSingleResult();
-				System.out.println(hostId);
-				//방의 호스트 id와 일치하면 수정 가능(true)
-				if (hostId.equals(id)) {
-					lists = em.find(StudyLists.class, roomNo);
-					tx.commit();
-				}
-			}catch (NoResultException e) {
-				tx.rollback();
-				e.printStackTrace();
-				throw e;
-			}catch (Exception e) {
-				tx.rollback();
-				e.printStackTrace();
-				throw e;
-			}finally {
-				em.close();
+	public StudyLists updateCheck(long roomNo, String id) throws SQLException, NoResultException {
+		EntityManager em = DBUtil.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		StudyLists lists = null;
+		
+		try {
+			tx.begin();
+			String hostId = (String)em.createNamedQuery("StudyLists.findById").setParameter("roomNo", roomNo).getSingleResult();
+			System.out.println(hostId);
+			//방의 호스트 id와 일치하면 수정 가능(true)
+			if (hostId.equals(id)) {
+				lists = em.find(StudyLists.class, roomNo);
+				tx.commit();
 			}
-			return lists;
+		}catch (NoResultException e) {
+			tx.rollback();
+			e.printStackTrace();
+			throw e;
+		}catch (Exception e) {
+			tx.rollback();
+			e.printStackTrace();
+			throw e;
+		}finally {
+			em.close();
 		}
+		return lists;
+	}
 	
 	//방수정, 스터디이름, 스터디상세설명, 스터디 카테고리만 수정. 
 	public boolean updateList(long roomNo, String roomTitle, String roomDesc, String roomPw, String category) throws SQLException {
