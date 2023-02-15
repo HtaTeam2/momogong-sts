@@ -258,6 +258,60 @@ public class StudyMembersDAO {
 		return false;
 	}
 
+		//jpa - id찾기 (email 입력으로 찾기)
+	public StudyMembers findId(String email) throws SQLException{
+		EntityManager em = DBUtil.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		StudyMembers members = null;
+		try {
+			
+			tx.begin();
+			
+			members = (StudyMembers) em.createNamedQuery("StudyMembers.findMemId").setParameter("email", email).getSingleResult();
+			
+			System.out.println(members); //테스트
+
+			tx.commit();
+			
+		} catch (Exception e) {
+			tx.rollback();
+			e.printStackTrace();
+		} finally {
+			em.close();
+		}
+		return members;
+	}
+	
+	//jpa - pw찾기 (id,email 입력으로 찾기)
+	public StudyMembers findPwd(String id, String email) throws SQLException{
+		EntityManager em = DBUtil.getEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		StudyMembers members = null;
+		try {
+			
+			tx.begin();
+			
+			members = (StudyMembers) em.createNamedQuery("StudyMembers.findMemPwd").setParameter("id", id).setParameter("email", email).getSingleResult();
+			
+			System.out.println(members); //테스트
+
+			tx.commit();
+			
+		} catch (Exception e) {
+			tx.rollback();
+			e.printStackTrace();
+		} finally {
+			em.close();
+		}
+		return members;
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	//jdbc 로그인 : sql문 사용해서 id,pw로 1명의 회원정보 조회
 	//sql = "select * from studymembers where id=? and password=?";
@@ -288,8 +342,7 @@ public class StudyMembersDAO {
 	}
 	
 	
-	//관리자
-	//jpa - 모든 회원 검색
+	//관리자 - jpa - 모든 회원 검색
 	public List<StudyMembers> getAllMembers() {
 		EntityManager em = DBUtil.getEntityManager();
 		
@@ -307,11 +360,7 @@ public class StudyMembersDAO {
 	
 
 	
-	//관리자 - jdbc
-		/**
-		 * 가입한 모든 회원 검색 (admin 제외/pw,goal 제외)
-		 * sql = "SELECT id, nickname, email, regdate, grade  FROM studymembers where grade in('free','premium')";
-		 */
+	//관리자 - jdbc - 가입한 모든 회원 검색 (admin 제외/pw,goal 제외)
 		public ArrayList<StudyMembersDTO> getMembers() throws SQLException {
 			Connection conn = null;
 			PreparedStatement pstmt = null;
@@ -337,54 +386,6 @@ public class StudyMembersDAO {
 			}
 			
 			return allList;
-		}
-		
-		/**
-		 * 회원 1명 삭제
-		 */
-		public boolean delete(String id) throws SQLException {
-			Connection con = null;
-			PreparedStatement pstmt = null;
-			
-			try {
-				con = DBUtil2.getConnection();
-				pstmt = con.prepareStatement("delete from studymembers where id=?");
-				pstmt.setString(1, id);
-				int result = pstmt.executeUpdate();
-				if(result != 0) {
-					return true;
-				}
-			} catch (SQLException s) {
-				s.printStackTrace();
-				throw s;
-			} finally {
-				DBUtil2.close(con, pstmt);
-			}
-			
-			return false;
-		}
-		
-		/**
-		 * 관리자 비밀번호,이메일 수정
-		 */
-		
-		public void update(StudyMembersDTO dto) throws SQLException {
-			Connection con = null;
-			PreparedStatement pstmt = null;
-			
-			try {
-				con = DBUtil2.getConnection();
-				pstmt = con.prepareStatement("UPDATE studymembers SET password = ?, email = ? WHERE id = admin");
-				pstmt.setString(1, dto.getPassword());
-				pstmt.setString(2, dto.getEmail());
-				//pstmt.setString(3, dto.getId());
-				pstmt.executeUpdate(); //insert/update/delete
-			} catch (SQLException s) {
-				s.printStackTrace();
-				throw s;
-			} finally {
-				DBUtil2.close(con, pstmt);
-			}
 		}
 	
 	
