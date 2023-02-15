@@ -70,7 +70,7 @@ public class NoticeController {
 
 		notdao.updateNotice(ndto);
 
-		return "redirect:/Notice/view/{noticeNo}";
+		return "redirect:/notice/updateSuccess.jsp";
 	}
 
 	// 전체 목록 조회
