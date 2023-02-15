@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import model.StudyListDAO;
-import model.domain.StudyListsDTO;
 import model.domain.entity.StudyLists;
 
 @Controller
@@ -44,32 +43,66 @@ public class StudyListController {
 	}
 	
 	//스터디 삭제
-	@RequestMapping(value = "/deleteList", method = RequestMethod.POST)
-	public String delete(@RequestParam("roomNo") long roomNo) throws Exception {
+	@RequestMapping(value = "/deleteList/{roomNo}", method = RequestMethod.POST)
+	public String delete(@PathVariable("roomNo") long roomNo) throws Exception {
 		System.out.println("delete()메소드 호출 확인");
 		
 		listdao.deleteList(roomNo);
 		
-		return "redirect:list.jsp"; //수정해야함
+		return "redirect:/group/deleteSucc.jsp"; //삭제 후 성공페이지로 넘어감
+	}
+	
+	//스터디 정보 수정
+	@RequestMapping(value = "/updatelist", method=RequestMethod.POST)
+	public String update(Model model, @RequestParam("roomNo") long roomNo, @RequestParam("roomTitle") String roomTitle, @RequestParam("roomDesc") String roomDesc,
+			@RequestParam("roomPw") String roomPw, @RequestParam("category") String category) throws Exception {
+		
+		boolean result = false;
+		
+		System.out.println("update() 확인----" + roomTitle);
+		//리턴값 boolean으로 수정
+		result = listdao.updateList(roomNo, roomTitle, roomDesc, roomPw, category);
+		
+		if(result == false) {
+			model.addAttribute("errorMsg", "업데이트에 실패했습니다. 잠시 후 다시 시도해주십시오.");
+			return "group/error"; //WEB-INF/group/error.jsp
+		}
+		
+		return "lists/updatesuccessView"; //WEB-INF/lists/updatesuccessView.jsp
+		
 	}
 	
 	
-	//스터디 수정
-	@RequestMapping(value = "/updateList", method=RequestMethod.POST)
-	public String update(@RequestParam("roomTitle") String roomTitle,
-						@RequestParam("roomDesc") String roomDesc, 
-						@RequestParam("category") String category, 
-						@ModelAttribute("sdto") StudyListsDTO sdto) throws Exception {
-
-		System.out.println("update() 확인----" + sdto );
+	//스터디 수정버튼 후 아이디 체크 
+	@RequestMapping(value = "/updatecheck", method=RequestMethod.POST)
+	public String updateCheck(Model model, long roomNo, @ModelAttribute("id") String id) throws Exception {
 		
-		sdto.setRoomTitle(roomTitle);
-		sdto.setRoomDesc(roomDesc);
-		sdto.setCategory(category);
-			
-		listdao.updateList(sdto);	
+		System.out.println("updateCheck() 확인----" + roomNo);
+		//리턴값 boolean으로 수정해서 true면 수정 아니면 에러페이지 가도록
+		StudyLists lists = listdao.updateCheck(roomNo, id);
 		
-		return "forward:/updateSuccess.jsp";//수정해야함
+		if(lists != null) {
+			model.addAttribute("lists", lists);
+			return "forward:/lists/stdListUpdate.jsp";
+		}
+		model.addAttribute("errorMsg", "해당 방의 수정 권한이 없습니다.");
+		return "group/error"; //WEB-INF/group/error.jsp
+	}
+	
+	//스터디 하나 정보보기
+	@RequestMapping(value = "/oneRoom/{roomNo}", method=RequestMethod.GET)
+	public String oneRoom(Model model, @PathVariable("roomNo") long roomNo) throws Exception {
+		
+		System.out.println("oneRoom() 확인----" + roomNo);
+		
+		StudyLists lists = listdao.oneRoom(roomNo);
+		
+		if(lists != null) {
+			model.addAttribute("lists", lists);
+			return "lists/roomView";
+		}
+		model.addAttribute("errorMsg", "해당 방이 존재하지 않습니다.");
+		return "group/error"; //WEB-INF/group/error.jsp
 	}
 	
 	//리스트
