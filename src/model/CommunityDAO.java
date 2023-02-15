@@ -184,18 +184,6 @@ public class CommunityDAO {
 	}
 	
 	
-	@Test
-	public void dataTest() {
-		try {
-//			write(new CommunityDTO(0, "제목", "아이디", "말머리", "비번", null, "내용..", 0));
-//			list();
-			search("writer", "te");
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 
 
 }
