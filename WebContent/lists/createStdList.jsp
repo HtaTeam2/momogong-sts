@@ -90,9 +90,8 @@ footer {
                                         <tr>
                                             <td>스터디등급</td>
                                             <td>
-                                                <label><input type="radio" name="grade" value="free"
-						checked> free </label> <label><input type="radio"
-						name="grade" value="premium"> premium </label>
+                                                <label><input type="radio" name="grade" value="free" checked> free </label> 
+                                                <label><input type="radio" name="grade" value="premium"> premium </label>
                                             </td>
                                 </div>
                                 <tr>
