@@ -36,9 +36,9 @@
 
 <script type="text/javascript">
 
-	function succ(msg){
+	function succ(){
 		alert('성공적으로 방을 생성하였습니다');
-		window.location.href ="/main.jsp";
+		window.location.href ="../main.jsp";
 	} 
 
 </script>
