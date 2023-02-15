@@ -10,6 +10,7 @@
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap"
 	rel="stylesheet">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 <script src="https://kit.fontawesome.com/f51a30e87b.js"
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="../css/join.css">
