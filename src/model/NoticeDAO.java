@@ -23,9 +23,14 @@ public class NoticeDAO {
 	public static Notice insertNotice(Notice ndto) throws SQLException {
 		EntityManager em = DBUtil.getEntityManager();
 		EntityTransaction tx = em.getTransaction();
+		Notice notice = null;
 		try {
 			tx.begin();
-			em.persist(ndto);
+			notice = new Notice();
+			notice.setViewCount(0);
+			notice.setNoticeTitle(ndto.getNoticeTitle());
+			notice.setNoticeContent(ndto.getNoticeContent());
+			em.persist(notice);
 			tx.commit();
 
 		} catch (Exception e) {
@@ -36,7 +41,7 @@ public class NoticeDAO {
 			em.close();
 		}
 
-		return ndto;
+		return notice;
 	}
 
 	// 글 수정
