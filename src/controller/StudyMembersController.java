@@ -36,7 +36,7 @@ public class StudyMembersController {
 	//로그인 화면으로 이동
 	@RequestMapping(value="/loginForm", method = RequestMethod.GET)
 	public String loginForm() {
-		return "login.html";
+		return "login.jsp";
 	}
 	
 	//로그인
@@ -77,57 +77,61 @@ public class StudyMembersController {
 		return "redirect:/main.html"; //로그인 전 메인화면			
 	}
 	
-	@RequestMapping(value="/findIdForm", method = RequestMethod.GET)
+	//id 찾기 페이지 이동
+	@RequestMapping(value = "/findIdForm", method = RequestMethod.GET)
 	public String findIdForm() {
 		return "auth/findId";
 	}
+
 	
-	//id 찾기
-	@RequestMapping(value = "/findId", method=RequestMethod.POST)
-	public ModelAndView findId(Model model, @RequestParam("email") String email, StudyMembersDTO dto) throws SQLException {
-		
+	// id 찾기
+	@RequestMapping(value = "/findId", method = RequestMethod.POST)
+	public ModelAndView findId(Model model, @RequestParam("email") String email, StudyMembersDTO dto)
+			throws SQLException {
+
 		ModelAndView mv = new ModelAndView();
 		try {
 			dto.setEmail(email);
 			StudyMembers findMemId = memdao.findId(email);
-			model.addAttribute("StudyMembers", findMemId);
-			
-			mv.setViewName("auth/findIdResult");   
+			model.addAttribute("findMemId", findMemId);
+
+			mv.setViewName("auth/findIdResult");
 //			System.out.println(model.addAttribute("StudyMembers", findMemId));
 		} catch (Exception e) {
-		    System.out.println(e.toString());
-		    model.addAttribute("msg", "오류가 발생되었습니다.");
+			System.out.println(e.toString());
+			model.addAttribute("msg", "오류가 발생되었습니다.");
 		}
-		 
+
 		return mv;
 	}
 	
-	@RequestMapping(value="/findPwdForm", method = RequestMethod.GET)
+	//pwd 찾기 페이지 이동
+	@RequestMapping(value = "/findPwdForm", method = RequestMethod.GET)
 	public String findPwdForm() {
 		return "auth/findPwd";
 	}
-	
-	//pwd 찾기
-	@RequestMapping(value = "/findPwd", method=RequestMethod.POST)
-	public ModelAndView findPwd(Model model, @RequestParam("id") String id, @RequestParam("email") String email, StudyMembersDTO dto) throws SQLException {
-		
+
+	// pwd 찾기
+	@RequestMapping(value = "/findPwd", method = RequestMethod.POST)
+	public ModelAndView findPwd(Model model, @RequestParam("id") String id, @RequestParam("email") String email,
+			StudyMembersDTO dto) throws SQLException {
+
 		ModelAndView mv = new ModelAndView();
 		try {
 			dto.setId(id);
 			dto.setEmail(email);
-			StudyMembers findPwd = memdao.findPwd(id,email);
-			model.addAttribute("StudyMembers", findPwd);
-			
-			mv.setViewName("auth/findPwdResult");   
+			StudyMembers findMemPwd = memdao.findPwd(id, email);
+			model.addAttribute("findMemPwd", findMemPwd);
+
+			mv.setViewName("auth/findPwdResult");
 //			System.out.println(model.addAttribute("StudyMembers", findPwd));
 		} catch (Exception e) {
-		    System.out.println(e.toString());
-		    model.addAttribute("msg", "오류가 발생되었습니다.");
+			System.out.println(e.toString());
+			model.addAttribute("msg", "오류가 발생되었습니다.");
 		}
-		 
+
 		return mv;
 	}
-	
 	
 	
 	//회원가입 입력 폼 
@@ -240,21 +244,6 @@ public class StudyMembersController {
 		mv.setViewName("auth/adAllView");
 		
 		return mv;
-	}
-	
-	//관리자 정보 수정(update)
-	@RequestMapping(value = "/updateAd", method=RequestMethod.POST)
-	public String updateAdmin(@RequestParam("password") String pw, 
-					     @RequestParam("email") String email,
-					     @ModelAttribute("dto") StudyMembersDTO dto) throws SQLException{
-		System.out.println("update() ---- " + dto);
-		
-		dto.setPassword(pw);
-		dto.setEmail(email);	
-			
-		memdao.update(dto);	
-				
-		return "forward:/auth/adUpdateSuccess.jsp";
 	}
 	
 	// 예외 처리에 대한 중복 코드를 분리해서 예외처리 전담 메소드
