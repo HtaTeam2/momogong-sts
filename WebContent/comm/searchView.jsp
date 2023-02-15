@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/comm/table.css" type="text/css"/>
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 <title>커뮤니티 목록</title>
 </head>
 <body>
