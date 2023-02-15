@@ -128,7 +128,7 @@ public class CommunityController {
 		}
 
 		return "redirect:view/"+dto.getComNo();
-//		return "redirect:list";
+		
 	}
 	
 	
@@ -159,7 +159,7 @@ public class CommunityController {
 		
 		List<CommunityDTO> list = comdao.search(searchType, searchText);
 		model.addAttribute("list", list);
-		return "forward:/comm/searchView.jsp";
+		return "forward:/comm/allView.jsp";
 	}
 
 
