@@ -39,7 +39,7 @@ public class NoticeController {
 		Notice notice = notdao.insertNotice(ndto);
 		model.addAttribute("ndto", notice);
 
-		return "redirect:/Notice/detail";
+		return "redirect:/Notice/list";
 	}
 
 	// 글 삭제
