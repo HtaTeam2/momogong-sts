@@ -22,6 +22,7 @@ session.setAttribute("grade", "FREE");
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/comm/table.css" type="text/css"/>
 <script src="${pageContext.request.contextPath}/comm/ckeditor/ckeditor.js"></script>
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 <title>Insert title here</title>
 </head>
 	<script>
