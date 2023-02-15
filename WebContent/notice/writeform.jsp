@@ -101,7 +101,6 @@
                                     <td>글 내용</td>
                                     <textarea rows="5" cols="60" name="noticeContent" placeholder="내용을 입력해주세요"></textarea>
                                     <script>
-                                        //id가 description인 태그에 ckeditor를 적용시킴
                                         CKEDITOR.replace("noticeContent"); //이미지 업로드 x
                                     </script>
 
