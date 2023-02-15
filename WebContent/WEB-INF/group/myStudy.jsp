@@ -70,10 +70,10 @@
 	</div>
 
 <!-- 비동기로 변경 -->
-	<h1>&nbsp;&nbsp;<i class="fa fa-pencil-square-o" style="font-size:40px;color:#3c3c3c;"></i>내스터디</h1>
+	<h1>&nbsp;&nbsp;<i class="fa fa-pencil-square-o" style="font-size:40px;color:#FFC81E;"></i>내스터디</h1>
 		<div class="w3-row-padding" style="margin:0 -16px">
 	      <div class="w3-margin-bottom">
-	      	<h2>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-flag-checkered"></i>나의 목표</h2>
+	      	<h2>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-flag-checkered" style="font-size:30px;color:#FFC81E;"></i>나의 목표</h2>
 	        <ul class="w3-ul w3-border w3-white w3-center w3-opacity w3-hover-opacity-off">
 	         <c:choose>
 				<c:when test="${empty allData[0].goal}">
@@ -82,12 +82,13 @@
 					</p>
 				</c:when>
 				<c:otherwise>
-		        	<li class="w3-padding-30">${allData[0].goal}</li>
+		        	<li class="w3-padding-30"><h2>${allData[0].goal}</h2></li>
 				</c:otherwise>
 			</c:choose>
 	        </ul>
 	      </div>
 	  	</div>
+	  	<h2>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-desktop" style="font-size:30px;color:#FFC81E;"></i>현재 가입한 스터디</h2>
 			<table border="0" cellpadding="5" cellspacing="2" width="100%" bordercolordark="white" bordercolorlight="black">
 				<tr>
 					<c:forEach items="${allData}" var="e" varStatus="status">
