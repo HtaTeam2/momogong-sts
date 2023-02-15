@@ -27,7 +27,7 @@ li {
   width: 30%;
   height: 650px;
   background: white;
-  border-radius: 20px;
+  border-radius:20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,7 +40,7 @@ h2 {
 }
 
 .text{
-    margin-top: 20px;
+    margin-top: 30px;
     font-size: 10pt;
     display: flex;
 }
@@ -92,7 +92,7 @@ h2 {
 }
 
 .login_id input {
-  width: 100%;
+  width: 150%;
   height: 50px;
   border-radius: 30px;
   margin-top: 10px;
@@ -107,7 +107,7 @@ h2 {
 }
 
 .login_pw input {
-  width: 100%;
+  width: 150%;
   height: 50px;
   border-radius: 30px;
   margin-top: 10px;
@@ -118,7 +118,7 @@ h2 {
 
 .login_etc {
   padding: 10px;
-  width: 80%;
+  width: 100%;
   font-size: 14px;
   display: flex;
   justify-content: space-between;
