@@ -15,7 +15,23 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">	
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif; font-size: 18px;}
+input[type=text] {
+	width: 300px;
+	height: 32px;
+	font-size: 15px;
+	border: 0;
+	border-radius: 15px;
+	outline: none;
+	padding-left: 10px;
+	background-color: rgb(233, 233, 233);
+}
+</style>
 <title>공지사항</title>
 </head>
 <body>
@@ -40,13 +56,9 @@
 	</header>
 	
 	<div id="searchList" class="w3-row-padding" div style="text-align: center;">
-<form action="${pageContext.request.contextPath}/Notice/insertview"
-			method="get">
-			<input type="submit" value="작성">
-
-	
-	<form action="${pageContext.request.contextPath}/Notice/list"
-		method="get">
+<form action="${pageContext.request.contextPath}/Notice/insertview" method="get">
+			
+	<form action="${pageContext.request.contextPath}/Notice/list" method="get">
 
 
 		<!-- <form action="Notice/list"> -->
@@ -102,6 +114,9 @@
 				</div>
 			</div>
 		</div>
+		</form>
+		<input type="submit" value="작성">
+	</form>	
 	</div>
 	<!-- axios 사용을 위한 추가 설정 -->
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
