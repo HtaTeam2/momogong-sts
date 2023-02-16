@@ -29,7 +29,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.google.gson.JsonObject;
 
 import model.CommunityDAO;
+import model.RecommendDAO;
 import model.domain.CommunityDTO;
+import model.domain.RecommendDTO;
 
 @Controller
 @RequestMapping("Community")
@@ -38,6 +40,8 @@ public class CommunityController {
 	@Autowired
 	public CommunityDAO comdao;
 	
+	@Autowired
+	public RecommendDAO recommdao;
 	
 	//글쓰기화면
 	@RequestMapping(value = "/writeform", method = RequestMethod.GET, produces="application/json;charset=UTF-8")
@@ -64,7 +68,7 @@ public class CommunityController {
 
 
 
-	//읽기
+	//읽기(추천기능 추가하기 전 연결했던 코드..)
 	@RequestMapping(value = "/view/{comNo}", method = RequestMethod.GET, produces="application/json;charset=UTF-8")
 	public String view(Model model, @PathVariable long comNo) throws SQLException {
 		System.out.println("view()------------"+comNo);
@@ -74,6 +78,24 @@ public class CommunityController {
 		if(dto == null) {
 			throw new RuntimeException("게시물이 존재하지 않습니다.");
 		}else {
+			model.addAttribute("dto", dto);
+		}
+		return "forward:/comm/read.jsp";
+	}
+	
+	//읽기(추천기능 추가하여 이렇게 수정하였지만.....결국 추천기능 구현 실패해서 쓸데없어짐 일단 여기로 연결은 해놓음)
+	@RequestMapping(value = "/recommview/{comNo}", method = RequestMethod.GET, produces="application/json;charset=UTF-8")
+	public String recommview(Model model, @PathVariable long comNo) throws SQLException {
+		System.out.println("view()------------");
+		CommunityDTO dto = comdao.view(comNo, true);
+		RecommendDTO rdto = new RecommendDTO();
+		
+		if(dto == null) {
+			throw new RuntimeException("게시물이 존재하지 않습니다.");
+		}else {
+			rdto.setCommid(dto.getComNo());
+			rdto.setMemid(dto.getMemberid());
+			model.addAttribute("recommcheck", recommdao.check(dto.getComNo(), dto.getMemberid()));//추천상태=1, 추천안한상태=0 
 			model.addAttribute("dto", dto);
 		}
 		return "forward:/comm/read.jsp";
