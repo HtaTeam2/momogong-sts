@@ -46,18 +46,7 @@ input[type=text] {
 </style>
 
 </head>
-<script type="text/javascript">
 
-$("#delete_btn").click(function(){
-    if(confirm("정말 삭제하시겠습니까 ?") == true){
-        alert("삭제되었습니다");
-    }
-    else{
-        return ;
-    }
-});
-	
-</script>
 
 
 <body class="w3-white w3-content" style="max-width: 1600px">
@@ -96,55 +85,53 @@ $("#delete_btn").click(function(){
 	</header>
 
 	<div id="searchList" class="w3-row-padding" align="center">
-		<form action="${pageContext.request.contextPath}/StdMembers/viewOne">
 
-			<table border="1" cellspacing="1" width="60%">
-				<tr>
-					<td width=30%>아이디</td>
-					<td width=70%>${allData.id}</td>
-				</tr>
-				<tr>
-					<td width="30%">닉네임</td>
-					<td width="70%">${allData.nickname}</td>
-				</tr>
-				<tr>
-					<td width="30%">비밀번호</td>
-					<td width="70%">${allData.password}</td>
-				</tr>
-				<tr>
-					<td width="30%">이메일 주소</td>
-					<td width="70%">${allData.email}</td>
-				</tr>
-				<tr>
-					<td width="30%">등급</td>
-					<td width="70%">${allData.grade}</td>
-				</tr>
-				<tr>
-					<td width="30%">목표</td>
-					<td width="70%">${allData.goal}</td>
-				</tr>
-				<tr>
-					<td width="30%">가입일</td>
-					<td width="70%">${allData.regdate}</td>
-				</tr>
-			</table>
-			<br> <br>
-			<!--
+		<table border="1" cellspacing="1" width="60%">
+			<tr>
+				<td width=30%>아이디</td>
+				<td width=70%>${allData.id}</td>
+			</tr>
+			<tr>
+				<td width="30%">닉네임</td>
+				<td width="70%">${allData.nickname}</td>
+			</tr>
+			<tr>
+				<td width="30%">비밀번호</td>
+				<td width="70%">${allData.password}</td>
+			</tr>
+			<tr>
+				<td width="30%">이메일 주소</td>
+				<td width="70%">${allData.email}</td>
+			</tr>
+			<tr>
+				<td width="30%">등급</td>
+				<td width="70%">${allData.grade}</td>
+			</tr>
+			<tr>
+				<td width="30%">목표</td>
+				<td width="70%">${allData.goal}</td>
+			</tr>
+			<tr>
+				<td width="30%">가입일</td>
+				<td width="70%">${allData.regdate}</td>
+			</tr>
+		</table>
+		<br> <br>
+		<!--
 			 http://ip:port/context명/update.jsp  
 		${pageContext.request.contextPath} : 코드 사용 권장
 		즉 현 jsp의 실행 위치가 어디에 있던 "http://ip:port/context명/" 을 의미하는 코드
 		
 		-->
-			<div class="btn">
-				<input class="btnBox" type="button" value="수정하기"
-					Onclick="location.href='${pageContext.request.contextPath}/StdMembers/updatepage?id=${allData.id}'">&nbsp;
-				<br> <br>
-				<button class="btnBox" id="delete_btn"
-					onclick='location.href="${pageContext.request.contextPath}/StdMembers/delete?id=${allData.id}"' 
-					onclick="removeCheck()" > 탈퇴하기</button>
-			</div>
+		<div class="btn">
+			<input class="btnBox" type="button" value="수정하기"
+				Onclick="location.href='${pageContext.request.contextPath}/StdMembers/updatepage?id=${allData.id}'">&nbsp;
+			<br> <br>
+			<button class="btnBox" id="delete_btn"
+				onclick='location.href="${pageContext.request.contextPath}/StdMembers/delete?id=${allData.id}"'>
+				탈퇴하기</button>
+		</div>
 
-		</form>
 	</div>
 	<!-- 외부로 별도로 분리해 놓은 js 파일만 include -->
 	<!-- axios 사용을 위한 추가 설정 -->
