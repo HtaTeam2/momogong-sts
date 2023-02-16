@@ -17,7 +17,7 @@
 
 |   이름   |                        깃허브 주소                         | 
 | :------: | :--------------------------------------------------------: | 
-|  김솔진  | [https://github.com/](https://github.com/)   | 
+|  김솔진  | [https://github.com/noljis](https://github.com/noljis)   | 
 |  강소영  | [https://github.com/](https://github.com/)     | 
 |  박혜인  | [https://github.com/](https://github.com/) |
 |  이민지  | [https://github.com/](https://github.com/) |
