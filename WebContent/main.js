@@ -129,10 +129,3 @@ document.querySelector('#btn1').addEventListener('click', function () {
 	title.innerText = '';
 });
 
-document.querySelector('#cate').addEventListener('click', function () {
-	//title: study input 태그의 값
-//	let title = document.querySelector('#study').value;
-//	console.log(title);
-//	dataReceive(title);
-//	title.innerText = '';
-});
