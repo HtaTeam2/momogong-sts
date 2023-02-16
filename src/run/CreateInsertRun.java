@@ -26,7 +26,7 @@ public class CreateInsertRun {
 		em.persist(m2);
 		em.persist(m3);
 		
-		Community c = new Community("제목", "기타", "글 내용입니다.", "1234", 0);
+		Community c = new Community("제목", "기타", "글 내용입니다.", "1234", 0, 0);
 		c.setStudymembers(m1);
 		em.persist(c);
 		
