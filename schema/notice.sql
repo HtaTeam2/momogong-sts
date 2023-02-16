@@ -5,7 +5,7 @@ CREATE TABLE notice(
 	noticeTitle	VARCHAR(50) NOT NULL,
 	noticeContent VARCHAR(255) NOT NULL,
 	noticeRegdate DATETIME DEFAULT now(),
-	viewCount LONG NOT NULL, 
+	viewCount INT NOT NULL, 
 	PRIMARY KEY(noticeNo)
 );
 
