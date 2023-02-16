@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -34,10 +35,6 @@ import lombok.Setter;
 
 //id,pw로 로그인
 @NamedQuery(name = "StudyMembers.findByLoginInfo", query = "select m from StudyMembers m where m.id=:id and m.password=:password")
-//id 찾기 (email 입력으로 찾기)
-@NamedQuery(name = "StudyMembers.findMemId", query = "select m from StudyMembers m where m.email = :email")
-//pw찾기(id,email 입력으로 찾기)
-@NamedQuery(name = "StudyMembers.findMemPwd", query = "select m from StudyMembers m where m.id=:id and m.email = :email")
 
 @Entity
 public class StudyMembers {
@@ -68,11 +65,11 @@ public class StudyMembers {
 	private String grade; //default : FREE => insert문에서 주는걸로!
 	
 	//참조
-	@OneToMany(mappedBy = "studyMembers") //StudyGroup에 매핑설정된 변수 이름으로 지정해야 함
+	@OneToMany(mappedBy = "studyMembers", cascade = CascadeType.PERSIST, orphanRemoval = true) //StudyGroup에 매핑설정된 변수 이름으로 지정해야 함
 	private List<StudyGroup> studygroup = new ArrayList<StudyGroup>();
 	
 	//참조-커뮤니티
-	@OneToMany(mappedBy = "studymembers") //Community에 매핑설정된 변수 이름으로 지정해야 함
+	@OneToMany(mappedBy = "studymembers", cascade = CascadeType.PERSIST, orphanRemoval = true) //Community에 매핑설정된 변수 이름으로 지정해야 함
 	private List<Community> community = new ArrayList<Community>();
 
 	
