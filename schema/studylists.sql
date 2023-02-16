@@ -6,7 +6,7 @@ DROP TABLE studylists_seq;
 DROP TABLE studylists;
 
 CREATE TABLE studylists (
-	roomNo INT NOT NULL AUTO_INCREMENT,		
+	roomNo LONG NOT NULL AUTO_INCREMENT,		
 	category VARCHAR(10) NOT NULL, 
 	roomTitle VARCHAR(20) NOT NULL, 
 	roomPw VARCHAR(10)DEFAULT NULL,		
