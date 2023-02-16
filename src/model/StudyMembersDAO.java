@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NamedQuery;
 
 import org.springframework.stereotype.Repository;
 
@@ -75,30 +76,30 @@ public class StudyMembersDAO {
     }
 	
 		//회원가입 - 아이디 중복 확인
-	public static int duplecateID(String id){
-		int cnt=0;
+	public static boolean duplecateID(String id) throws Exception{
+		boolean result = true ;
+		
 	    try{
-	    	Connection con=DBUtil2.getConnection();
-	        StringBuilder sql=new StringBuilder();
+	    	Connection con = DBUtil2.getConnection();
+	        String sql= "select id from studymembers where id =?";
 	        
-	        //아이디 중복 확인
-	        sql.append(" SELECT count(id) as cnt ");
-	        sql.append(" FROM studymembers ");
-	        sql.append(" WHERE id = ? ");
 	        
-	        PreparedStatement pstmt=con.prepareStatement(sql.toString());
+	        PreparedStatement pstmt=con.prepareStatement(sql);
 	        pstmt.setString(1, id);
 	        
 	        ResultSet rs=pstmt.executeQuery();
+	        
+	        //존재하는 id라면 false로 바꾸기
 	        if(rs.next()){
-	        	cnt=rs.getInt("cnt");
-	 
+	        	result= false;
 	        }
 	        
 	    }catch(Exception e){
 	     	System.out.println("아이디 중복 확인 실패 : " + e);
+	     	e.printStackTrace();
+	     	throw e;
 	    }
-		return cnt;
+		return result;
 	}
 	
 	
@@ -258,7 +259,9 @@ public class StudyMembersDAO {
 		return false;
 	}
 
-		//jpa - id찾기 (email 입력으로 찾기)
+	//jpa - id찾기 (email 입력으로 찾기)
+	//@NamedQuery(name = "StudyMembers.findByEmail", query = "select m from StudyMembers m where m.email = :email")
+	
 	public StudyMembers findId(String email) throws SQLException{
 		EntityManager em = DBUtil.getEntityManager();
 		EntityTransaction tx = em.getTransaction();
@@ -267,7 +270,7 @@ public class StudyMembersDAO {
 			
 			tx.begin();
 			
-			members = (StudyMembers) em.createNamedQuery("StudyMembers.findMemId").setParameter("email", email).getSingleResult();
+			members = (StudyMembers) em.createNamedQuery("StudyMembers.findByEmail").setParameter("email", email).getSingleResult();
 			
 			System.out.println(members); //테스트
 
@@ -283,6 +286,7 @@ public class StudyMembersDAO {
 	}
 	
 	//jpa - pw찾기 (id,email 입력으로 찾기)
+	//@NamedQuery(name = "StudyMembers.findPassword", query = "select m from StudyMembers m where m.id=:id and m.email = :email")
 	public StudyMembers findPwd(String id, String email) throws SQLException{
 		EntityManager em = DBUtil.getEntityManager();
 		EntityTransaction tx = em.getTransaction();
@@ -291,7 +295,7 @@ public class StudyMembersDAO {
 			
 			tx.begin();
 			
-			members = (StudyMembers) em.createNamedQuery("StudyMembers.findMemPwd").setParameter("id", id).setParameter("email", email).getSingleResult();
+			members = (StudyMembers) em.createNamedQuery("StudyMembers.findPassword").setParameter("id", id).setParameter("email", email).getSingleResult();
 			
 			System.out.println(members); //테스트
 
@@ -306,43 +310,8 @@ public class StudyMembersDAO {
 		return members;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	//jdbc 로그인 : sql문 사용해서 id,pw로 1명의 회원정보 조회
-	//sql = "select * from studymembers where id=? and password=?";
-	public boolean loginMember2(String id, String pw) throws SQLException {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		try {
-			conn = DBUtil2.getConnection();
-			pstmt = conn.prepareStatement("select * from studymembers where id=? and password=?");
-			pstmt.setString(1, id);
-			pstmt.setString(2, pw);
-			
-			rset = pstmt.executeQuery();
-			
-			if (rset.next()) {
-				return true;
-			}
-		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-			throw sqle;
-		} finally {
-			DBUtil2.close(conn, pstmt, rset);
-		}
-		
-		return false;
-	}
-	
-	
-	//관리자 - jpa - 모든 회원 검색
+	//관리자
+	//jpa - 모든 회원 검색
 	public List<StudyMembers> getAllMembers() {
 		EntityManager em = DBUtil.getEntityManager();
 		
@@ -360,7 +329,11 @@ public class StudyMembersDAO {
 	
 
 	
-	//관리자 - jdbc - 가입한 모든 회원 검색 (admin 제외/pw,goal 제외)
+	//관리자 - jdbc
+		/**
+		 * 가입한 모든 회원 검색 (admin 제외/pw,goal 제외)
+		 * sql = "SELECT id, nickname, email, regdate, grade  FROM studymembers where grade in('free','premium')";
+		 */
 		public ArrayList<StudyMembersDTO> getMembers() throws SQLException {
 			Connection conn = null;
 			PreparedStatement pstmt = null;
@@ -386,6 +359,54 @@ public class StudyMembersDAO {
 			}
 			
 			return allList;
+		}
+		
+		/**
+		 * 회원 1명 삭제
+		 */
+		public boolean delete(String id) throws SQLException {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			
+			try {
+				con = DBUtil2.getConnection();
+				pstmt = con.prepareStatement("delete from studymembers where id=?");
+				pstmt.setString(1, id);
+				int result = pstmt.executeUpdate();
+				if(result != 0) {
+					return true;
+				}
+			} catch (SQLException s) {
+				s.printStackTrace();
+				throw s;
+			} finally {
+				DBUtil2.close(con, pstmt);
+			}
+			
+			return false;
+		}
+		
+		/**
+		 * 관리자 비밀번호,이메일 수정
+		 */
+		
+		public void update(StudyMembersDTO dto) throws SQLException {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			
+			try {
+				con = DBUtil2.getConnection();
+				pstmt = con.prepareStatement("UPDATE studymembers SET password = ?, email = ? WHERE id = admin");
+				pstmt.setString(1, dto.getPassword());
+				pstmt.setString(2, dto.getEmail());
+				//pstmt.setString(3, dto.getId());
+				pstmt.executeUpdate(); //insert/update/delete
+			} catch (SQLException s) {
+				s.printStackTrace();
+				throw s;
+			} finally {
+				DBUtil2.close(con, pstmt);
+			}
 		}
 	
 	
