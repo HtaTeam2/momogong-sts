@@ -72,8 +72,10 @@ input[type=text] {
   <div id="searchList" class="w3-row-padding" align="center">
   
 	<form action="${pageContext.request.contextPath}/StdList/updatecheck?roomNo=${lists.roomNo}" method="post">
-
-		<table border="1" cellspacing="1" width="60%">
+	<br>
+		<h2 class="w3-left w3-xlarge">${lists.roomTitle}의 정보</h2>
+	<br>
+		<table class="w3-table-all" border="1" cellspacing="1" width="60%">
 			<tr>
 				<td width="30%">방 번호</td>
 				<td width="70%">${lists.roomNo}</td>
