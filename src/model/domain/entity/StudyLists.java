@@ -37,6 +37,9 @@ import lombok.Setter;
 //해당 방 번호의 방장 찾는 sql입니다.
 @NamedQuery(name = "StudyLists.findById",
 			query = "select s.studyMembers.id from StudyLists s where s.roomNo = :roomNo")
+//호스트로 존재하는지 여부
+@NamedQuery(name = "StudyLists.findByHostId",
+			query = "select s.studyMembers.id from StudyLists s where s.studyMembers.id = :hostId")
 
 @Entity
 @SequenceGenerator(

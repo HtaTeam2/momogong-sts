@@ -81,7 +81,7 @@ public class StudyMembersDAO {
 		
 	    try{
 	    	Connection con = DBUtil2.getConnection();
-	        String sql= "select id from studymembers where id =?";
+	        String sql= "select id from studymembers where id = ?";
 	        
 	        
 	        PreparedStatement pstmt=con.prepareStatement(sql);

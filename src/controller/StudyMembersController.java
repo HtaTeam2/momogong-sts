@@ -39,8 +39,8 @@ public class StudyMembersController {
 		return "login.jsp";
 	}
 	
-	//로그인
-	//세션에 로그인 한 회원의 전체 정보 데이터  저장하도록 수정필요 ->나중에 등급권한 설정..
+	// 로그인
+	// 세션에 로그인 한 회원의 전체 정보 데이터 저장하도록 수정필요 ->나중에 등급권한 설정..
 	@RequestMapping(value = "/login", method=RequestMethod.POST)
 	public String login(Model sessionData, @RequestParam("id") String id, @RequestParam("password") String password) throws SQLException {
 		
@@ -53,7 +53,7 @@ public class StudyMembersController {
 			
 			return "redirect:/main.jsp"; //로그인 후 메인화면
 		}else {
-			return "redirect:/login.html"; //에러메시지..... => view단에서	
+			return "redirect:/loginError.jsp"; //에러메시지 창 띄우는걸로 수정하기	
 		}
 	}
 	

@@ -40,27 +40,24 @@ input[type=text] {
 		<div class="w3-section w3-bottombar w3-padding-16">
 
 			<img src="${pageContext.request.contextPath}/images/momogong.png"
-				onclick='location.href="${pageContext.request.contextPath}/main.jsp"'
+				onclick='location.href="${pageContext.request.contextPath}/main.html"'
 				style="width: 10%" class="w3-hover-opacity">
 			<button class="w3-button w3-white"
-				onclick='location.href="${pageContext.request.contextPath}/StdGroup/mystudy"'>내
+				onclick='location.href="../login.jsp"'>내
 				스터디</button>
 			<button class="w3-button w3-white"
-				onclick='location.href="${pageContext.request.contextPath}/lists/createStdList.jsp"'>스터디
+				onclick='location.href="../login.jsp"'>스터디
 				생성</button>
 			<button class="w3-button w3-white"
-				onclick='location.href="${pageContext.request.contextPath}/Community/list"'>커뮤니티</button>
+				onclick='location.href="../login.jsp"'>커뮤니티</button>
 			<button class="w3-button w3-white w3-hide-small"
-				onclick='location.href="${pageContext.request.contextPath}/Notice/list"'>공지사항</button>
+				onclick='location.href="../login.jsp"'>공지사항</button>
 			스터디 검색 : <input type="text" id="study" name="study" value="">
 			<button id="btn1" class="w3-button w3-white w3-hide-small">
 				<i class="fa fa-search"></i>
 			</button>
 			<button class="w3-button w3-white w3-hide-small w3-right"
 				onclick='location.href="../login.jsp"'>로그인</button>
-			<button class="w3-button w3-white w3-hide-small w3-right"
-				onclick='location.href="${pageContext.request.contextPath}/StdMembers/viewOne2"'>내
-				정보</button>
 			<c:if test="${sessionScope.id == 'admin'}">
 				<button class="w3-button w3-white w3-hide-small w3-right" 
 				 	onclick='location.href="${pageContext.request.contextPath}/StdMembers/adPage"'>관리자메뉴</button>

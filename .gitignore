@@ -1,6 +1,9 @@
 # Created by https://www.gitignore.io/api/git,java,maven,windows,eclipse
 # Edit at https://www.gitignore.io/?templates=git,java,maven,windows,eclipse
 
+#git
+README.md
+
 ### Eclipse ###
 .metadata
 bin/

@@ -93,7 +93,7 @@ public class CommunityDAO {
 		try {
 			String sql = "select c from Community c order by c.comNo desc";
 			list = em.createQuery(sql).getResultList();
-			
+			System.out.println("list");
 			//list.forEach(v->System.out.println(v));
 			for(Community v:list) {
 				list2.add(CommunityDTO.fromEntity(v));
