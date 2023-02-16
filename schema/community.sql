@@ -9,7 +9,7 @@ CREATE TABLE community (
 	comPw VARCHAR(6) ,
 	comRegdate DATETIME  DEFAULT now(),
 	comContent VARCHAR(255) NOT NULL,
-	comViewCount LONG NOT NULL,
+	comViewCount INT NOT NULL,
 	PRIMARY KEY(comNo)
 );
 
