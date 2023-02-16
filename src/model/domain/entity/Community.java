@@ -1,6 +1,8 @@
 package model.domain.entity;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -71,8 +74,17 @@ public class Community {
 	@Column(nullable = false)
 	private Integer comViewCount;
 	
+	
+	@NonNull
+	@Column(nullable = false)
+	private Integer recommCount;
+	
+	
 	//글쓴이 회원테이블 참조!
 	@ManyToOne
 	@JoinColumn(name = "memberid")
 	private StudyMembers studymembers;
+	
+	@OneToMany(mappedBy = "community") //Recommend에 매핑설정된 변수 이름으로 지정해야 함
+	private List<Recommend> recommend = new ArrayList<Recommend>();
 }
