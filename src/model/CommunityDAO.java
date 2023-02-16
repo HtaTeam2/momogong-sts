@@ -10,7 +10,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import org.junit.Test;
 import org.springframework.stereotype.Repository;
 
 import model.domain.CommunityDTO;
@@ -30,7 +29,7 @@ public class CommunityDAO {
 			tx.begin();
 			
 			StudyMembers member = em.find(StudyMembers.class, dto.getMemberid());
-			Community community = new Community(dto.getComTitle(), dto.getSubject(), dto.getComContent(), dto.getComPw(), 0);
+			Community community = new Community(dto.getComTitle(), dto.getSubject(), dto.getComContent(), dto.getComPw(), 0, 0);
 			community.setStudymembers(member);
 			em.persist(community);//entity 영속성 저장
 			
@@ -51,8 +50,6 @@ public class CommunityDAO {
 	
 	//읽기
 	public CommunityDTO view(long comNo, boolean flag) throws SQLException{
-//		EntityManager em = DBUtil.getEntityManager();
-//		EntityTransaction tx = em.getTransaction();
 		
 		Connection con = null;	
 		PreparedStatement pstmt = null;
@@ -75,7 +72,7 @@ public class CommunityDAO {
 			rset = pstmt.executeQuery();
 			if(rset.next()) {
 				dto = new CommunityDTO(comNo, rset.getString("comTitle"), rset.getString("memberid"), rset.getString("subject"), rset.getString("comPw"), 
-						rset.getDate("comRegdate"), rset.getString("comContent"), rset.getInt("comViewCount"));
+						rset.getDate("comRegdate"), rset.getString("comContent"), rset.getInt("comViewCount"), rset.getInt("recommCount"));
 			}
 		}catch(SQLException s) {
 			s.printStackTrace();
@@ -189,18 +186,6 @@ public class CommunityDAO {
 	}
 	
 	
-	@Test
-	public void dataTest() {
-		try {
-//			write(new CommunityDTO(0, "제목", "아이디", "말머리", "비번", null, "내용..", 0));
-//			list();
-			search("writer", "te");
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 
 
 }
