@@ -1,11 +1,11 @@
 DROP TABLE notice;
 
 CREATE TABLE notice(
-	noticeNo INT NOT NULL AUTO_INCREMENT,
+	noticeNo LONG NOT NULL AUTO_INCREMENT,
 	noticeTitle	VARCHAR(50) NOT NULL,
 	noticeContent VARCHAR(255) NOT NULL,
 	noticeRegdate DATETIME DEFAULT now(),
-	viewCount INT NOT NULL, 
+	viewCount LONG NOT NULL, 
 	PRIMARY KEY(noticeNo)
 );
 
