@@ -28,6 +28,7 @@ public class CommunityDTO {
 	private Date comRegdate; //가입날짜
 	private String comContent; // 게시글 내용
 	private int comViewCount; //조회수
+	private int recommCount; //추천수
 	
 	/* ? ModelMapper 
 	 * 
@@ -43,6 +44,7 @@ public class CommunityDTO {
 				.comRegdate(community.getComRegdate())
 				.comContent(community.getComContent())
 				.comViewCount(community.getComViewCount())
+				.recommCount(community.getRecommCount())
 				.build();
 	}
 
