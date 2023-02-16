@@ -19,7 +19,7 @@
 | :------: | :--------------------------------------------------------: | 
 |  김솔진  | [https://github.com/](https://github.com/)   | 
 |  강소영  | [https://github.com/](https://github.com/)     | 
-|  박헤인  | [https://github.com/](https://github.com/) |
+|  박혜인  | [https://github.com/](https://github.com/) |
 |  이민지  | [https://github.com/](https://github.com/) |
 |  이시현  | [https://github.com/](https://github.com/) |
 |  이신애  | [https://github.com/](https://github.com/) |
