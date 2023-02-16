@@ -114,10 +114,10 @@ public class StudyListController {
 	
 	//리스트
 	@RequestMapping(value = "/allList", method = RequestMethod.GET) 
-	public String AllList(Model model) throws Exception {
+	public String allList(Model model) throws Exception {
 		System.out.println("allList() 확인----");
 		try {
-			List<StudyLists> rlist = listdao.AllList();
+			List<StudyLists> rlist = listdao.allList();
 			//배열이 비어있으면 String으로 예외던지기
 			System.out.println(rlist);
 			if(rlist.isEmpty()) { 
