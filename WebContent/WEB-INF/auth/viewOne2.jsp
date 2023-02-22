@@ -84,7 +84,7 @@ input[type=text] {
 		</div>
 	</header>
 
-	<div id="searchList" class="w3-row-padding" align="center">
+	<div id="searchList" class="w3-row-padding" align="left">
 
 		<table border="1" cellspacing="1" width="60%">
 			<tr>
@@ -133,9 +133,8 @@ input[type=text] {
 		</div>
 
 	</div>
-	<!-- 외부로 별도로 분리해 놓은 js 파일만 include -->
 	<!-- axios 사용을 위한 추가 설정 -->
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-	<script src="/main.js"></script>
+	<script src="/../team_studyroom/select.js"></script>
 </body>
 </html>

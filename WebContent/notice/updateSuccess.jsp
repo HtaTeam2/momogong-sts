@@ -6,10 +6,18 @@
 <head>
 <meta charset="UTF-8">
 <title>updateSuccess.jsp</title>
-<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">	
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 <style>
-body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
-td{font-family: "Raleway", sans-serif; font-size: 18px; align:center;}
+body, h1, h2, h3, h4, h5, h6 {
+	font-family: "Raleway", sans-serif
+}
+
+td {
+	font-family: "Raleway", sans-serif;
+	font-size: 18px;
+	align: center;
+}
+
 input[type=text] {
 	width: 500px;
 	height: 32px;
@@ -20,26 +28,26 @@ input[type=text] {
 	padding-left: 10px;
 	background-color: rgb(233, 233, 233);
 }
+
 footer {
-	width: 100%; 
-	bottom:0; 
+	width: 100%;
+	bottom: 0;
 }
 </style>
 </head>
 <body onload='succ()'>
 
-<script type="text/javascript">
+	<script type="text/javascript">
+		function succ(msg) {
+			alert('축하합니다.  update 성공하셨습니다.');
+			window.location.href = "../Notice/list";
+		}
+	</script>
 
-	function succ(msg){
-		alert('축하합니다.  update 성공하셨습니다.');
-		window.location.href ="../Notice/list";
-	} 
-
-</script>
-
-		</div>
+	</div>
 	<!-- axios 사용을 위한 추가 설정 -->
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-	<script src="main.js"></script>	
+	<script src="main.js"></script>
 </body>
-</html>l>
+</html>
+l>

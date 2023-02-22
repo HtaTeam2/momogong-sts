@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>공지 글내용</title>
-<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet"
@@ -84,7 +84,9 @@ footer {
 			<h3>글 수정</h3>
 			<br>
 
-			<form action="${pageContext.request.contextPath}/Notice/updateNotice/${dto.noticeNo}" method="get">
+			<form
+				action="${pageContext.request.contextPath}/Notice/updateNotice/${dto.noticeNo}"
+				method="get">
 				<!-- update Form  -->
 				<table border="1" cellspacing="1" width="60%">
 					<tbody>
@@ -111,7 +113,7 @@ footer {
 						</tr>
 					</tbody>
 				</table>
-				<p/>
+				<p />
 
 				<input type="button" value="목록으로"
 					Onclick="location.href='${pageContext.request.contextPath}/Notice/list'">
@@ -120,7 +122,9 @@ footer {
 				</c:if>
 			</form>
 			<c:if test="${sessionScope.id == 'admin'}">
-				<form id="delFrm" action="${pageContext.request.contextPath}/Notice/deleteNotice/${dto.noticeNo}" method="post">
+				<form id="delFrm"
+					action="${pageContext.request.contextPath}/Notice/deleteNotice/${dto.noticeNo}"
+					method="post">
 					<input type="hidden" name="noticeNo" value="${dto.noticeNo}">
 					<button type="submit">삭제</button>
 				</form>
@@ -129,6 +133,6 @@ footer {
 
 	<!-- axios 사용을 위한 추가 설정 -->
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-	<script src="main.js"></script>
+	<script src="../../select.js"></script>
 </body>
 </html>

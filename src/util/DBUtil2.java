@@ -14,76 +14,77 @@ import javax.sql.DataSource;
 
 public class DBUtil2 {
 	private static DataSource ds;
-	
+
 	static {
 		try {
-			
-			Context envContext  = (Context)(new InitialContext().lookup("java:/comp/env"));
-			ds = (DataSource)envContext.lookup("jdbc/mysql");
-	
+
+			Context envContext = (Context) (new InitialContext().lookup("java:/comp/env"));
+			ds = (DataSource) envContext.lookup("jdbc/mysql");
+
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static Connection getConnection() throws SQLException{
+	public static Connection getConnection() throws SQLException {
 		return ds.getConnection();
 	}
-	
+
 	public static void close(Connection conn, Statement pstmt, ResultSet rset) {
 		try {
-			if(rset != null) {
+			if (rset != null) {
 				rset.close();
 				rset = null;
 			}
-			if(pstmt != null) {
+			if (pstmt != null) {
 				pstmt.close();
 				pstmt = null;
 			}
-			if(conn != null) {
+			if (conn != null) {
 				conn.close();
 				conn = null;
 			}
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void close(Connection conn, Statement pstmt) {
 		try {
-			if(pstmt != null) {
+			if (pstmt != null) {
 				pstmt.close();
 				pstmt = null;
 			}
-			if(conn != null) {
+			if (conn != null) {
 				conn.close();
 				conn = null;
 			}
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void close(Connection conn, Statement pstmt1, Statement pstmt2) {
 		try {
-			if(pstmt1 != null) {
+			if (pstmt1 != null) {
 				pstmt1.close();
 				pstmt1 = null;
 			}
-			if(pstmt2 != null) {
+			if (pstmt2 != null) {
 				pstmt2.close();
 				pstmt2 = null;
 			}
-			if(conn != null) {
+			if (conn != null) {
 				conn.close();
 				conn = null;
 			}
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public static void close(Connection con, Statement pstmt1, Statement pstmt2, Statement pstmt3, Statement pstmt4, ResultSet rset) {
+
+	public static void close(Connection con, Statement pstmt1, Statement pstmt2, Statement pstmt3, Statement pstmt4,
+			ResultSet rset) {
 		try {
 			if (pstmt1 != null) {
 				pstmt1.close();
@@ -105,7 +106,7 @@ public class DBUtil2 {
 				con.close();
 				con = null;
 			}
-			if(rset != null) {
+			if (rset != null) {
 				rset.close();
 				rset = null;
 			}
@@ -113,7 +114,7 @@ public class DBUtil2 {
 			System.out.println(se.getMessage());
 		}
 	}
-	
+
 	public static void close(Connection con, Statement pstmt, Statement pstmt1, ResultSet rs) {
 		try {
 			if (pstmt1 != null) {
@@ -132,5 +133,5 @@ public class DBUtil2 {
 			System.out.println(se.getMessage());
 		}
 	}
-	
+
 }

@@ -22,7 +22,7 @@ import model.domain.entity.Notice;
 
 @Controller
 @RequestMapping("Notice")
-@SessionAttributes({"id"})
+@SessionAttributes({ "id" })
 public class NoticeController {
 	@Autowired
 	public NoticeDAO notdao;
@@ -32,12 +32,11 @@ public class NoticeController {
 	public String writeform() {
 		return "forward:/notice/writeform.jsp";
 	}
-	
+
 	// 글등록
 	@PostMapping(value = "/insertNotice", produces = "application/json; charset=UTF-8")
-	public String write(Model model, @ModelAttribute Notice ndto) throws Exception{
-		System.out.println("insert()----------");
-		
+	public String write(Model model, @ModelAttribute Notice ndto) throws Exception {
+
 		Notice notice = notdao.insertNotice(ndto);
 		model.addAttribute("ndto", notice);
 
@@ -55,7 +54,6 @@ public class NoticeController {
 	// 글 수정 (내용, 제목)
 	@RequestMapping(value = "/updateNotice/{noticeNo}", method = RequestMethod.GET)
 	public String update(Notice ndto, Model model) throws SQLException {
-		System.out.println("update() ---- " + ndto);
 		if (ndto.getNoticeNo() == 0) {
 			throw new RuntimeException("존재하지 않은 게시물 입니다.");
 		} else {
@@ -79,12 +77,10 @@ public class NoticeController {
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
 	public String list(Model model) throws Exception {
-		System.out.println("list()------------");
 
 		model.addAttribute("list", notdao.list());
 		return "forward:/notice/view.jsp";
 	}
-
 
 	// 글 상세보기
 	@RequestMapping(value = "/view/{noticeNo}", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
@@ -97,22 +93,18 @@ public class NoticeController {
 		}
 		return "forward:/notice/detail.jsp";
 	}
-	
+
 	// 이미지 첨부
-	
-	
 
 	// 예외 처리에 대한 중복 코드를 분리해서 예외처리 전담 메소드
 	@ExceptionHandler
 	public String totalEx(SQLException e) {
-		System.out.println("예외 처리 전담");
 		e.printStackTrace();
 		return "forward:error.jsp";
 	}
 
 	@ExceptionHandler
 	public String totalEx2(NullPointerException e) {
-		System.out.println("예외 처리 전담");
 		e.printStackTrace();
 		return "forward:error.jsp?";
 	}

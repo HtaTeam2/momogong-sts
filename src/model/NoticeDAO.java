@@ -19,7 +19,7 @@ import util.DBUtil2;
 @Repository
 public class NoticeDAO {
 
-	//글 추가
+	// 글 추가
 	public static Notice insertNotice(Notice ndto) throws SQLException {
 		EntityManager em = DBUtil.getEntityManager();
 		EntityTransaction tx = em.getTransaction();

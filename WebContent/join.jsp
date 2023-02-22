@@ -64,27 +64,21 @@
 		}
 		
 		axios({
-			method : 'GET', 
+			method : 'GET',
 			url : "StdMembers/checkOk?id="+resData
 		
-		}).then(function(resData){ //응답 시
-			console.log(response);
-			alert(resData);
+		}).then(function(resData){
+			checkData =  resData.data;
+			if(checkData){
+				alert("사용 가능한 아이디입니다.");
+			}else{
+				alert("이미 사용중인 아이디입니다.");
+			}
 			check = true;
-			
-		}).catch(function (error) { //오류 발생 시 
-			alert("사용 불가능한 아이디 입니다.") ;
-			
-		}).then(function(){ //항시
-			
-			alert("사용 가능한 아이디 입니다.");
-			check = true;
-			
-		});
-		
-		 
-		
-		
+		}).catch(function (errorMsg) {
+		    console.error(errorMsg);
+		    alert("내부적인 오류로 조회할 수 없습니다. 재시도 해주십시오.");
+		}); 
 	}
 	
 	//입력 태그 null값 경고
@@ -130,9 +124,7 @@
 		<div class="join">
 			<h2>회원가입</h2>
 			<span style="color: red; font-weight: bold">* 필수입력</span>
-			<form name="f"
-				action="${pageContext.request.contextPath}/StdMembers/insert"
-				method="post">
+			<form name="f" action="${pageContext.request.contextPath}/StdMembers/insert" method="post">
 				<div class="join_a">
 					<h4>*아이디</h4>
 					<input type="text" name="id" id="id" placeholder="아이디를 입력해주세요."

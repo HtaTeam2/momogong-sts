@@ -23,67 +23,65 @@ import model.StudyMembersDAO;
 import model.domain.StudyMembersDTO;
 import model.domain.entity.StudyMembers;
 
-
 @Controller
 @RequestMapping("StdMembers")
-@SessionAttributes({"dto", "id"})
+@SessionAttributes({ "dto", "id" })
 public class StudyMembersController {
 
 	@Autowired
 	public StudyMembersDAO memdao;
 
-	
-	//로그인 화면으로 이동
-	@RequestMapping(value="/loginForm", method = RequestMethod.GET)
+	// 로그인 화면으로 이동
+	@RequestMapping(value = "/loginForm", method = RequestMethod.GET)
 	public String loginForm() {
 		return "login.jsp";
 	}
-	
+
 	// 로그인
 	// 세션에 로그인 한 회원의 전체 정보 데이터 저장하도록 수정필요 ->나중에 등급권한 설정..
-	@RequestMapping(value = "/login", method=RequestMethod.POST)
-	public String login(Model sessionData, @RequestParam("id") String id, @RequestParam("password") String password) throws SQLException {
-		
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String login(Model sessionData, @RequestParam("id") String id, @RequestParam("password") String password)
+			throws SQLException {
+
 		boolean validate = memdao.loginMember(id, password);
-		System.out.println("----"+validate);
-		
-		if(validate == true) { //로그인성공
+		System.out.println("----" + validate);
+
+		if (validate == true) { // 로그인성공
 			System.out.println("id확인 " + id);
-			sessionData.addAttribute("id", id);  //세션에 데이터  저장
-			
-			return "redirect:/main.jsp"; //로그인 후 메인화면
-		}else {
-			return "redirect:/loginError.jsp"; //에러메시지 창 띄우는걸로 수정하기	
+			sessionData.addAttribute("id", id); // 세션에 데이터 저장
+
+			return "redirect:/main.jsp"; // 로그인 후 메인화면
+		} else {
+			return "redirect:/loginError.jsp"; // 에러메시지 창 띄우는걸로 수정하기
 		}
 	}
-	
-	//로그인 상태 확인
+
+	// 로그인 상태 확인
 	@RequestMapping(value = "/loginCheck", method = RequestMethod.POST)
 	public String loginCheck(HttpSession session, Model sessionData) {
-		
+
 		System.out.println("로그인 확인");
 		String id = (String) sessionData.getAttribute("id");
 		return (String) session.getAttribute("id");
 	}
-	
-	//로그아웃 -  세션 삭제 후 로그인 전 메인화면으로 이동
-	@RequestMapping(value = "/logout", method=RequestMethod.GET)
+
+	// 로그아웃 - 세션 삭제 후 로그인 전 메인화면으로 이동
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String login(SessionStatus sess) {
-		
+
 		System.out.println("로그 아웃  완료");
 		sess.setComplete();
 		sess = null;
-		
-		return "redirect:/main.html"; //로그인 전 메인화면			
+
+		return "redirect:/main.html"; // 로그인 전 메인화면
 	}
-	
-	//id 찾기 페이지 이동
+
+	// id 찾기 페이지 이동
 	@RequestMapping(value = "/findIdForm", method = RequestMethod.GET)
 	public String findIdForm() {
 		return "auth/findId";
 	}
 
-	
 	// id 찾기
 	@RequestMapping(value = "/findId", method = RequestMethod.POST)
 	public ModelAndView findId(Model model, @RequestParam("email") String email, StudyMembersDTO dto)
@@ -104,8 +102,8 @@ public class StudyMembersController {
 
 		return mv;
 	}
-	
-	//pwd 찾기 페이지 이동
+
+	// pwd 찾기 페이지 이동
 	@RequestMapping(value = "/findPwdForm", method = RequestMethod.GET)
 	public String findPwdForm() {
 		return "auth/findPwd";
@@ -132,54 +130,50 @@ public class StudyMembersController {
 
 		return mv;
 	}
-	
-	
-	//회원가입 입력 폼 
-	//http://localhost/team2_studyroom/StdMembers/insertview
+
+	// 회원가입 입력 폼
+	// http://localhost/team2_studyroom/StdMembers/insertview
 	@GetMapping(value = "/insertview", produces = "application/json; charset=UTF-8")
 	protected ModelAndView memInsertView() throws SQLException {
-		
+
 		ModelAndView mv = new ModelAndView();
 		System.out.println("insert() -----");
-		
-		mv.setViewName("auth/join");   
+
+		mv.setViewName("auth/join");
 		return mv;
 	}
-	
-	//회원 정보 등록 후 정보 보기
-	//http://localhost/team2_studyroom/StdMembers/insert
+
+	// 회원 정보 등록 후 정보 보기
+	// http://localhost/team2_studyroom/StdMembers/insert
 	@PostMapping(value = "/insert", produces = "application/json; charset=UTF-8")
 	protected ModelAndView memInsert(Model sessionData, StudyMembers dto) throws SQLException {
 		ModelAndView mv = new ModelAndView();
 		System.out.println("insert() -----");
 
 		StudyMembers newmem = memdao.insertMember(dto);
-		
+
 		sessionData.addAttribute("dto", dto);
-		mv.setViewName("auth/viewOne"); 
-		
+		mv.setViewName("auth/viewOne");
+
 		return mv;
 	}
-	
-	
-	// 아이디 중복 체크 확인 
+
+	// 아이디 중복 체크 확인
 	// http://localhost/team2_studyroom/StdMembers/checkOk?id=값
 	@RequestMapping(value = "/checkOk", method = RequestMethod.GET)
-	protected String idCheck(String id) throws Exception {
-
-		String check = "아이디 중복입니다.";
+	protected String idCheck(Model model, String id) throws Exception {
+		System.out.println(id);
 
 		boolean result = memdao.duplecateID(id);
 
-		if (result == true) {
-			check = "사용가능한 아이디 입니다.";
-		}
+		model.addAttribute("data", result);
+		
 		System.out.println("checkOk() -----" + result);
 
-		return check;
+		return "main_res";	//WEB-INF/main_res.jsp
 	}
-	
-	//프로필 수정 페이지 이동
+
+	// 프로필 수정 페이지 이동
 	@RequestMapping(value = "/updatepage", method = RequestMethod.GET)
 	public ModelAndView updatePage(String id) throws SQLException {
 
@@ -190,29 +184,31 @@ public class StudyMembersController {
 
 		return mv;
 	}
-	
-	//프로필 수정 기능
+
+	// 프로필 수정 기능
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String update(@ModelAttribute("id") String id, @RequestParam("nickname") String nickname, @RequestParam("email") String email, @RequestParam("password") String pw, @RequestParam("goal") String goal) throws SQLException {
+	public String update(@ModelAttribute("id") String id, @RequestParam("nickname") String nickname,
+			@RequestParam("email") String email, @RequestParam("password") String pw, @RequestParam("goal") String goal)
+			throws SQLException {
 
 		System.out.println("update() ----- " + id);
-		
+
 		memdao.memUpdate(id, email, goal, nickname, pw);
 
 		return "auth/updateSuccess";
 	}
-	
-	//탈퇴 & 1명 회원 삭제
+
+	// 탈퇴 & 1명 회원 삭제
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String delete(@RequestParam("id") String deleteId) throws SQLException {
-		
+
 		memdao.delete(deleteId);
-		
-		return "auth/deleteSuccess"; 
+
+		return "auth/deleteSuccess";
 	}
 
-	//로그인 후 조회
-	//http://localhost/team2_studyroom/WEB-INF/auth/viewOne.jsp
+	// 로그인 후 조회
+	// http://localhost/team2_studyroom/WEB-INF/auth/viewOne.jsp
 	@RequestMapping(value = "/viewOne2", method = RequestMethod.GET)
 	public ModelAndView viewOne(@ModelAttribute("id") String id) throws SQLException {
 		ModelAndView mv = new ModelAndView();
@@ -223,33 +219,31 @@ public class StudyMembersController {
 
 		return mv;
 	}
-	
-	
 
-	//관리자 화면으로 이동
-	@RequestMapping(value="/adPage", method = RequestMethod.GET)
+	// 관리자 화면으로 이동
+	@RequestMapping(value = "/adPage", method = RequestMethod.GET)
 	public String adMain() {
 		return "auth/adPage";
 	}
-	
-	//관리자 - 전체회원조회
-	//http://localhost:8080/team2_studyroom/StdMembers/allView
-	//spring 코드로 변환 url - allView 
-	@RequestMapping(value="/adAllView", method = RequestMethod.GET)
+
+	// 관리자 - 전체회원조회
+	// http://localhost:8080/team2_studyroom/StdMembers/allView
+	// spring 코드로 변환 url - allView
+	@RequestMapping(value = "/adAllView", method = RequestMethod.GET)
 	public ModelAndView getMembers() throws SQLException {
-		
+
 		ModelAndView mv = new ModelAndView();
-			
+
 		mv.addObject("allData", memdao.getMembers());
 		mv.setViewName("auth/adAllView");
-		
+
 		return mv;
 	}
-	
+
 	// 예외 처리에 대한 중복 코드를 분리해서 예외처리 전담 메소드
-	//http://localhost/team2_studyroom/WEB-INF/auth/error.jsp
+	// http://localhost/team2_studyroom/WEB-INF/auth/error.jsp
 	@ExceptionHandler
-	public String totalEx(SQLException e, HttpServletRequest req) { 
+	public String totalEx(SQLException e, HttpServletRequest req) {
 		System.out.println("예외 처리 전담");
 		e.printStackTrace();
 

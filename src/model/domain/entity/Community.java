@@ -25,7 +25,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
@@ -33,24 +32,21 @@ import lombok.ToString;
 @Setter
 @ToString
 
-
 @NamedQuery(name = "Community.findByComTitle", query = "select c from Community c where c.comTitle like :comTitle")
 @NamedQuery(name = "Community.findByComContent", query = "select c from Community c where c.comContent like :comContent")
 @NamedQuery(name = "Community.findByMemberid", query = "select c from Community c where c.studymembers.id like :memberid")
 
-
 @Entity
-@SequenceGenerator(
-        name="COMMUNITY_SEQ_GEN", //시퀀스 제너레이터 이름
-        sequenceName="COMMUNITY_SEQ", //시퀀스 이름
-        initialValue=1, //시작값
-        allocationSize=1 //메모리를 통해 할당할 범위 사이즈!
-        )
+@SequenceGenerator(name = "COMMUNITY_SEQ_GEN", // 시퀀스 제너레이터 이름
+		sequenceName = "COMMUNITY_SEQ", // 시퀀스 이름
+		initialValue = 1, // 시작값
+		allocationSize = 1 // 메모리를 통해 할당할 범위 사이즈!
+)
 public class Community {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="COMMUNITY_SEQ_GEN")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COMMUNITY_SEQ_GEN")
 	private Long comNo;
-	
+
 	@NonNull
 	@Column(length = 50, nullable = false)
 	private String comTitle;
@@ -58,33 +54,31 @@ public class Community {
 	@NonNull
 	@Column(nullable = false)
 	private String subject;
-	
+
 	@NonNull
 	@Column(nullable = false)
 	private String comContent;
-	
+
 	@NonNull
 	@Column(length = 6, nullable = false)
 	private String comPw;
-	
+
 	@CreationTimestamp
 	private Date comRegdate;
-	
+
 	@NonNull
 	@Column(nullable = false)
 	private Integer comViewCount;
-	
-	
+
 	@NonNull
 	@Column(nullable = false)
 	private Integer recommCount;
-	
-	
-	//글쓴이 회원테이블 참조!
+
+	// 글쓴이 회원테이블 참조!
 	@ManyToOne
 	@JoinColumn(name = "memberid")
 	private StudyMembers studymembers;
-	
-	@OneToMany(mappedBy = "community") //Recommend에 매핑설정된 변수 이름으로 지정해야 함
+
+	@OneToMany(mappedBy = "community") // Recommend에 매핑설정된 변수 이름으로 지정해야 함
 	private List<Recommend> recommend = new ArrayList<Recommend>();
 }
